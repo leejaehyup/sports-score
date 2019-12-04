@@ -7,6 +7,7 @@ export default class PenaltyButton extends React.Component {
     count: 0
   };
   onPress_Penalty_ScoreUp = () => {
+    3;
     const {count} = this.state;
     this.setState({count: count + 1});
   };

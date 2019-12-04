@@ -4,13 +4,14 @@ import {Button, Text} from "react-native-elements";
 
 export default class GameTimer extends React.Component {
   state = {
-    count: 300,
+    count: parseInt(this.props.minute) * 60 + parseInt(this.props.second),
     interval: null,
     timer: {
       min: "",
       sec: ""
     }
   };
+
   componentDidMount() {
     this.convert_Count_To_Timer(this.state.count);
   }
@@ -20,7 +21,7 @@ export default class GameTimer extends React.Component {
   }
   // 총 카운트를 타이머로 변환
   convert_Count_To_Timer = count => {
-    let min = count / 60;
+    let min = parseInt(count / 60);
     let sec = count % 60;
     this.setState({timer: {min, sec}});
   };

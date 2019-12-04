@@ -1,12 +1,13 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Button, Text} from "react-native-elements";
+import {totalScore} from "../context/ScoreContext";
 
-export default class ScoreButton extends React.Component {
+class ScoreButton extends React.Component {
   state = {
     timerOn: false, //타이머 온오프
-    initScore: "", //초기 스코어
-    scores: "-1", // 시간
+    initScore: this.props.score, //초기 스코어
+    scores: this.props.score + "", // 시간
     interval: null, // setInterval 함수
     changeInitScore: false, // 타이머를 초기 스코어로 바꿀지 여부
     totalScore: "0"
@@ -17,9 +18,11 @@ export default class ScoreButton extends React.Component {
   }
   plusScore = () => {
     this.setState({totalScore: parseInt(this.state.totalScore) + 1 + ""});
+    this.props.plus(this.props.user, parseInt(this.state.initScore));
   };
   minusScore = () => {
     this.setState({totalScore: parseInt(this.state.totalScore) - 1 + ""});
+    this.props.minus(this.props.user, parseInt(this.state.initScore));
   };
 
   scorePressTimerOn = e => {
@@ -46,34 +49,26 @@ export default class ScoreButton extends React.Component {
     });
   };
 
-  componentDidUpdate(preProps) {
-    const {score} = this.props; // prop으로 받은 score
-    const {scores} = this.state; // state에 저장될 변수
-    if (!scores || scores === "-1") {
-      this.setState({scores: score, initScore: score});
-    }
-  }
-
   render() {
     const {scores, totalScore} = this.state;
-
     return (
       <View style={styles.Button_Container}>
         {scores !== "-1" ? (
           <View>
             <Button
-              title={scores}
+              title={scores + ""}
+              titleStyle={{fontSize: 20}}
               buttonStyle={{backgroundColor: "purple"}}
               onPress={this.scorePressTimerOn}
             />
             <View style={styles.plus_Minus_Button_Container}>
               <Button
                 title="+"
-                buttonStyle={{width: 55}}
+                buttonStyle={{flex: 1, width: "100%"}}
                 onPress={this.plusScore}
               />
               <Button
-                buttonStyle={{width: 55, start: 6}}
+                buttonStyle={{flex: 1, width: "100%"}}
                 title="-"
                 onPress={this.minusScore}
               />
@@ -81,7 +76,7 @@ export default class ScoreButton extends React.Component {
             <Text style={styles.button_text}>{totalScore}</Text>
           </View>
         ) : (
-          <Text></Text>
+          <Text>123</Text>
         )}
       </View>
     );
@@ -96,7 +91,8 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   plus_Minus_Button_Container: {
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "stretch"
   },
 
   button_text: {
@@ -104,3 +100,5 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
+
+export default totalScore(ScoreButton);
