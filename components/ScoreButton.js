@@ -64,11 +64,11 @@ class ScoreButton extends React.Component {
             <View style={styles.plus_Minus_Button_Container}>
               <Button
                 title="+"
-                buttonStyle={{flex: 1, width: "100%"}}
+                buttonStyle={{flex: 1, width: "100%", height: "100%"}}
                 onPress={this.plusScore}
               />
               <Button
-                buttonStyle={{flex: 1, width: "100%"}}
+                buttonStyle={{flex: 1, width: "100%", height: "100%"}}
                 title="-"
                 onPress={this.minusScore}
               />
@@ -91,7 +91,14 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   plus_Minus_Button_Container: {
+    // paddingRight: 5,
+    // paddingTop: 5,
+    // flexDirection: "row",
+    // justifyContent: "space-between"
+    margin: 5,
+    padding: 1,
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "stretch"
   },
 

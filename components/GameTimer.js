@@ -22,21 +22,23 @@ export default class GameTimer extends React.Component {
   // 총 카운트를 타이머로 변환
   convert_Count_To_Timer = count => {
     let min = parseInt(count / 60);
-    let sec = count % 60;
+    let sec = (count % 60) + ".0";
     this.setState({timer: {min, sec}});
   };
 
   // 타이머 하나씩 감소
   timer_CountDown = (min, sec) => {
     let numMin = parseInt(min);
-    let numSec = parseInt(sec);
+    let numSec = parseFloat(sec);
     const {interval} = this.state;
     if (numMin === 0 && numSec === 0) {
       clearInterval(interval);
-    } else if (numSec === 0) {
-      this.setState({timer: {min: numMin - 1 + "", sec: "59"}});
+    } else if (parseInt(numSec) === 0) {
+      this.setState({timer: {min: numMin - 1 + "", sec: "59.9"}});
     } else {
-      this.setState({timer: {min: numMin + "", sec: numSec - 1 + ""}});
+      this.setState({
+        timer: {min: numMin + "", sec: (numSec - 0.1).toFixed(1) + ""}
+      });
     }
   };
   // 타이머 시작
@@ -49,7 +51,7 @@ export default class GameTimer extends React.Component {
             timer: {min, sec}
           } = this.state;
           this.timer_CountDown(min, sec);
-        }, 1000)
+        }, 100)
       });
     } else return;
   };
