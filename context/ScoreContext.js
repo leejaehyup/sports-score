@@ -7,14 +7,14 @@ const {Provider, Consumer: ScoreConsumer} = Context;
 class ScoreProvider extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       value: 0,
       value_1: 0,
       value_2: 0,
       score: [2, 3, 4],
       i: -1,
-      user: ""
+      user: "",
+      getScoreTime: props.getScoreTime
     };
     // 여기서 actions 라는 객체는 우리가 임의로 설정하는 객체입니다.
     // 나중에 변화를 일으키는 함수들을 전달해줄때, 함수 하나하나 일일히 전달하는 것이 아니라,
@@ -71,6 +71,7 @@ function totalScore(WrappedComponent) {
             score={state.score[++state.i % 3]}
             // user1, user2 나누기
             user={state.i % 6 < 3 ? "user1" : "user2"}
+            getScoreTime={state.getScoreTime}
           />
         )
 

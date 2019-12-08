@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View, Text} from "react-native";
+import {StyleSheet, View, Text, Dimensions} from "react-native";
 import ScoreButton from "../components/ScoreButton";
 import PenaltyButton from "../components/PenaltyButton";
 import AdvantageButton from "../components/AdvantageButton";
@@ -7,24 +7,60 @@ import GameTimer from "../components/GameTimer";
 import GameInformation_2 from "../components/user/GameInformation_2";
 import GameInformation_1 from "../components/user/GameInformation_1";
 import {ScoreProvider} from "../context/ScoreContext";
+import {ScreenOrientation} from "expo";
 
 export default class GameScreen extends React.Component {
   state = {
-    isLoading: true
+    isLoading: true,
+    orientation: ""
   };
+  getOrientation = () => {
+    if (this.refs.rootView) {
+      if (Dimensions.get("window").width < Dimensions.get("window").height) {
+        this.setState({orientation: "portrait"});
+        ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT);
+      } else {
+        this.setState({orientation: "landsacpe"});
+        ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE);
+      }
+    }
+  };
+
+  componentDidMount() {
+    this.getOrientation();
+    Dimensions.addEventListener("change", () => {
+      this.getOrientation();
+    });
+  }
+
+  async changeScreenOrientation() {
+    const {orientation} = this.state;
+    if (orientation === "portrait")
+      await ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT);
+    else
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.Orientation.LANDSCAPE
+      );
+  }
+
   render() {
     const {
       state: {
-        params: {minute, second}
+        params: {minute, second, user1, user2, getScoreTime}
       }
     } = this.props.navigation;
+
     return (
-      <ScoreProvider>
-        <View style={styles.container}>
-          <View style={{flex: 1, flexDirection: "column"}}>
-            <Text>ID1</Text>
+      <ScoreProvider getScoreTime={getScoreTime}>
+        <View ref="rootView" style={styles.container}>
+          <View style={{flex: 3, flexDirection: "column"}}>
+            <View style={{flex: 1}}>
+              <Text style={styles.userText}>{user1}</Text>
+            </View>
             <GameInformation_1 />
-            <Text>ID2</Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.userText}>{user2}</Text>
+            </View>
             <GameInformation_2 />
           </View>
           <View style={styles.button_container}>
@@ -67,12 +103,14 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   buttonsGroup_1: {
-    justifyContent: "space-between",
-    flexDirection: "row",
+    justifyContent: "center",
+    flexDirection: "column",
     flex: 3
   },
   buttonsGroup_2: {
-    flexDirection: "row",
+    justifyContent: "center",
+    flexDirection: "column",
+    marginTop: 5,
     flex: 3
   },
   additionButtons: {
@@ -81,6 +119,13 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   timer_Container: {
-    flex: 1
+    position: "absolute",
+    right: "40%",
+    top: "45%"
+  },
+  userText: {
+    fontSize: 30,
+    color: "blue",
+    textAlign: "center"
   }
 });

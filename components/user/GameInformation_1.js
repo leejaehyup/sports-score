@@ -7,7 +7,7 @@ class GameInformation extends React.Component {
   render() {
     const {value_1} = this.props;
     return (
-      <View style={styles.Button_Container}>
+      <View style={styles.gameInfo_Container}>
         <Text style={styles.button_text}>총점</Text>
         <Text style={styles.button_text1}>{value_1}</Text>
       </View>
@@ -15,15 +15,15 @@ class GameInformation extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  Button_Container: {
-    flex: 1
+  gameInfo_Container: {
+    flex: 4
   },
   button_text: {
     fontSize: 20,
     textAlign: "center"
   },
   button_text1: {
-    fontSize: 50,
+    fontSize: 80,
     textAlign: "center"
   }
 });

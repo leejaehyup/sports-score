@@ -4,7 +4,8 @@ import {Button, Text} from "react-native-elements";
 
 export default class GameTimer extends React.Component {
   state = {
-    count: parseInt(this.props.minute) * 60 + parseInt(this.props.second),
+    count:
+      (parseInt(this.props.minute) * 60 + parseInt(this.props.second)) * 1000,
     interval: null,
     timer: {
       min: "",
@@ -21,37 +22,49 @@ export default class GameTimer extends React.Component {
   }
   // 총 카운트를 타이머로 변환
   convert_Count_To_Timer = count => {
-    let min = parseInt(count / 60);
-    let sec = (count % 60) + ".0";
+    let min = parseInt(count / 1000 / 60);
+    let sec = ((count / 1000) % 60) + ".000";
     this.setState({timer: {min, sec}});
   };
 
   // 타이머 하나씩 감소
-  timer_CountDown = (min, sec) => {
-    let numMin = parseInt(min);
-    let numSec = parseFloat(sec);
+  // timer_CountDown = (min, sec) => {
+  //   let numMin = parseInt(min);
+  //   let numSec = parseFloat(sec);
+  //   const {interval} = this.state;
+  //   if (numMin === 0 && numSec === 0) {
+  //     clearInterval(interval);
+  //   } else if (parseInt(numSec) === 0) {
+  //     this.setState({timer: {min: numMin - 1 + "", sec: "59.9"}});
+  //   } else {
+  //     this.setState({
+  //       timer: {min: numMin + "", sec: (numSec - 0.1).toFixed(1) + ""}
+  //     });
+  //   }
+  // };
+  timer_CountDown = current => {
     const {interval} = this.state;
-    if (numMin === 0 && numSec === 0) {
-      clearInterval(interval);
-    } else if (parseInt(numSec) === 0) {
-      this.setState({timer: {min: numMin - 1 + "", sec: "59.9"}});
+    if (current > 0) {
+      let min = parseInt(current / 60000);
+      let sec = ((current - min * 60000) / 1000).toFixed(3);
+      this.setState({timer: {min: min, sec: sec}, count: current});
     } else {
-      this.setState({
-        timer: {min: numMin + "", sec: (numSec - 0.1).toFixed(1) + ""}
-      });
+      clearInterval(interval);
+      this.setState({timer: {min: 0, sec: "0.000"}, count: 0});
     }
   };
   // 타이머 시작
   onPress_Start_Timer = () => {
-    const {interval} = this.state;
+    const {interval, count} = this.state;
+    const startTimer = Date.now();
     if (!interval) {
       this.setState({
         interval: setInterval(() => {
-          const {
-            timer: {min, sec}
-          } = this.state;
-          this.timer_CountDown(min, sec);
-        }, 100)
+          let currentTimer = Date.now() - startTimer;
+          this.timer_CountDown(count - +currentTimer);
+          //console.log(count * 1000 - +currentTimer);
+          //this.timer_CountDown(min, sec);
+        }, 25)
       });
     } else return;
   };
@@ -67,8 +80,8 @@ export default class GameTimer extends React.Component {
       timer: {min, sec}
     } = this.state;
     return (
-      <View style={styles.Button_Container}>
-        <Text style={styles.button_text}>{`${min}분:${sec}초`}</Text>
+      <View style={styles.timer_Container}>
+        <Text style={styles.timer_Text}>{`${min}분:${sec}초`}</Text>
         <Button
           title="시작"
           buttonStyle={{backgroundColor: "black"}}
@@ -80,13 +93,12 @@ export default class GameTimer extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  Button_Container: {
+  timer_Container: {
     flex: 1,
-    margin: 10,
     flexDirection: "row",
     justifyContent: "center"
   },
-  button_text: {
+  timer_Text: {
     fontSize: 30,
     textAlign: "center"
   }

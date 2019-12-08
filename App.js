@@ -3,6 +3,18 @@ import {createStackNavigator} from "react-navigation-stack";
 import IndexScreen from "./pages/Index";
 import ConfigureScreen from "./pages/Configure";
 import GameScreen from "./pages/Game";
+import {ScoreProvider} from "./context/ScoreContext";
+import React from "react";
+
+class App extends React.Component {
+  render() {
+    return (
+      <ScoreProvider>
+        <AppNavigator />
+      </ScoreProvider>
+    );
+  }
+}
 
 const AppNavigator = createStackNavigator(
   {
