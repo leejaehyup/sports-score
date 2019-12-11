@@ -9,12 +9,19 @@ class ScoreProvider extends Component {
     super(props);
     this.state = {
       value: 0,
-      value_1: 0,
-      value_2: 0,
-      score: [2, 3, 4],
-      i: -1,
-      user: "",
-      getScoreTime: props.getScoreTime
+      value_1: 0, // user1 score
+      value_2: 0, // user2 score
+      score: [2, 3, 4], // score
+      i: -1, // index
+      user: "", // user id
+      getScoreTime: props.getScoreTime, // 점수를 득점하기 위한 시간
+      //잡다한 점수들
+      penalty_index: 0, // index
+      advantage_index: 0, // index
+      penalty_1: 0,
+      advantage_1: 0,
+      penalty_2: 0,
+      advantage_2: 0
     };
     // 여기서 actions 라는 객체는 우리가 임의로 설정하는 객체입니다.
     // 나중에 변화를 일으키는 함수들을 전달해줄때, 함수 하나하나 일일히 전달하는 것이 아니라,
@@ -31,6 +38,47 @@ class ScoreProvider extends Component {
             value_1: prevState.value_1 - value
           }));
         else this.setState(prevState => ({value_2: prevState.value_2 - value}));
+      },
+      advantage_plus: user => {
+        if (user.trim() === "user1")
+          this.setState(prevState => ({
+            advantage_1: prevState.advantage_1 + 1
+          }));
+        else
+          this.setState(prevState => ({
+            advantage_2: prevState.advantage_2 + 1
+          }));
+      },
+      advantage_minus: user => {
+        if (user.trim() === "user1")
+          this.setState(prevState => ({
+            advantage_1: prevState.advantage_1 - 1
+          }));
+        else
+          this.setState(prevState => ({
+            advantage_2: prevState.advantage_2 - 1
+          }));
+      },
+      penalty_plus: user => {
+        //console.log(this.state.sundry.penalty_1);
+        if (user.trim() === "user1") {
+          this.setState(prevState => ({
+            penalty_1: prevState.penalty_1 + 1
+          }));
+        } else
+          this.setState(prevState => ({
+            penalty_2: prevState.penalty_2 + 1
+          }));
+      },
+      penalty_minus: user => {
+        if (user.trim() === "user1")
+          this.setState(prevState => ({
+            penalty_1: prevState.penalty_1 - 1
+          }));
+        else
+          this.setState(prevState => ({
+            penalty_2: prevState.penalty_2 - 1
+          }));
       }
     };
   }
@@ -45,18 +93,58 @@ class ScoreProvider extends Component {
     return <Provider value={value}>{this.props.children}</Provider>;
   }
 }
-function withScore(WrappedComponent) {
+function gameInfoScore(WrappedComponent) {
   return function UseScoreProvider(props) {
     return (
       <ScoreConsumer>
         {({state, actions}) => (
-          <WrappedComponent value_1={state.value_1} value_2={state.value_2} />
+          <WrappedComponent
+            value_1={state.value_1}
+            value_2={state.value_2}
+            penalty_1={state.penalty_1}
+            penalty_2={state.penalty_2}
+            advantage_1={state.advantage_1}
+            advantage_2={state.advantage_2}
+          />
         )}
       </ScoreConsumer>
     );
   };
 }
-function totalScore(WrappedComponent) {
+function penaltyScore(WrappedComponent) {
+  return function UseScoreProvider(props) {
+    return (
+      <ScoreConsumer>
+        {({state, actions}) => (
+          <WrappedComponent
+            penalty_plus={actions.penalty_plus}
+            penalty_minus={actions.penalty_minus}
+            user={state.penalty_index % 2 < 1 ? "user1" : "user2"}
+            value={state.score[++state.penalty_index % 3]}
+          />
+        )}
+      </ScoreConsumer>
+    );
+  };
+}
+function advantageScore(WrappedComponent) {
+  return function UseScoreProvider(props) {
+    return (
+      <ScoreConsumer>
+        {({state, actions}) => (
+          <WrappedComponent
+            advantage_minus={actions.advantage_minus}
+            advantage_plus={actions.advantage_plus}
+            user={state.advantage_index % 2 < 1 ? "user1" : "user2"}
+            value={state.score[++state.advantage_index % 3]}
+          />
+        )}
+      </ScoreConsumer>
+    );
+  };
+}
+
+function scoreButton(WrappedComponent) {
   return function UseScoreProvider(props) {
     return (
       <ScoreConsumer>
@@ -73,37 +161,18 @@ function totalScore(WrappedComponent) {
             user={state.i % 6 < 3 ? "user1" : "user2"}
             getScoreTime={state.getScoreTime}
           />
-        )
-
-        /* {({state, actions}) => {
-          if (state.i > 4) state.i = -1;
-          if (state.i < 2) {
-            console.log(state.i);
-            <WrappedComponent
-              value_1={state.value_1}
-              plus={actions.plus}
-              minus={actions.minus}
-              i={state.i}
-              score={state.score[++state.i % 3]}
-              user="user1"
-            />;
-          } else {
-            console.log(state.i);
-            <WrappedComponent
-              value_2={state.value_2}
-              plus={actions.plus}
-              minus={actions.minus}
-              i={state.i}
-              score={state.score[++state.i % 3]}
-              user="user2"
-            />;
-          }
-        }} */
-        }
+        )}
       </ScoreConsumer>
     );
   };
 }
 
 // 내보내줍니다.
-export {ScoreProvider, ScoreConsumer, withScore, totalScore};
+export {
+  ScoreProvider,
+  ScoreConsumer,
+  gameInfoScore,
+  scoreButton,
+  advantageScore,
+  penaltyScore
+};

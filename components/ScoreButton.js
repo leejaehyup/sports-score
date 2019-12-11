@@ -1,7 +1,7 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Button, Text} from "react-native-elements";
-import {totalScore} from "../context/ScoreContext";
+import {scoreButton} from "../context/ScoreContext";
 
 class ScoreButton extends React.Component {
   state = {
@@ -40,9 +40,11 @@ class ScoreButton extends React.Component {
   // 카운트 세기
   countdown = () => {
     const {initScore, timerOn} = this.state;
+    const startTimer = Date.now();
     this.setState({scores: "0"});
     this.setState({
       interval: setInterval(() => {
+        let currentTimer = Date.now() - startTimer;
         const {getScoreTime} = this.props;
         // tofiexd는 문자열 반환 -> number형으로 변환해서 비교
         if (
@@ -61,7 +63,8 @@ class ScoreButton extends React.Component {
           this.props.plus(this.props.user, parseInt(this.state.initScore));
         } else {
           this.setState({
-            scores: (parseFloat(this.state.scores) + 0.1).toFixed(1) + ""
+            //scores: (parseFloat(this.state.scores) + 0.1).toFixed(1) + ""
+            scores: (currentTimer / 1000).toFixed(1) + ""
           });
         }
       }, 100)
@@ -130,4 +133,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default totalScore(ScoreButton);
+export default scoreButton(ScoreButton);

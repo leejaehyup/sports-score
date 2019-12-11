@@ -73,6 +73,7 @@ export default class GameScreen extends React.Component {
               <PenaltyButton />
               <AdvantageButton />
             </View>
+            <View style={{flex: 1}}></View>
             <View style={styles.timer_Container}>
               <GameTimer minute={minute} second={second} />
             </View>
@@ -110,15 +111,18 @@ const styles = StyleSheet.create({
   buttonsGroup_2: {
     justifyContent: "center",
     flexDirection: "column",
-    marginTop: 5,
     flex: 3
   },
   additionButtons: {
-    justifyContent: "space-between",
-    flex: 2,
-    flexDirection: "row"
+    // justifyContent: "space-between",
+    // flex: 2,
+    // flexDirection: "row"
+    justifyContent: "center",
+    flexDirection: "column",
+    flex: 2
   },
   timer_Container: {
+    marginRight: 2,
     position: "absolute",
     right: "40%",
     top: "45%"

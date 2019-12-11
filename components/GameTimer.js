@@ -4,6 +4,9 @@ import {Button, Text} from "react-native-elements";
 
 export default class GameTimer extends React.Component {
   state = {
+    starting: false,
+    resetCount:
+      (parseInt(this.props.minute) * 60 + parseInt(this.props.second)) * 1000,
     count:
       (parseInt(this.props.minute) * 60 + parseInt(this.props.second)) * 1000,
     interval: null,
@@ -64,7 +67,8 @@ export default class GameTimer extends React.Component {
           this.timer_CountDown(count - +currentTimer);
           //console.log(count * 1000 - +currentTimer);
           //this.timer_CountDown(min, sec);
-        }, 25)
+        }, 25),
+        starting: true
       });
     } else return;
   };
@@ -72,22 +76,42 @@ export default class GameTimer extends React.Component {
   onPress_Stop_Timer = () => {
     const {interval} = this.state;
     clearInterval(interval);
-    this.setState({interval: null});
+    this.setState({interval: null, starting: false});
+  };
+
+  onPress_Reset_Timer = () => {
+    const {resetCount, interval} = this.state;
+    clearInterval(interval);
+    this.setState({count: resetCount, interval: null, starting: false});
+    this.convert_Count_To_Timer(resetCount);
   };
 
   render() {
     const {
-      timer: {min, sec}
+      timer: {min, sec},
+      starting
     } = this.state;
     return (
       <View style={styles.timer_Container}>
         <Text style={styles.timer_Text}>{`${min}분:${sec}초`}</Text>
-        <Button
-          title="시작"
-          buttonStyle={{backgroundColor: "black"}}
-          onPress={this.onPress_Start_Timer}
-        />
-        <Button title="중지" onPress={this.onPress_Stop_Timer} />
+        <View style={{marginRight: 10}}>
+          {starting ? (
+            <Button title="중지" onPress={this.onPress_Stop_Timer} />
+          ) : (
+            <Button
+              title="시작"
+              buttonStyle={{backgroundColor: "black"}}
+              onPress={this.onPress_Start_Timer}
+            />
+          )}
+        </View>
+        <View>
+          <Button
+            title="reset"
+            buttonStyle={{backgroundColor: "black"}}
+            onPress={this.onPress_Reset_Timer}
+          />
+        </View>
       </View>
     );
   }
@@ -100,6 +124,7 @@ const styles = StyleSheet.create({
   },
   timer_Text: {
     fontSize: 30,
-    textAlign: "center"
+    textAlign: "center",
+    marginRight: 10
   }
 });
