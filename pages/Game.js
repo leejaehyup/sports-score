@@ -52,39 +52,54 @@ export default class GameScreen extends React.Component {
 
     return (
       <ScoreProvider getScoreTime={getScoreTime}>
-        <View ref="rootView" style={styles.container}>
-          <View style={{flex: 3, flexDirection: "column"}}>
-            <View style={{flex: 1}}>
-              <Text style={styles.userText}>{user1}</Text>
-            </View>
-            <GameInformation_1 />
-            <View style={{flex: 1}}>
-              <Text style={styles.userText}>{user2}</Text>
-            </View>
-            <GameInformation_2 />
+        <View style={{flex: 1, marginTop: 5}}>
+          <View style={styles.timer_Container}>
+            <GameTimer minute={minute} second={second} />
           </View>
-          <View style={styles.button_container}>
-            <View style={styles.buttonsGroup_1}>
-              <ScoreButton score={"2"} />
-              <ScoreButton score={"3"} />
-              <ScoreButton score={"4"} />
+          <View ref="rootView" style={styles.container}>
+            <View style={{flex: 3, flexDirection: "column"}}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Text style={styles.userText}>{user1}</Text>
+              </View>
+              <GameInformation_1 />
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Text style={styles.userText}>{user2}</Text>
+              </View>
+              <GameInformation_2 />
+              <View style={{flex: 1}}></View>
             </View>
-            <View style={styles.additionButtons}>
-              <PenaltyButton />
-              <AdvantageButton />
-            </View>
-            <View style={{flex: 1}}></View>
-            <View style={styles.timer_Container}>
-              <GameTimer minute={minute} second={second} />
-            </View>
-            <View style={styles.buttonsGroup_2}>
-              <ScoreButton score={"2"} />
-              <ScoreButton score={"3"} />
-              <ScoreButton score={"4"} />
-            </View>
-            <View style={styles.additionButtons}>
-              <PenaltyButton />
-              <AdvantageButton />
+            <View style={styles.button_container}>
+              <View style={styles.buttonsGroup_1}>
+                <ScoreButton score={"2"} />
+                <ScoreButton score={"3"} />
+                <ScoreButton score={"4"} />
+              </View>
+              <View style={styles.additionButtons}>
+                <PenaltyButton />
+                <AdvantageButton />
+              </View>
+              <View style={styles.buttonsGroup_2}>
+                <ScoreButton score={"2"} />
+                <ScoreButton score={"3"} />
+                <ScoreButton score={"4"} />
+              </View>
+              <View style={styles.additionButtons}>
+                <PenaltyButton />
+                <AdvantageButton />
+              </View>
+              <View style={{flex: 1}}></View>
             </View>
           </View>
         </View>
@@ -95,7 +110,7 @@ export default class GameScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 10,
     backgroundColor: "white",
     flexDirection: "row"
   },
@@ -109,6 +124,7 @@ const styles = StyleSheet.create({
     flex: 3
   },
   buttonsGroup_2: {
+    marginTop: 20,
     justifyContent: "center",
     flexDirection: "column",
     flex: 3
@@ -122,13 +138,17 @@ const styles = StyleSheet.create({
     flex: 2
   },
   timer_Container: {
-    marginRight: 2,
-    position: "absolute",
-    right: "40%",
-    top: "45%"
+    // marginRight: 2,
+    // position: "absolute",
+    // right: "40%",
+    // top: "45%"
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
   },
   userText: {
-    fontSize: 30,
+    fontSize: 20,
     color: "blue",
     textAlign: "center"
   }

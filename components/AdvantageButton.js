@@ -27,7 +27,8 @@ class AdvantageButton extends React.Component {
           </View>
           <View style={styles.advantage_button}>
             <Button
-              title="어드밴티지"
+              title="A"
+              titleStyle={{fontSize: 20}}
               buttonStyle={{backgroundColor: "blue"}}
               onPress={this.onPress_Advantage_ScoreUp}
             />
@@ -48,9 +49,9 @@ class AdvantageButton extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 10,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    margin: 10
   },
   advantage_container: {
     flex: 1,

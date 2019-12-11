@@ -8,17 +8,55 @@ class GameInformation extends React.Component {
     const {value_1, advantage_1, penalty_1} = this.props;
     return (
       <View style={styles.gameInfo_Container}>
-        <Text style={styles.button_text}>총점</Text>
-        <Text style={styles.button_text1}>{value_1}</Text>
-        <Text style={styles.penalty_text}>{penalty_1}</Text>
-        <Text style={styles.advantage_text}>{advantage_1}</Text>
+        <View
+          style={{
+            flex: 3,
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems: "center"
+          }}
+        >
+          <Text style={styles.button_text}>총점 : </Text>
+          <Text style={styles.button_text1}>{value_1}</Text>
+        </View>
+        <View
+          style={{
+            flex: 2,
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems: "center"
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center"
+            }}
+          >
+            <Text style={{fontSize: 20}}>P : </Text>
+            <Text style={styles.penalty_text}>{penalty_1}</Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center"
+            }}
+          >
+            <Text style={{fontSize: 20}}>A : </Text>
+            <Text style={styles.advantage_text}>{advantage_1}</Text>
+          </View>
+        </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   gameInfo_Container: {
-    flex: 4
+    flex: 5
   },
   button_text: {
     fontSize: 20,

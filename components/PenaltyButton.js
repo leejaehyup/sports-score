@@ -28,14 +28,14 @@ class PenaltyButton extends React.Component {
           </View>
           <View style={styles.penalty_button}>
             <Button
-              title="패널티"
+              title="P"
+              titleStyle={{fontSize: 20}}
               buttonStyle={{backgroundColor: "red"}}
               onPress={this.onPress_Penalty_ScoreUp}
             />
           </View>
           <View style={styles.minus_button}>
             <Button
-              buttonStyle={{}}
               title="-"
               titleStyle={{fontSize: 20}}
               onPress={this.minusPenalty}
@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   penalty_button: {
-    flex: 5
+    flex: 5,
+    width: "100%"
   },
   minus_button: {
     flex: 1
