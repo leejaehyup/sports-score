@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "s3deploy": "aws s3 sync ./web-build s3://score-board "
+    "s3deploy": "aws s3 sync ./web-build s3://score-board"
   },
   "dependencies": {
     "expo": "^35.0.0",

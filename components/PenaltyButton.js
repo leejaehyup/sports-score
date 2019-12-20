@@ -1,6 +1,6 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
-import {Button, Text} from "react-native-elements";
+import {Button} from "react-native-elements";
 import {penaltyScore} from "../context/ScoreContext";
 
 class PenaltyButton extends React.Component {
@@ -23,7 +23,7 @@ class PenaltyButton extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.penalty_container}>
-          <View style={styles.button_text}>
+          <View style={styles.penalty_text}>
             {/* <Text style={styles.button_text}>{count}</Text> */}
           </View>
           <View style={styles.penalty_button}>
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
     margin: 10
   },
   penalty_container: {
@@ -63,8 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   penalty_button: {
-    flex: 5,
-    width: "100%"
+    flex: 3
   },
   minus_button: {
     flex: 1

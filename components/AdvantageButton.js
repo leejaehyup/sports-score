@@ -1,6 +1,6 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
-import {Button, Text} from "react-native-elements";
+import {Button} from "react-native-elements";
 import {advantageScore} from "../context/ScoreContext";
 
 class AdvantageButton extends React.Component {
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
     margin: 10
   },
   advantage_container: {
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   advantage_button: {
-    flex: 5
+    flex: 3
   },
   minus_button: {
     flex: 1

@@ -33,11 +33,19 @@ class ScoreProvider extends Component {
         else this.setState(prevState => ({value_2: prevState.value_2 + value}));
       },
       minus: (user, value) => {
-        if (user.trim() === "user1")
+        if (user.trim() === "user1") {
+          if (this.state.value_1 < value) {
+            return;
+          }
           this.setState(prevState => ({
             value_1: prevState.value_1 - value
           }));
-        else this.setState(prevState => ({value_2: prevState.value_2 - value}));
+        } else {
+          if (this.state.value_2 < value) {
+            return;
+          }
+          this.setState(prevState => ({value_2: prevState.value_2 - value}));
+        }
       },
       advantage_plus: user => {
         if (user.trim() === "user1")
@@ -50,14 +58,17 @@ class ScoreProvider extends Component {
           }));
       },
       advantage_minus: user => {
-        if (user.trim() === "user1")
+        if (user.trim() === "user1") {
+          if (this.state.advantage_1 <= 0) return;
           this.setState(prevState => ({
             advantage_1: prevState.advantage_1 - 1
           }));
-        else
+        } else {
+          if (this.state.advantage_2 <= 0) return;
           this.setState(prevState => ({
             advantage_2: prevState.advantage_2 - 1
           }));
+        }
       },
       penalty_plus: user => {
         //console.log(this.state.sundry.penalty_1);
@@ -71,14 +82,17 @@ class ScoreProvider extends Component {
           }));
       },
       penalty_minus: user => {
-        if (user.trim() === "user1")
+        if (user.trim() === "user1") {
+          if (this.state.penalty_1 <= 0) return;
           this.setState(prevState => ({
             penalty_1: prevState.penalty_1 - 1
           }));
-        else
+        } else {
+          if (this.state.penalty_2 <= 0) return;
           this.setState(prevState => ({
             penalty_2: prevState.penalty_2 - 1
           }));
+        }
       }
     };
   }

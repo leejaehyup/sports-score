@@ -6,7 +6,7 @@ export default class ConfigureScreen extends React.Component {
   state = {
     minute: "",
     second: "",
-    getScoreTime: "",
+    getScoreTime: "3",
     user1: "",
     user2: ""
   };
@@ -17,14 +17,14 @@ export default class ConfigureScreen extends React.Component {
         <Text style={styles.configureText}>설정 페이지</Text>
         <Text style={styles.configureUser}>유저 설정하기</Text>
         <View style={styles.userContainer}>
-          <Text>User:</Text>
+          <Text style={{marginLeft: 10}}>User:</Text>
           <TextInput
             style={styles.textInput}
             onChangeText={user1 => this.setState({user1})}
             value={this.state.user1}
             placeholder="User"
           />
-          <Text>User:</Text>
+          <Text style={{marginLeft: 10}}>User:</Text>
           <TextInput
             style={styles.textInput}
             onChangeText={user2 => this.setState({user2})}
@@ -34,27 +34,39 @@ export default class ConfigureScreen extends React.Component {
         </View>
         <Text style={styles.configureTimer}>시간 설정하기</Text>
         <View style={styles.timerContainer}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={minute => this.setState({minute})}
-            value={this.state.minute}
-            placeholder="minute"
-          />
-          <Text>분</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={second => this.setState({second})}
-            value={this.state.second}
-            placeholder="second"
-          />
-          <Text>초</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={getScoreTime => this.setState({getScoreTime})}
-            value={this.state.getScoreTime}
-            placeholder="getScoreTime"
-          />
+          <View style={{flexDirection: "row"}}>
+            <Text>분 : </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={minute => this.setState({minute})}
+              value={this.state.minute}
+              placeholder="minute"
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: "row"
+            }}
+          >
+            <Text>초 : </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={second => this.setState({second})}
+              value={this.state.second}
+              placeholder="second"
+            />
+          </View>
+          <View style={{flexDirection: "row"}}>
+            <Text>점수 획득 시간 : </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={getScoreTime => this.setState({getScoreTime})}
+              value={this.state.getScoreTime}
+              placeholder="getScoreTime"
+            />
+          </View>
         </View>
+
         <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
           <Button
             title="Go game screen"
@@ -95,7 +107,7 @@ const styles = StyleSheet.create({
     height: 30,
     borderColor: "gray",
     borderWidth: 1,
-    width: "40%"
+    width: "30%"
   },
   userContainer: {
     marginTop: 10,

@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, Modal, TextInput} from "react-native";
 import {Button, Text} from "react-native-elements";
 
 export default class GameTimer extends React.Component {
@@ -13,8 +13,105 @@ export default class GameTimer extends React.Component {
     timer: {
       min: "",
       sec: ""
-    }
+    },
+    modalVisible: false
   };
+
+  /////////////
+
+  modal = props => {
+    const {
+      timer: {min, sec},
+      starting
+    } = this.state;
+    var modalBackgroundStyle = {
+      backgroundColor: "rgba(0, 0, 0, 0.5)"
+    };
+    var innerContainerTransparentStyle = {backgroundColor: "#fff", padding: 20};
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "white"
+        }}
+      >
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => this.setModalVisible(false)}
+        >
+          <View
+            style={[
+              {
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "white"
+              },
+              modalBackgroundStyle
+            ]}
+          >
+            <View style={innerContainerTransparentStyle}>
+              <Text>소수점 제외한 시간 설정해주세요.</Text>
+
+              <TextInput
+                value={this.state.timer.min + ""}
+                onChangeText={this.onChangeMin}
+                placeholder="min"
+              />
+              <TextInput
+                value={this.state.timer.sec + ""}
+                onChangeText={this.onChangeSec}
+                placeholder="sec"
+              />
+              <Button title="확인" onPress={this.filterNotNumber.bind(this)} />
+            </View>
+          </View>
+        </Modal>
+        <Text
+          onPress={this._handleButtonPress}
+          style={{fontSize: 30, textAlign: "center", marginRight: 10}}
+        >
+          {`${min}분:${sec}초`}
+        </Text>
+      </View>
+    );
+  };
+
+  _handleButtonPress = () => {
+    this.setModalVisible(true);
+  };
+
+  filterNotNumber = () => {
+    const regexp = /^[0-9]*$/;
+    const {min, sec} = this.state.timer;
+    if (!regexp.test(+min)) {
+      alert("숫자만 입력하세요");
+      return;
+    }
+    if (!regexp.test(+sec)) {
+      alert("숫자만 입력하세요");
+      return;
+    }
+
+    let count = (parseInt(min) * 60 + parseInt(sec)) * 1000;
+    this.setState({modalVisible: false, count, resetCount: count});
+  };
+
+  setModalVisible = visible => {
+    this.setState({modalVisible: visible});
+  };
+  onChangeMin = min => {
+    this.setState(preState => ({timer: {...preState.timer, min: min}}));
+  };
+
+  onChangeSec = sec => {
+    this.setState(preState => ({timer: {...preState.timer, sec: sec}}));
+  };
+  ///////////
 
   componentDidMount() {
     this.convert_Count_To_Timer(this.state.count);
@@ -93,7 +190,8 @@ export default class GameTimer extends React.Component {
     } = this.state;
     return (
       <View style={styles.timer_Container}>
-        <Text style={styles.timer_Text}>{`${min}분:${sec}초`}</Text>
+        <this.modal min={min + ""} sec={sec + ""} />
+        {/* <Text style={styles.timer_Text}>{`${min}분:${sec}초`}</Text> */}
         <View style={{marginRight: 10}}>
           {starting ? (
             <Button title="중지" onPress={this.onPress_Stop_Timer} />
@@ -120,7 +218,8 @@ const styles = StyleSheet.create({
   timer_Container: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center"
   },
   timer_Text: {
     fontSize: 30,

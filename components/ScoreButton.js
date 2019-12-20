@@ -114,14 +114,15 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center"
   },
   scoreContainer: {
     flex: 1,
     flexDirection: "row"
   },
   scoreButton: {
-    flex: 5
+    flex: 3
   },
   plus_Minus_Button_Container: {
     flex: 1

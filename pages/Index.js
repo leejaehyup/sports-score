@@ -21,7 +21,7 @@ export default class IndexScreen extends React.Component {
           <Text>sports score</Text>
           <Button
             title="Go configure screen"
-            onPress={() => this.props.navigation.navigate("Configure")}
+            onPress={() => this.props.navigation.navigate("Game")}
           />
         </View>
       </View>
