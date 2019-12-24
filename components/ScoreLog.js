@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import {scoreButton} from "../context/ScoreContext";
 import {
   Text,
   View,
@@ -9,7 +8,7 @@ import {
   TextInput,
   FlatList
 } from "react-native";
-
+import {connect} from "react-redux";
 class ScoreLog extends Component {
   state = {
     modalVisible: false
@@ -31,31 +30,9 @@ class ScoreLog extends Component {
             <View style={innerContainerTransparentStyle}>
               <Text>Log</Text>
               <FlatList
-                data={[
-                  {key: "Devin"},
-                  {key: "Dan"},
-                  {key: "Dominic"},
-                  {key: "Jackson"},
-                  {key: "James"},
-                  {key: "Joel"},
-                  {key: "John"},
-                  {key: "Jillian"},
-                  {key: "Jimmy"},
-                  {key: "Julie"},
-                  {key: "a"},
-                  {key: "b"},
-                  {key: "c"},
-                  {key: "d"},
-                  {key: "e"},
-                  {key: "f"},
-                  {key: "g"},
-                  {key: "h"},
-                  {key: "j"},
-                  {key: "k"}
-                ]}
+                data={this.props.gameLog}
                 renderItem={({item}) => (
                   <View>
-                    {console.log(item)}
                     <Text style={styles.item}>{item.key}</Text>
                   </View>
                 )}
@@ -67,7 +44,7 @@ class ScoreLog extends Component {
             </View>
           </View>
         </Modal>
-        <Text onPress={this._handleButtonPress}>modal</Text>
+        <Button title="Log" onPress={this._handleButtonPress} />
       </View>
     );
   };
@@ -91,10 +68,10 @@ class ScoreLog extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
+    flex: 2,
+    flexDirection: "row",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1"
+    alignItems: "center"
   },
   item: {
     padding: 10,
@@ -102,4 +79,8 @@ const styles = StyleSheet.create({
     height: 44
   }
 });
-export default scoreButton(ScoreLog);
+const mapStateToProps = state => ({
+  gameLog: state.scoreGame.gameLog
+});
+
+export default connect(mapStateToProps)(ScoreLog);

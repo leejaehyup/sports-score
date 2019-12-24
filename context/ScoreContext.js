@@ -14,7 +14,7 @@ class ScoreProvider extends Component {
       score: [2, 3, 4], // score
       i: -1, // index
       user: "", // user id
-      getScoreTime: props.getScoreTime, // 점수를 득점하기 위한 시간
+      getScoreTime: 3, // 점수를 득점하기 위한 시간
       //잡다한 점수들
       penalty_index: 0, // index
       advantage_index: 0, // index

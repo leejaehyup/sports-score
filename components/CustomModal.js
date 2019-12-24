@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import {Text, View, StyleSheet, Button, Modal, TextInput} from "react-native";
+import {connect} from "react-redux";
+import {playerName} from "../reducers/scoreGame";
 
-export default class CustomModal extends Component {
+class CustomModal extends Component {
   state = {
     modalVisible: false,
     player1: "Player1",
@@ -9,6 +11,11 @@ export default class CustomModal extends Component {
   };
 
   _handleButtonPress = () => {
+    const {gameStart} = this.props;
+    if (gameStart) {
+      alert("게임 시작 전에 가능합니다.");
+      return;
+    }
     this.setModalVisible(true);
   };
 
@@ -17,13 +24,15 @@ export default class CustomModal extends Component {
   };
   onChangePlayer1 = name => {
     this.setState({player1: name});
+    this.props.playerName(this.props.user, name);
   };
   onChangePlayer2 = name => {
     this.setState({player2: name});
+    this.props.playerName(this.props.user, name);
   };
 
   render() {
-    let {player} = this.props;
+    let {player, gameStart} = this.props;
     var modalBackgroundStyle = {
       backgroundColor: "rgba(0, 0, 0, 0.5)"
     };
@@ -78,7 +87,7 @@ export default class CustomModal extends Component {
           </View>
         </Modal>
         <Text onPress={this._handleButtonPress} style={{fontSize: 20}}>
-          {player === "player1" ? this.state.player1 : this.state.player2}
+          {player === "player1" ? this.props.player1 : this.props.player2}
         </Text>
       </View>
     );
@@ -93,3 +102,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#ecf0f1"
   }
 });
+const mapStateToProps = state => ({
+  player1: state.scoreGame.player1,
+  player2: state.scoreGame.player2,
+  gameStart: state.scoreGame.gameStart
+});
+
+export default connect(mapStateToProps, {playerName})(CustomModal);

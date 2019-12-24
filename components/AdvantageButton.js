@@ -1,30 +1,74 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Button} from "react-native-elements";
-import {advantageScore} from "../context/ScoreContext";
+import {connect} from "react-redux";
+import {
+  advantageIncrement,
+  advantageDecrement,
+  gameLog
+} from "../reducers/scoreGame";
 
 class AdvantageButton extends React.Component {
-  state = {
-    count: 0
-  };
   onPress_Advantage_ScoreUp = () => {
-    const {count} = this.state;
-    this.setState({count: count + 1});
-    this.props.advantage_plus(this.props.user);
+    const {
+      timer,
+      player1,
+      player2,
+      user,
+      advantage_1,
+      advantage_2,
+      gameStart
+    } = this.props;
+    if (!gameStart) {
+      alert("게임 시작을 해주세요");
+      return;
+    }
+    this.props.advantageIncrement(this.props.user);
+    if (user.trim() === "user1") {
+      this.props.gameLog({
+        key: `${player1} ${timer.min}분${timer.sec}초에 Ad + 1 = ${advantage_1 +
+          1}`
+      });
+    } else {
+      this.props.gameLog({
+        key: `${player2} ${timer.min}분${timer.sec}초에 Ad + 1 = ${advantage_2 +
+          1}`
+      });
+    }
   };
   minusAdvantage = () => {
-    this.setState({count: this.state.count - 1});
-    this.props.advantage_minus(this.props.user);
+    const {
+      timer,
+      player1,
+      player2,
+      user,
+      advantage_1,
+      advantage_2,
+      gameStart
+    } = this.props;
+    if (!gameStart) return;
+    if (user.trim() === "user1") {
+      if (advantage_1 <= 0) return;
+      this.props.gameLog({
+        key: `${player1} ${timer.min}분${timer.sec}초에 Ad - 1 = ${advantage_1 -
+          1}`
+      });
+      this.props.advantageDecrement(this.props.user);
+    } else {
+      if (advantage_2 <= 0) return;
+      this.props.gameLog({
+        key: `${player2} ${timer.min}분${timer.sec}초에 Ad - 1 = ${advantage_2 -
+          1}`
+      });
+      this.props.advantageDecrement(this.props.user);
+    }
   };
 
   render() {
-    const {count} = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.advantage_container}>
-          <View style={styles.advantage_text}>
-            {/* <Text style={styles.button_text}>{count}</Text> */}
-          </View>
+          <View style={styles.advantage_text}></View>
           <View style={styles.advantage_button}>
             <Button
               title="A"
@@ -73,5 +117,17 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
+const mapStateToProps = state => ({
+  timer: state.scoreGame.timer,
+  player1: state.scoreGame.player1,
+  player2: state.scoreGame.player2,
+  advantage_1: state.scoreGame.advantage_1,
+  advantage_2: state.scoreGame.advantage_2,
+  gameStart: state.scoreGame.gameStart
+});
 
-export default advantageScore(AdvantageButton);
+export default connect(mapStateToProps, {
+  advantageIncrement,
+  advantageDecrement,
+  gameLog
+})(AdvantageButton);

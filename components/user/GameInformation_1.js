@@ -1,11 +1,11 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Text} from "react-native-elements";
-import {gameInfoScore} from "../../context/ScoreContext";
+import {connect} from "react-redux";
 
-class GameInformation extends React.Component {
+class GameInformation_1 extends React.Component {
   render() {
-    const {value_1, advantage_1, penalty_1} = this.props;
+    const {totalScore_1, advantage_1, penalty_1} = this.props;
     return (
       <View style={styles.gameInfo_Container}>
         <View
@@ -17,7 +17,7 @@ class GameInformation extends React.Component {
           }}
         >
           <Text style={styles.button_text}>총점 : </Text>
-          <Text style={styles.button_text1}>{value_1}</Text>
+          <Text style={styles.button_text1}>{totalScore_1}</Text>
         </View>
         <View
           style={{
@@ -75,5 +75,10 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
+const mapStateToProps = state => ({
+  totalScore_1: state.scoreGame.totalScore_1,
+  advantage_1: state.scoreGame.advantage_1,
+  penalty_1: state.scoreGame.penalty_1
+});
 
-export default gameInfoScore(GameInformation);
+export default connect(mapStateToProps)(GameInformation_1);

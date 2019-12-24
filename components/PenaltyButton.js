@@ -1,31 +1,65 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Button} from "react-native-elements";
-import {penaltyScore} from "../context/ScoreContext";
-
+import {connect} from "react-redux";
+import {
+  penaltyIncrement,
+  penaltyDecrement,
+  gameLog
+} from "../reducers/scoreGame";
 class PenaltyButton extends React.Component {
-  state = {
-    count: 0
-  };
-
   onPress_Penalty_ScoreUp = () => {
-    const {count} = this.state;
-    this.setState({count: count + 1});
-    this.props.penalty_plus(this.props.user);
+    const {
+      timer,
+      player1,
+      player2,
+      user,
+      penalty_1,
+      penalty_2,
+      gameStart
+    } = this.props;
+    if (!gameStart) {
+      alert("게임 시작을 해주세요");
+      return;
+    }
+    this.props.penaltyIncrement(this.props.user);
+    if (user.trim() === "user1") {
+      this.props.gameLog({
+        key: `${player1} ${timer.min}분${timer.sec}초 Pn + 1 = ${penalty_1 +
+          1} `
+      });
+    } else {
+      this.props.gameLog({
+        key: `${player2}이 ${timer.min}분${timer.sec}초 Pn + 1 = ${penalty_2 +
+          1}`
+      });
+    }
   };
   minusPenalty = () => {
-    this.setState({count: this.state.count - 1});
-    this.props.penalty_minus(this.props.user);
+    const {timer, player1, player2, user, penalty_1, penalty_2} = this.props;
+
+    if (user.trim() === "user1") {
+      if (penalty_1 <= 0) return;
+      this.props.gameLog({
+        key: `${player1} ${timer.min}분${timer.sec}초 Pn - 1 = ${penalty_1 -
+          1} `
+      });
+      this.props.penaltyDecrement(this.props.user);
+    } else {
+      if (penalty_2 <= 0) return;
+      this.props.gameLog({
+        key: `${player2}이 ${timer.min}분${timer.sec}초 Pn - 1 = ${penalty_2 -
+          1}`
+      });
+      this.props.penaltyDecrement(this.props.user);
+    }
   };
 
   render() {
-    const {count} = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.penalty_container}>
-          <View style={styles.penalty_text}>
-            {/* <Text style={styles.button_text}>{count}</Text> */}
-          </View>
+          <View style={styles.penalty_text}></View>
           <View style={styles.penalty_button}>
             <Button
               title="P"
@@ -73,5 +107,17 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
+const mapStateToProps = state => ({
+  timer: state.scoreGame.timer,
+  player1: state.scoreGame.player1,
+  player2: state.scoreGame.player2,
+  penalty_1: state.scoreGame.penalty_1,
+  penalty_2: state.scoreGame.penalty_2,
+  gameStart: state.scoreGame.gameStart
+});
 
-export default penaltyScore(PenaltyButton);
+export default connect(mapStateToProps, {
+  penaltyDecrement,
+  penaltyIncrement,
+  gameLog
+})(PenaltyButton);

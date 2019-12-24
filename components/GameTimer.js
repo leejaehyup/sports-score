@@ -1,14 +1,18 @@
 import React from "react";
 import {StyleSheet, View, Modal, TextInput} from "react-native";
 import {Button, Text} from "react-native-elements";
+import {connect} from "react-redux";
+import {timerLoaded, gameReset, gameStart} from "../reducers/scoreGame";
 
-export default class GameTimer extends React.Component {
+class GameTimer extends React.Component {
   state = {
     starting: false,
     resetCount:
-      (parseInt(this.props.minute) * 60 + parseInt(this.props.second)) * 1000,
+      (parseInt(this.props.timer.min) * 60 + parseInt(this.props.timer.sec)) *
+      1000,
     count:
-      (parseInt(this.props.minute) * 60 + parseInt(this.props.second)) * 1000,
+      (parseInt(this.props.timer.min) * 60 + parseInt(this.props.timer.sec)) *
+      1000,
     interval: null,
     timer: {
       min: "",
@@ -123,8 +127,10 @@ export default class GameTimer extends React.Component {
   // 총 카운트를 타이머로 변환
   convert_Count_To_Timer = count => {
     let min = parseInt(count / 1000 / 60);
-    let sec = ((count / 1000) % 60) + ".000";
-    this.setState({timer: {min, sec}});
+    let sec = ((count / 1000) % 60) + ".00";
+    this.setState({timer: {min, sec}}, () =>
+      this.props.timerLoaded(this.state.timer)
+    );
   };
 
   // 타이머 하나씩 감소
@@ -146,16 +152,21 @@ export default class GameTimer extends React.Component {
     const {interval} = this.state;
     if (current > 0) {
       let min = parseInt(current / 60000);
-      let sec = ((current - min * 60000) / 1000).toFixed(3);
-      this.setState({timer: {min: min, sec: sec}, count: current});
+      let sec = ((current - min * 60000) / 1000).toFixed(2);
+      this.setState({timer: {min: min, sec: sec}, count: current}, () =>
+        this.props.timerLoaded(this.state.timer)
+      );
     } else {
       clearInterval(interval);
-      this.setState({timer: {min: 0, sec: "0.000"}, count: 0});
+      this.setState({timer: {min: 0, sec: "0.00"}, count: 0}, () =>
+        this.props.timerLoaded(this.state.timer)
+      );
     }
   };
   // 타이머 시작
   onPress_Start_Timer = () => {
     const {interval, count} = this.state;
+    this.props.gameStart();
     const startTimer = Date.now();
     if (!interval) {
       this.setState({
@@ -164,7 +175,7 @@ export default class GameTimer extends React.Component {
           this.timer_CountDown(count - +currentTimer);
           //console.log(count * 1000 - +currentTimer);
           //this.timer_CountDown(min, sec);
-        }, 25),
+        }, 200),
         starting: true
       });
     } else return;
@@ -181,6 +192,7 @@ export default class GameTimer extends React.Component {
     clearInterval(interval);
     this.setState({count: resetCount, interval: null, starting: false});
     this.convert_Count_To_Timer(resetCount);
+    this.props.gameReset();
   };
 
   render() {
@@ -216,7 +228,7 @@ export default class GameTimer extends React.Component {
 }
 const styles = StyleSheet.create({
   timer_Container: {
-    flex: 1,
+    flex: 9,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center"
@@ -227,3 +239,10 @@ const styles = StyleSheet.create({
     marginRight: 10
   }
 });
+const mapStateToProps = state => ({
+  timer: state.scoreGame.timer
+});
+
+export default connect(mapStateToProps, {timerLoaded, gameReset, gameStart})(
+  GameTimer
+);
