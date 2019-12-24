@@ -55,7 +55,7 @@ export default class GameTimer extends React.Component {
             ]}
           >
             <View style={innerContainerTransparentStyle}>
-              <Text>소수점 제외한 시간 설정해주세요.</Text>
+              <Text>시간 설정해주세요.</Text>
 
               <TextInput
                 value={this.state.timer.min + ""}
@@ -88,14 +88,14 @@ export default class GameTimer extends React.Component {
   filterNotNumber = () => {
     const regexp = /^[0-9]*$/;
     const {min, sec} = this.state.timer;
-    if (!regexp.test(+min)) {
-      alert("숫자만 입력하세요");
-      return;
-    }
-    if (!regexp.test(+sec)) {
-      alert("숫자만 입력하세요");
-      return;
-    }
+    // if (!regexp.test(+min)) {
+    //   alert("숫자만 입력하세요");
+    //   return;
+    // }
+    // if (!regexp.test(+sec)) {
+    //   alert("숫자만 입력하세요");
+    //   return;
+    // }
 
     let count = (parseInt(min) * 60 + parseInt(sec)) * 1000;
     this.setState({modalVisible: false, count, resetCount: count});

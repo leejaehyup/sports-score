@@ -37,7 +37,7 @@ class ScoreButton extends React.Component {
       this.setState({scores: initScore, changeInitScore: false}); // 세 번 클릭 시
     }
   };
-  // 카운트 세기
+  // 3초 카운트
   countdown = () => {
     const {initScore, timerOn} = this.state;
     const startTimer = Date.now();

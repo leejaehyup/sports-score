@@ -107,6 +107,25 @@ class ScoreProvider extends Component {
     return <Provider value={value}>{this.props.children}</Provider>;
   }
 }
+
+function gameLog(WrappedComponent) {
+  return function UseScoreProvider(props) {
+    return (
+      <ScoreConsumer>
+        {({state, actions}) => (
+          <WrappedComponent
+            value_1={state.value_1}
+            value_2={state.value_2}
+            penalty_1={state.penalty_1}
+            penalty_2={state.penalty_2}
+            advantage_1={state.advantage_1}
+            advantage_2={state.advantage_2}
+          />
+        )}
+      </ScoreConsumer>
+    );
+  };
+}
 function gameInfoScore(WrappedComponent) {
   return function UseScoreProvider(props) {
     return (
@@ -188,5 +207,6 @@ export {
   gameInfoScore,
   scoreButton,
   advantageScore,
-  penaltyScore
+  penaltyScore,
+  gameLog
 };

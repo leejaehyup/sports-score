@@ -9,6 +9,10 @@ import GameInformation_1 from "../components/user/GameInformation_1";
 import {ScoreProvider} from "../context/ScoreContext";
 import CustomModal from "../components/CustomModal";
 import {Divider} from "react-native-elements";
+import ScoreLog from "../components/ScoreLog";
+// redux
+import {Provider} from "react-redux";
+import store from "../store";
 // import {ScreenOrientation} from "expo";
 
 export default class GameScreen extends React.Component {
@@ -60,81 +64,84 @@ export default class GameScreen extends React.Component {
     // } = this.props.navigation;
 
     return (
-      <ScoreProvider getScoreTime={3}>
-        <View style={{flex: 1, marginTop: 5}}>
-          <View ref="rootView" style={styles.container}>
-            {/* 플레이어 1 */}
-            <View style={{flex: 3, flexDirection: "row"}}>
-              <View style={{flex: 4, flexDirection: "column"}}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  <CustomModal player="player1" />
+      <Provider store={store}>
+        <ScoreProvider getScoreTime={3}>
+          <View style={{flex: 1, marginTop: 5}}>
+            <View ref="rootView" style={styles.container}>
+              {/* 플레이어 1 */}
+              <View style={{flex: 3, flexDirection: "row"}}>
+                <View style={{flex: 4, flexDirection: "column"}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <CustomModal player="player1" />
+                  </View>
+                  {/* 게임 정보 */}
+
+                  <GameInformation_1 />
                 </View>
-                {/* 게임 정보 */}
-                <GameInformation_1 />
+                {/* 게임 버튼들 */}
+                <View style={styles.button_container}>
+                  <View style={styles.buttonsGroup_1}>
+                    <ScoreButton score={"2"} />
+                    <ScoreButton score={"3"} />
+                    <ScoreButton score={"4"} />
+                  </View>
+                  <View style={styles.additionButtons}>
+                    <PenaltyButton />
+                    <AdvantageButton />
+                  </View>
+                </View>
               </View>
-              {/* 게임 버튼들 */}
-              <View style={styles.button_container}>
-                <View style={styles.buttonsGroup_1}>
-                  <ScoreButton score={"2"} />
-                  <ScoreButton score={"3"} />
-                  <ScoreButton score={"4"} />
-                </View>
-                <View style={styles.additionButtons}>
-                  <PenaltyButton />
-                  <AdvantageButton />
+              {/* 타이머 */}
+              <Divider style={{backgroundColor: "black", marginTop: 5}} />
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "column"
+                }}
+              >
+                <View style={styles.timer_Container}>
+                  <GameTimer minute={5} second={0} />
+                  <ScoreLog />
                 </View>
               </View>
-            </View>
-            {/* 타이머 */}
-            <Divider style={{backgroundColor: "black", marginTop: 5}} />
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "column"
-              }}
-            >
-              <View style={styles.timer_Container}>
-                <GameTimer minute={5} second={0} />
-              </View>
-            </View>
-            <Divider style={{backgroundColor: "black", marginBottom: 5}} />
-            {/* 플레이어 2 */}
-            <View style={{flex: 3, flexDirection: "row"}}>
-              <View style={{flex: 4, flexDirection: "column"}}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  <CustomModal player="player1" />
+              <Divider style={{backgroundColor: "black", marginBottom: 5}} />
+              {/* 플레이어 2 */}
+              <View style={{flex: 3, flexDirection: "row"}}>
+                <View style={{flex: 4, flexDirection: "column"}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <CustomModal player="player1" />
+                  </View>
+                  {/* 게임 정보 */}
+                  <GameInformation_2 />
                 </View>
-                {/* 게임 정보 */}
-                <GameInformation_2 />
-              </View>
-              {/* 게임 버튼들 */}
-              <View style={styles.button_container}>
-                <View style={styles.buttonsGroup_2}>
-                  <ScoreButton score={"2"} />
-                  <ScoreButton score={"3"} />
-                  <ScoreButton score={"4"} />
-                </View>
-                <View style={styles.additionButtons}>
-                  <PenaltyButton />
-                  <AdvantageButton />
+                {/* 게임 버튼들 */}
+                <View style={styles.button_container}>
+                  <View style={styles.buttonsGroup_2}>
+                    <ScoreButton score={"2"} />
+                    <ScoreButton score={"3"} />
+                    <ScoreButton score={"4"} />
+                  </View>
+                  <View style={styles.additionButtons}>
+                    <PenaltyButton />
+                    <AdvantageButton />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-        {/* <View style={{flex: 1, marginTop: 5}}>
+          {/* <View style={{flex: 1, marginTop: 5}}>
           <View ref="rootView" style={styles.container}>
             <View style={{flex: 3, flexDirection: "column"}}>
               <View
@@ -185,7 +192,8 @@ export default class GameScreen extends React.Component {
             </View>
           </View>
         </View> */}
-      </ScoreProvider>
+        </ScoreProvider>
+      </Provider>
     );
   }
 }
