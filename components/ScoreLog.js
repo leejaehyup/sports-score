@@ -1,14 +1,8 @@
 import React, {Component} from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Button,
-  Modal,
-  TextInput,
-  FlatList
-} from "react-native";
+import {Text, View, StyleSheet, Button, Modal, FlatList} from "react-native";
 import {connect} from "react-redux";
+import {deleteLog} from "../reducers/scoreGame";
+import {Divider} from "react-native-elements";
 class ScoreLog extends Component {
   state = {
     modalVisible: false
@@ -31,9 +25,16 @@ class ScoreLog extends Component {
               <Text>Log</Text>
               <FlatList
                 data={this.props.gameLog}
-                renderItem={({item}) => (
-                  <View>
+                renderItem={({item, index}) => (
+                  <View style={{flex: 1, flexDirection: "row"}}>
                     <Text style={styles.item}>{item.key}</Text>
+                    <Button
+                      title="x"
+                      onPress={() => {
+                        this.handleDeleteLog(item.key, index);
+                      }}
+                    ></Button>
+                    <Divider style={{backgroundColor: "black", marginTop: 5}} />
                   </View>
                 )}
               />
@@ -49,7 +50,16 @@ class ScoreLog extends Component {
     );
   };
 
+  handleDeleteLog = (log, index) => {
+    let l = log.toLowerCase().split(" ");
+    this.props.deleteLog(l[0], l[2], l[3], index);
+  };
+
   _handleButtonPress = () => {
+    if (this.props.gameLog.length <= 0) {
+      alert("log가 없습니다");
+      return;
+    }
     this.setModalVisible(true);
   };
 
@@ -80,7 +90,8 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = state => ({
-  gameLog: state.scoreGame.gameLog
+  gameLog: state.scoreGame.gameLog,
+  log: state.scoreGame.log
 });
 
-export default connect(mapStateToProps)(ScoreLog);
+export default connect(mapStateToProps, {deleteLog})(ScoreLog);

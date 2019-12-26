@@ -1,7 +1,7 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Button, Text} from "react-native-elements";
-import {increment, decrement, gameLog} from "../reducers/scoreGame";
+import {increment, decrement, gameLog, log} from "../reducers/scoreGame";
 import {connect} from "react-redux";
 
 class ScoreButton extends React.Component {
@@ -31,20 +31,18 @@ class ScoreButton extends React.Component {
 
     if (user.trim() === "user1") {
       if (totalScore_1 < initScore) return;
+
       this.props.gameLog({
-        key: `${player1} ${timer.min}분${
-          timer.sec
-        }초에 -${initScore} =${totalScore_1 - initScore}`
+        key: `${player1} ${timer.min}분${timer.sec}초 S -${initScore}`
       });
-      this.props.decrement(this.props.user, parseInt(this.state.initScore));
+      this.props.decrement(this.props.player1, parseInt(this.state.initScore));
     } else {
       if (totalScore_2 < initScore) return;
+
       this.props.gameLog({
-        key: `${player2} ${timer.min}분${
-          timer.sec
-        }초에 -${initScore} =${totalScore_2 - initScore}`
+        key: `${player2} ${timer.min}분${timer.sec}초 S -${initScore}`
       });
-      this.props.decrement(this.props.user, parseInt(this.state.initScore));
+      this.props.decrement(this.props.player2, parseInt(this.state.initScore));
     }
   };
 
@@ -95,19 +93,16 @@ class ScoreButton extends React.Component {
           });
           // 점수 올리기
 
-          this.props.increment(user, parseInt(initScore));
           if (user.trim() === "user1") {
             this.props.gameLog({
-              key: `${player1} ${timer.min}분${
-                timer.sec
-              }초에 +${initScore} =${totalScore_1 + initScore}`
+              key: `${player1} ${timer.min}분${timer.sec}초 S +${initScore}`
             });
+            this.props.increment(player1, parseInt(initScore));
           } else {
             this.props.gameLog({
-              key: `${player2} ${timer.min}분${
-                timer.sec
-              }초에 +${initScore} =${totalScore_2 + initScore}`
+              key: `${player2} ${timer.min}분${timer.sec}초 S +${initScore}`
             });
+            this.props.increment(player2, parseInt(initScore));
           }
         } else {
           this.setState({
@@ -140,12 +135,12 @@ class ScoreButton extends React.Component {
                 buttonStyle={{flex: 1, width: "100%", height: "100%"}}
                 onPress={this.plusScore}
               /> */}
-              <Button
+              {/* <Button
                 buttonStyle={{}}
                 title="-"
                 titleStyle={{fontSize: 20}}
                 onPress={this.minusScore}
-              />
+              /> */}
             </View>
           </View>
         ) : (
@@ -188,6 +183,6 @@ const mapStateToProps = state => ({
   gameStart: state.scoreGame.gameStart
 });
 
-export default connect(mapStateToProps, {increment, decrement, gameLog})(
+export default connect(mapStateToProps, {increment, decrement, gameLog, log})(
   ScoreButton
 );

@@ -16,8 +16,8 @@ class GameInformation_1 extends React.Component {
             alignItems: "center"
           }}
         >
-          <Text style={styles.button_text}>총점 : </Text>
-          <Text style={styles.button_text1}>{totalScore_1}</Text>
+          {/* <Text style={styles.button_text}>총점 : </Text> */}
+          <Text style={styles.score_text}>{totalScore_1}</Text>
         </View>
         <View
           style={{
@@ -35,7 +35,7 @@ class GameInformation_1 extends React.Component {
               alignItems: "center"
             }}
           >
-            <Text style={{fontSize: 20}}>P : </Text>
+            {/* <Text style={{fontSize: 20}}>P : </Text> */}
             <Text style={styles.penalty_text}>{penalty_1}</Text>
           </View>
           <View
@@ -46,7 +46,7 @@ class GameInformation_1 extends React.Component {
               alignItems: "center"
             }}
           >
-            <Text style={{fontSize: 20}}>A : </Text>
+            {/* <Text style={{fontSize: 20}}>A : </Text> */}
             <Text style={styles.advantage_text}>{advantage_1}</Text>
           </View>
         </View>
@@ -62,17 +62,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center"
   },
-  button_text1: {
+  score_text: {
     fontSize: 80,
-    textAlign: "center"
+    textAlign: "center",
+    color: "purple"
   },
   penalty_text: {
     fontSize: 40,
-    textAlign: "center"
+    textAlign: "center",
+    color: "red"
   },
   advantage_text: {
     fontSize: 40,
-    textAlign: "center"
+    textAlign: "center",
+    color: "blue"
   }
 });
 const mapStateToProps = state => ({

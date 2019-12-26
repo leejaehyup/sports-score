@@ -2,7 +2,12 @@ import React from "react";
 import {StyleSheet, View, Modal, TextInput} from "react-native";
 import {Button, Text} from "react-native-elements";
 import {connect} from "react-redux";
-import {timerLoaded, gameReset, gameStart} from "../reducers/scoreGame";
+import {
+  timerLoaded,
+  gameReset,
+  gameStart,
+  gameStop
+} from "../reducers/scoreGame";
 
 class GameTimer extends React.Component {
   state = {
@@ -86,6 +91,11 @@ class GameTimer extends React.Component {
   };
 
   _handleButtonPress = () => {
+    if (this.props.gameStarted) {
+      alert("게임 시작 전에 설정해주세요");
+      return;
+    }
+
     this.setModalVisible(true);
   };
 
@@ -182,6 +192,7 @@ class GameTimer extends React.Component {
   };
   // 타이머 중지
   onPress_Stop_Timer = () => {
+    this.props.gameStop();
     const {interval} = this.state;
     clearInterval(interval);
     this.setState({interval: null, starting: false});
@@ -240,9 +251,13 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = state => ({
-  timer: state.scoreGame.timer
+  timer: state.scoreGame.timer,
+  gameStarted: state.scoreGame.gameStart
 });
 
-export default connect(mapStateToProps, {timerLoaded, gameReset, gameStart})(
-  GameTimer
-);
+export default connect(mapStateToProps, {
+  timerLoaded,
+  gameReset,
+  gameStart,
+  gameStop
+})(GameTimer);

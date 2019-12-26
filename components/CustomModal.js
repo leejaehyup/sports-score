@@ -6,8 +6,8 @@ import {playerName} from "../reducers/scoreGame";
 class CustomModal extends Component {
   state = {
     modalVisible: false,
-    player1: "Player1",
-    player2: "Player2"
+    player1: "player1",
+    player2: "player2"
   };
 
   _handleButtonPress = () => {
@@ -86,7 +86,10 @@ class CustomModal extends Component {
             </View>
           </View>
         </Modal>
-        <Text onPress={this._handleButtonPress} style={{fontSize: 20}}>
+        <Text
+          onPress={this._handleButtonPress}
+          style={{fontSize: 20, fontWeight: "bold"}}
+        >
           {player === "player1" ? this.props.player1 : this.props.player2}
         </Text>
       </View>

@@ -9,6 +9,9 @@ import {
 } from "../reducers/scoreGame";
 
 class AdvantageButton extends React.Component {
+  state = {
+    loading: false
+  };
   onPress_Advantage_ScoreUp = () => {
     const {
       timer,
@@ -19,22 +22,27 @@ class AdvantageButton extends React.Component {
       advantage_2,
       gameStart
     } = this.props;
+    const {loading} = this.state;
     if (!gameStart) {
       alert("게임 시작을 해주세요");
       return;
     }
-    this.props.advantageIncrement(this.props.user);
+    if (loading) return;
     if (user.trim() === "user1") {
       this.props.gameLog({
-        key: `${player1} ${timer.min}분${timer.sec}초에 Ad + 1 = ${advantage_1 +
-          1}`
+        key: `${player1} ${timer.min}분${timer.sec}초 A +1`
       });
+      this.props.advantageIncrement(player1);
     } else {
       this.props.gameLog({
-        key: `${player2} ${timer.min}분${timer.sec}초에 Ad + 1 = ${advantage_2 +
-          1}`
+        key: `${player2} ${timer.min}분${timer.sec}초 A +1`
       });
+      this.props.advantageIncrement(player2);
     }
+    this.setState({loading: true});
+    setTimeout(() => {
+      this.setState({loading: false});
+    }, 300);
   };
   minusAdvantage = () => {
     const {
@@ -50,17 +58,15 @@ class AdvantageButton extends React.Component {
     if (user.trim() === "user1") {
       if (advantage_1 <= 0) return;
       this.props.gameLog({
-        key: `${player1} ${timer.min}분${timer.sec}초에 Ad - 1 = ${advantage_1 -
-          1}`
+        key: `${player1} ${timer.min}분${timer.sec}초 A -1`
       });
-      this.props.advantageDecrement(this.props.user);
+      this.props.advantageDecrement(player1);
     } else {
       if (advantage_2 <= 0) return;
       this.props.gameLog({
-        key: `${player2} ${timer.min}분${timer.sec}초에 Ad - 1 = ${advantage_2 -
-          1}`
+        key: `${player2} ${timer.min}분${timer.sec}초 A -1`
       });
-      this.props.advantageDecrement(this.props.user);
+      this.props.advantageDecrement(player2);
     }
   };
 
@@ -78,12 +84,12 @@ class AdvantageButton extends React.Component {
             />
           </View>
           <View style={styles.minus_button}>
-            <Button
+            {/* <Button
               buttonStyle={{}}
               title="-"
               titleStyle={{fontSize: 20}}
               onPress={this.minusAdvantage}
-            />
+            /> */}
           </View>
         </View>
       </View>

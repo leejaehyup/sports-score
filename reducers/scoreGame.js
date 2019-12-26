@@ -11,9 +11,10 @@ const initialState = {
     sec: 0
   },
   gameLog: [],
-  player1: "Player1",
-  player2: "Player2",
+  player1: "player1",
+  player2: "player2",
   gameStart: false
+  //log map
 };
 //---------//
 // Actions //
@@ -45,18 +46,20 @@ export const PLAYER2_NAME = "PLAYER2_NAME";
 export const GAME_LOG = "GAME_LOG";
 export const GAME_RESET = "GAME_RESET";
 export const GAME_START = "GAME_START";
+export const GAME_LOG_DELETE = "GAME_LOG_DELETE";
+export const GAME_STOP = "GAME_STOP";
 
 // Action Functions//
 
 // 점수 획득
 export const increment = (user, value) => (dispatch, getState) => {
-  if (user.trim() === "user1")
+  if (user.trim() === getState().scoreGame.player1)
     dispatch({type: PLAYER1_INCREMENT, payload: value});
   else dispatch({type: PLAYER2_INCREMENT, payload: value});
 };
 // 점수 차감
 export const decrement = (user, value) => (dispatch, getState) => {
-  if (user.trim() === "user1") {
+  if (user.trim() === getState().scoreGame.player1) {
     if (getState().scoreGame.totalScore_1 < value) {
       return;
     }
@@ -71,23 +74,27 @@ export const decrement = (user, value) => (dispatch, getState) => {
 
 // 어드밴티지 획득
 export const advantageIncrement = user => (dispatch, getState) => {
-  if (user.trim() === "user1") dispatch({type: PLAYER1_ADVANTAGE_INCREMENT});
+  if (user.trim() === getState().scoreGame.player1)
+    dispatch({type: PLAYER1_ADVANTAGE_INCREMENT});
   else dispatch({type: PLAYER2_ADVANTAGE_INCREMENT});
 };
 // 어드밴티지 차감
 export const advantageDecrement = user => (dispatch, getState) => {
-  if (user.trim() === "user1") dispatch({type: PLAYER1_ADVANTAGE_DECREMENT});
+  if (user.trim() === getState().scoreGame.player1)
+    dispatch({type: PLAYER1_ADVANTAGE_DECREMENT});
   else dispatch({type: PLAYER2_ADVANTAGE_DECREMENT});
 };
 
 // 패널티 획득
 export const penaltyIncrement = user => (dispatch, getState) => {
-  if (user.trim() === "user1") dispatch({type: PLAYER1_PENALTY_INCREMENT});
+  if (user.trim() === getState().scoreGame.player1)
+    dispatch({type: PLAYER1_PENALTY_INCREMENT});
   else dispatch({type: PLAYER2_PENALTY_INCREMENT});
 };
 // 패널티 차감
 export const penaltyDecrement = user => (dispatch, getState) => {
-  if (user.trim() === "user1") dispatch({type: PLAYER1_PENALTY_DECREMENT});
+  if (user.trim() === getState().scoreGame.player1)
+    dispatch({type: PLAYER1_PENALTY_DECREMENT});
   else dispatch({type: PLAYER2_PENALTY_DECREMENT});
 };
 
@@ -106,6 +113,27 @@ export const gameLog = log => (dispatch, getState) => {
   dispatch({type: GAME_LOG, payload: log});
 };
 
+// 로그 지우기
+export const deleteLog = (player, scoreType, score, index) => (
+  dispatch,
+  getState
+) => {
+  if (scoreType === "s" && parseInt(score) > 0) {
+    dispatch(decrement(player, score));
+  } else if (scoreType === "s" && parseInt(score) < 0) {
+    dispatch(increment(player, score));
+  } else if (scoreType === "a" && parseInt(score) > 0) {
+    dispatch(advantageDecrement(player));
+  } else if (scoreType === "a" && parseInt(score) < 0) {
+    dispatch(advantageIncrement(player));
+  } else if (scoreType === "p" && parseInt(score) > 0) {
+    dispatch(penaltyDecrement(player));
+  } else if (scoreType === "p" && parseInt(score) < 0) {
+    dispatch(penaltyIncrement(player));
+  }
+  dispatch({type: GAME_LOG_DELETE, payload: index});
+};
+
 // 게임 리셋
 export const gameReset = () => {
   return {
@@ -116,6 +144,13 @@ export const gameReset = () => {
 export const gameStart = () => {
   return {
     type: GAME_START
+  };
+};
+
+// 게임 중지
+export const gameStop = () => {
+  return {
+    type: GAME_STOP
   };
 };
 
@@ -215,6 +250,12 @@ function reducer(state = initialState, action) {
         ...state,
         gameLog: [action.payload, ...state.gameLog]
       };
+    // 로그 지우기
+    case GAME_LOG_DELETE:
+      return {
+        ...state,
+        gameLog: state.gameLog.filter((log, index) => action.payload !== index)
+      };
 
     // 게임 리셋
     case GAME_RESET:
@@ -231,15 +272,25 @@ function reducer(state = initialState, action) {
           sec: 0
         },
         gameLog: [],
-        player1: "Player1",
-        player2: "Player2",
-        gameStart: false
+        player1: "player1",
+        player2: "player2",
+        gameStart: false,
+        log: []
       };
+
+    //게임 시작
     case GAME_START:
       return {
         ...state,
         gameStart: true
       };
+    //게임 중지
+    case GAME_STOP:
+      return {
+        ...state,
+        gameStart: false
+      };
+
     default:
       return state;
   }

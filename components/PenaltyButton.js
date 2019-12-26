@@ -8,6 +8,9 @@ import {
   gameLog
 } from "../reducers/scoreGame";
 class PenaltyButton extends React.Component {
+  state = {
+    loading: false
+  };
   onPress_Penalty_ScoreUp = () => {
     const {
       timer,
@@ -18,22 +21,28 @@ class PenaltyButton extends React.Component {
       penalty_2,
       gameStart
     } = this.props;
+    const {loading} = this.state;
     if (!gameStart) {
       alert("게임 시작을 해주세요");
       return;
     }
-    this.props.penaltyIncrement(this.props.user);
+    if (loading) return;
+
     if (user.trim() === "user1") {
       this.props.gameLog({
-        key: `${player1} ${timer.min}분${timer.sec}초 Pn + 1 = ${penalty_1 +
-          1} `
+        key: `${player1} ${timer.min}분${timer.sec}초 P +1`
       });
+      this.props.penaltyIncrement(player1);
     } else {
       this.props.gameLog({
-        key: `${player2}이 ${timer.min}분${timer.sec}초 Pn + 1 = ${penalty_2 +
-          1}`
+        key: `${player2} ${timer.min}분${timer.sec}초 P +1`
       });
+      this.props.penaltyIncrement(player2);
     }
+    this.setState({loading: true});
+    setTimeout(() => {
+      this.setState({loading: false});
+    }, 300);
   };
   minusPenalty = () => {
     const {timer, player1, player2, user, penalty_1, penalty_2} = this.props;
@@ -41,17 +50,15 @@ class PenaltyButton extends React.Component {
     if (user.trim() === "user1") {
       if (penalty_1 <= 0) return;
       this.props.gameLog({
-        key: `${player1} ${timer.min}분${timer.sec}초 Pn - 1 = ${penalty_1 -
-          1} `
+        key: `${player1} ${timer.min}분${timer.sec}초 P -1`
       });
-      this.props.penaltyDecrement(this.props.user);
+      this.props.penaltyDecrement(player1);
     } else {
       if (penalty_2 <= 0) return;
       this.props.gameLog({
-        key: `${player2}이 ${timer.min}분${timer.sec}초 Pn - 1 = ${penalty_2 -
-          1}`
+        key: `${player2} ${timer.min}분${timer.sec}초 P -1`
       });
-      this.props.penaltyDecrement(this.props.user);
+      this.props.penaltyDecrement(player2);
     }
   };
 
@@ -69,11 +76,11 @@ class PenaltyButton extends React.Component {
             />
           </View>
           <View style={styles.minus_button}>
-            <Button
+            {/* <Button
               title="-"
               titleStyle={{fontSize: 20}}
               onPress={this.minusPenalty}
-            />
+            /> */}
           </View>
         </View>
       </View>
