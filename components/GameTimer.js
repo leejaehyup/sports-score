@@ -158,6 +158,7 @@ class GameTimer extends React.Component {
   //     });
   //   }
   // };
+
   timer_CountDown = current => {
     const {interval} = this.state;
     if (current > 0) {
@@ -171,6 +172,7 @@ class GameTimer extends React.Component {
       this.setState({timer: {min: 0, sec: "0.00"}, count: 0}, () =>
         this.props.timerLoaded(this.state.timer)
       );
+      alert();
     }
   };
   // 타이머 시작
@@ -185,7 +187,7 @@ class GameTimer extends React.Component {
           this.timer_CountDown(count - +currentTimer);
           //console.log(count * 1000 - +currentTimer);
           //this.timer_CountDown(min, sec);
-        }, 200),
+        }, 120),
         starting: true
       });
     } else return;

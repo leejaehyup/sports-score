@@ -63,17 +63,17 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   score_text: {
-    fontSize: 80,
+    fontSize: 100,
     textAlign: "center",
     color: "purple"
   },
   penalty_text: {
-    fontSize: 40,
+    fontSize: 50,
     textAlign: "center",
     color: "red"
   },
   advantage_text: {
-    fontSize: 40,
+    fontSize: 50,
     textAlign: "center",
     color: "blue"
   }

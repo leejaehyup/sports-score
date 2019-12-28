@@ -13,8 +13,8 @@ const initialState = {
   gameLog: [],
   player1: "player1",
   player2: "player2",
-  gameStart: false
-  //log map
+  gameStart: false,
+  run_score_time: false
 };
 //---------//
 // Actions //
@@ -48,6 +48,8 @@ export const GAME_RESET = "GAME_RESET";
 export const GAME_START = "GAME_START";
 export const GAME_LOG_DELETE = "GAME_LOG_DELETE";
 export const GAME_STOP = "GAME_STOP";
+export const RUN_SCORE_TIME_SUCCESS = "RUN_SCORE_TIME_SUCCESS";
+export const RUN_SCORE_TIME_FAIL = "RUN_SCORE_TIME_FAIL";
 
 // Action Functions//
 
@@ -132,6 +134,18 @@ export const deleteLog = (player, scoreType, score, index) => (
     dispatch(penaltyIncrement(player));
   }
   dispatch({type: GAME_LOG_DELETE, payload: index});
+};
+
+// 점수 시간 돌아가는지 여부
+export const runScoreTimeSuccess = () => {
+  return {
+    type: RUN_SCORE_TIME_SUCCESS
+  };
+};
+export const runScoreTimeFail = () => {
+  return {
+    type: RUN_SCORE_TIME_FAIL
+  };
 };
 
 // 게임 리셋
@@ -289,6 +303,19 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         gameStart: false
+      };
+
+    // 점수 시간 돌아감
+    case RUN_SCORE_TIME_SUCCESS:
+      return {
+        ...state,
+        run_score_time: true
+      };
+    // 점수 시간 안 돔
+    case RUN_SCORE_TIME_FAIL:
+      return {
+        ...state,
+        run_score_time: false
       };
 
     default:

@@ -1,7 +1,14 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Button, Text} from "react-native-elements";
-import {increment, decrement, gameLog, log} from "../reducers/scoreGame";
+import {
+  increment,
+  decrement,
+  gameLog,
+  log,
+  runScoreTimeFail,
+  runScoreTimeSuccess
+} from "../reducers/scoreGame";
 import {connect} from "react-redux";
 
 class ScoreButton extends React.Component {
@@ -48,17 +55,19 @@ class ScoreButton extends React.Component {
 
   scorePressTimerOn = e => {
     const {timerOn, changeInitScore, initScore} = this.state;
-    const {gameStart} = this.props;
+    const {gameStart, run_score_time} = this.props;
     if (!gameStart) {
       alert("게임 시작을 해주세요");
       return;
     }
-    if (!timerOn && !changeInitScore) {
+    if (!timerOn && !changeInitScore && !run_score_time) {
       this.setState({timerOn: true}); //타이머 온 - 한번 클릭시
       this.countdown();
+      this.props.runScoreTimeSuccess();
     } else if (timerOn && !changeInitScore) {
       this.setState({timerOn: false, changeInitScore: true}); // 타이머 오프 - 두 번 클릭 시
       clearInterval(this.state.interval);
+      this.props.runScoreTimeFail();
     } else {
       this.setState({scores: initScore, changeInitScore: false}); // 세 번 클릭 시
     }
@@ -92,7 +101,7 @@ class ScoreButton extends React.Component {
             timerOn: false
           });
           // 점수 올리기
-
+          this.props.runScoreTimeFail();
           if (user.trim() === "user1") {
             this.props.gameLog({
               key: `${player1} ${timer.min}분${timer.sec}초 S +${initScore}`
@@ -110,7 +119,7 @@ class ScoreButton extends React.Component {
             scores: (currentTimer / 1000).toFixed(1) + ""
           });
         }
-      }, 100)
+      }, 50)
     });
   };
 
@@ -180,9 +189,15 @@ const mapStateToProps = state => ({
   player2: state.scoreGame.player2,
   totalScore_1: state.scoreGame.totalScore_1,
   totalScore_2: state.scoreGame.totalScore_2,
-  gameStart: state.scoreGame.gameStart
+  gameStart: state.scoreGame.gameStart,
+  run_score_time: state.scoreGame.run_score_time
 });
 
-export default connect(mapStateToProps, {increment, decrement, gameLog, log})(
-  ScoreButton
-);
+export default connect(mapStateToProps, {
+  increment,
+  decrement,
+  gameLog,
+  log,
+  runScoreTimeFail,
+  runScoreTimeSuccess
+})(ScoreButton);
