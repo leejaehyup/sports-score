@@ -72,6 +72,8 @@ export default class GameScreen extends React.Component {
     //     params: {minute, second, user1, user2, getScoreTime}
     //   }
     // } = this.props.navigation;
+
+    /////////////////portrait mode////////////////
     const portrait_mode = (
       <View style={styles.container}>
         {/* 플레이어 1 */}
@@ -87,8 +89,9 @@ export default class GameScreen extends React.Component {
               <CustomModal player="player1" user="user1" />
             </View>
             {/* 게임 정보 */}
-
-            <GameInformation_1 />
+            <View style={{flex: 5}}>
+              <GameInformation_1 />
+            </View>
           </View>
           {/* 게임 버튼들 */}
           <View style={styles.button_container}>

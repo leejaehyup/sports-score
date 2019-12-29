@@ -5,17 +5,25 @@ import {connect} from "react-redux";
 
 class GameInformation_1 extends React.Component {
   render() {
-    const {totalScore_1, advantage_1, penalty_1} = this.props;
+    const highlight_style = {
+      on: {
+        flex: 3,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        backgroundColor: "#A6A6A6"
+      },
+      off: {
+        flex: 3,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center"
+      }
+    };
+    const {totalScore_1, advantage_1, penalty_1, highlight_1} = this.props;
     return (
       <View style={styles.gameInfo_Container}>
-        <View
-          style={{
-            flex: 3,
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "center"
-          }}
-        >
+        <View style={highlight_1 ? highlight_style.on : highlight_style.off}>
           {/* <Text style={styles.button_text}>총점 : </Text> */}
           <Text style={styles.score_text}>{totalScore_1}</Text>
         </View>
@@ -81,7 +89,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   totalScore_1: state.scoreGame.totalScore_1,
   advantage_1: state.scoreGame.advantage_1,
-  penalty_1: state.scoreGame.penalty_1
+  penalty_1: state.scoreGame.penalty_1,
+  highlight_1: state.scoreGame.highlight_1
 });
 
 export default connect(mapStateToProps)(GameInformation_1);

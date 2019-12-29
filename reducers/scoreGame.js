@@ -6,6 +6,8 @@ const initialState = {
   totalScore_2: 0,
   advantage_2: 0,
   penalty_2: 0,
+  highlight_1: false,
+  highlight_2: false,
   timer: {
     min: 5,
     sec: 0
@@ -50,6 +52,10 @@ export const GAME_LOG_DELETE = "GAME_LOG_DELETE";
 export const GAME_STOP = "GAME_STOP";
 export const RUN_SCORE_TIME_SUCCESS = "RUN_SCORE_TIME_SUCCESS";
 export const RUN_SCORE_TIME_FAIL = "RUN_SCORE_TIME_FAIL";
+const HIGHLIGHT_1_ON = "HIGHLIGHT_1_ON";
+const HIGHLIGHT_2_ON = "HIGHLIGHT_2_ON";
+const HIGHLIGHT_1_OFF = "HIGHLIGHT_1_OFF";
+const HIGHLIGHT_2_OFF = "HIGHLIGHT_2_OFF";
 
 // Action Functions//
 
@@ -134,6 +140,24 @@ export const deleteLog = (player, scoreType, score, index) => (
     dispatch(penaltyIncrement(player));
   }
   dispatch({type: GAME_LOG_DELETE, payload: index});
+};
+
+// 하이라이팅 ON
+export const highlighting_on = player => (dispatch, getState) => {
+  if (player === getState().scoreGame.player1) {
+    dispatch({type: HIGHLIGHT_1_ON});
+  } else {
+    dispatch({type: HIGHLIGHT_2_ON});
+  }
+};
+
+// 하이라이팅 OFF
+export const highlighting_off = player => (dispatch, getState) => {
+  if (player === getState().scoreGame.player1) {
+    dispatch({type: HIGHLIGHT_1_OFF});
+  } else {
+    dispatch({type: HIGHLIGHT_2_OFF});
+  }
 };
 
 // 점수 시간 돌아가는지 여부
@@ -316,6 +340,29 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         run_score_time: false
+      };
+
+    // 하이라이팅 온
+    case HIGHLIGHT_2_ON:
+      return {
+        ...state,
+        highlight_2: true
+      };
+    case HIGHLIGHT_1_ON:
+      return {
+        ...state,
+        highlight_1: true
+      };
+    // 하이라이팅 오프
+    case HIGHLIGHT_2_OFF:
+      return {
+        ...state,
+        highlight_2: false
+      };
+    case HIGHLIGHT_1_OFF:
+      return {
+        ...state,
+        highlight_1: false
       };
 
     default:

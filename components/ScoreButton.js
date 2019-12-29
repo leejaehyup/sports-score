@@ -7,7 +7,9 @@ import {
   gameLog,
   log,
   runScoreTimeFail,
-  runScoreTimeSuccess
+  runScoreTimeSuccess,
+  highlighting_off,
+  highlighting_on
 } from "../reducers/scoreGame";
 import {connect} from "react-redux";
 
@@ -19,6 +21,23 @@ class ScoreButton extends React.Component {
     interval: null, // setInterval 함수
     changeInitScore: false, // 타이머를 초기 스코어로 바꿀지 여부
     getScoreTime: 3
+  };
+
+  highlight_on = user => {
+    const {player1, player2} = this.props;
+    if (user.trim() === "user1") {
+      this.props.highlighting_on(player1);
+    } else {
+      this.props.highlighting_on(player2);
+    }
+  };
+  highlight_off = user => {
+    const {player1, player2} = this.props;
+    if (user.trim() === "user1") {
+      this.props.highlighting_off(player1);
+    } else {
+      this.props.highlighting_off(player2);
+    }
   };
 
   componentWillUnmount() {
@@ -55,7 +74,7 @@ class ScoreButton extends React.Component {
 
   scorePressTimerOn = e => {
     const {timerOn, changeInitScore, initScore} = this.state;
-    const {gameStart, run_score_time} = this.props;
+    const {gameStart, run_score_time, user} = this.props;
     if (!gameStart) {
       alert("게임 시작을 해주세요");
       return;
@@ -64,10 +83,12 @@ class ScoreButton extends React.Component {
       this.setState({timerOn: true}); //타이머 온 - 한번 클릭시
       this.countdown();
       this.props.runScoreTimeSuccess();
+      this.highlight_on(user);
     } else if (timerOn && !changeInitScore) {
       this.setState({timerOn: false, changeInitScore: true}); // 타이머 오프 - 두 번 클릭 시
       clearInterval(this.state.interval);
       this.props.runScoreTimeFail();
+      this.highlight_off(user);
     } else {
       this.setState({scores: initScore, changeInitScore: false}); // 세 번 클릭 시
     }
@@ -102,6 +123,7 @@ class ScoreButton extends React.Component {
           });
           // 점수 올리기
           this.props.runScoreTimeFail();
+          this.highlight_off(user);
           if (user.trim() === "user1") {
             this.props.gameLog({
               key: `${player1} ${timer.min}분${timer.sec}초 S +${initScore}`
@@ -199,5 +221,7 @@ export default connect(mapStateToProps, {
   gameLog,
   log,
   runScoreTimeFail,
-  runScoreTimeSuccess
+  runScoreTimeSuccess,
+  highlighting_off,
+  highlighting_on
 })(ScoreButton);
