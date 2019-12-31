@@ -23,10 +23,18 @@ class CustomModal extends Component {
     this.setState({modalVisible: visible});
   };
   onChangePlayer1 = name => {
+    if (name.length > 15) {
+      alert("글자 수 초과");
+      return;
+    }
     this.setState({player1: name});
     this.props.playerName(this.props.user, name);
   };
   onChangePlayer2 = name => {
+    if (name.length > 15) {
+      alert("글자 수 초과");
+      return;
+    }
     this.setState({player2: name});
     this.props.playerName(this.props.user, name);
   };

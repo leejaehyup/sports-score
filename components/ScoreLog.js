@@ -22,21 +22,40 @@ class ScoreLog extends Component {
         >
           <View style={[styles.container, modalBackgroundStyle]}>
             <View style={innerContainerTransparentStyle}>
-              <Text>Log</Text>
+              <Text style={{textAlign: "center", fontSize: 15, color: "blue"}}>
+                Log
+              </Text>
               <FlatList
                 data={this.props.gameLog}
-                renderItem={({item, index}) => (
-                  <View style={{flex: 1, flexDirection: "row"}}>
-                    <Text style={styles.item}>{item.key}</Text>
-                    <Button
-                      title="x"
-                      onPress={() => {
-                        this.handleDeleteLog(item.key, index);
+                renderItem={({item, index}) => {
+                  const color = this.handleLogColor(item.key);
+
+                  return (
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        marginTop: 5,
+                        borderWidth: 3,
+                        borderColor: color,
+                        justifyContent: "space-between"
                       }}
-                    ></Button>
-                    <Divider style={{backgroundColor: "black", marginTop: 5}} />
-                  </View>
-                )}
+                    >
+                      <Text style={styles.item}>{item.key}</Text>
+
+                      <Button
+                        title="x"
+                        onPress={() => {
+                          this.handleDeleteLog(item.key, index);
+                        }}
+                      ></Button>
+
+                      <Divider
+                        style={{backgroundColor: "black", marginTop: 5}}
+                      />
+                    </View>
+                  );
+                }}
               />
               <Button
                 title="close"
@@ -48,6 +67,18 @@ class ScoreLog extends Component {
         <Button title="Log" onPress={this._handleButtonPress} />
       </View>
     );
+  };
+
+  handleLogColor = log => {
+    let l = log.toLowerCase().split(" ");
+    let color;
+    l[2] === "s"
+      ? (color = "purple")
+      : l[2] === "p"
+      ? (color = "red")
+      : (color = "blue");
+
+    return color;
   };
 
   handleDeleteLog = (log, index) => {
@@ -86,7 +117,8 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     fontSize: 18,
-    height: 44
+    height: 44,
+    justifyContent: "flex-start"
   }
 });
 const mapStateToProps = state => ({
