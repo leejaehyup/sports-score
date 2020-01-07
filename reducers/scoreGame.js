@@ -128,16 +128,12 @@ export const deleteLog = (player, scoreType, score, index) => (
 ) => {
   if (scoreType === "s" && parseInt(score) > 0) {
     dispatch(decrement(player, score));
-  } else if (scoreType === "s" && parseInt(score) < 0) {
-    dispatch(increment(player, score));
   } else if (scoreType === "a" && parseInt(score) > 0) {
     dispatch(advantageDecrement(player));
-  } else if (scoreType === "a" && parseInt(score) < 0) {
-    dispatch(advantageIncrement(player));
   } else if (scoreType === "p" && parseInt(score) > 0) {
     dispatch(penaltyDecrement(player));
-  } else if (scoreType === "p" && parseInt(score) < 0) {
-    dispatch(penaltyIncrement(player));
+    // } else if (scoreType === "p" && parseInt(score) < 0) {
+    //   dispatch(penaltyIncrement(player));
   }
   dispatch({type: GAME_LOG_DELETE, payload: index});
 };

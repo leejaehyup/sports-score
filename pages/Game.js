@@ -6,13 +6,14 @@ import AdvantageButton from "../components/AdvantageButton";
 import GameTimer from "../components/GameTimer";
 import GameInformation_2 from "../components/user/GameInformation_2";
 import GameInformation_1 from "../components/user/GameInformation_1";
-import {ScoreProvider} from "../context/ScoreContext";
 import CustomModal from "../components/CustomModal";
 import {Divider} from "react-native-elements";
 import ScoreLog from "../components/ScoreLog";
+import GameEndButton from "../components/GameEndButton";
 // redux
 import {Provider} from "react-redux";
 import store from "../store";
+//orientation
 import {ScreenOrientation} from "expo";
 
 export default class GameScreen extends React.Component {
@@ -117,6 +118,7 @@ export default class GameScreen extends React.Component {
           <View style={styles.timer_Container}>
             <GameTimer minute={5} second={0} />
             <ScoreLog />
+            <GameEndButton />
           </View>
         </View>
         <Divider style={{backgroundColor: "black", marginBottom: 5}} />
@@ -157,6 +159,7 @@ export default class GameScreen extends React.Component {
         <View style={landsacpe_styles.timer_container}>
           <GameTimer minute={5} second={0} />
           <ScoreLog />
+          <GameEndButton />
         </View>
         <Divider style={{backgroundColor: "black", marginTop: 5}} />
         <View style={landsacpe_styles.player_container}>

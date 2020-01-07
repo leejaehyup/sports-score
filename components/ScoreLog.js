@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, Button, Modal, FlatList} from "react-native";
+import {Text, View, StyleSheet, Modal, FlatList} from "react-native";
 import {connect} from "react-redux";
 import {deleteLog} from "../reducers/scoreGame";
-import {Divider} from "react-native-elements";
+import {Divider, Button} from "react-native-elements";
 class ScoreLog extends Component {
   state = {
     modalVisible: false
@@ -64,7 +64,13 @@ class ScoreLog extends Component {
             </View>
           </View>
         </Modal>
-        <Button title="Log" onPress={this._handleButtonPress} />
+        <Button
+          title="Log"
+          titleStyle={{fontSize: 15}}
+          buttonStyle={{backgroundColor: "black"}}
+          onPress={this._handleButtonPress}
+        />
+        {/* <Button title="Log" onPress={this._handleButtonPress} /> */}
       </View>
     );
   };

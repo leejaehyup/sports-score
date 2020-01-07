@@ -172,7 +172,7 @@ class GameTimer extends React.Component {
       this.setState({timer: {min: 0, sec: "0.00"}, count: 0}, () =>
         this.props.timerLoaded(this.state.timer)
       );
-      alert();
+      alert("경기 종료");
     }
   };
   // 타이머 시작
