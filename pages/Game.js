@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View, Dimensions, Text} from "react-native";
+import {StyleSheet, View, StatusBar, Dimensions} from "react-native";
 import ScoreButton from "../components/ScoreButton";
 import PenaltyButton from "../components/PenaltyButton";
 import AdvantageButton from "../components/AdvantageButton";
@@ -19,64 +19,69 @@ import {ScreenOrientation} from "expo";
 export default class GameScreen extends React.Component {
   state = {
     isLoading: true,
-    orientation: "",
+    orientation: this.props.navigation.state.params.orientation,
     modalVisible: false,
     player1: "Player1",
-    player2: "Player2"
+    player2: "Player2",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height
   };
   static navigationOptions = {
     header: null
   };
 
+  onLayout = e => {
+    this.setState({
+      width: Dimensions.get("window").width,
+      height: Dimensions.get("window").height
+    });
+  };
+
   componentWillUnmount() {
     this.setState({modalVisible: false});
+    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT);
   }
 
-  getOrientation = async () => {
-    if (this.refs.rootView) {
-      if (Dimensions.get("window").width < Dimensions.get("window").height) {
-        this.setState({orientation: "portrait"});
-        // await ScreenOrientation.lockAsync(
-        //   ScreenOrientation.Orientation.PORTRAIT
-        // );
-      } else {
-        this.setState({orientation: "landsacpe"});
-        // await ScreenOrientation.lockAsync(
-        //   ScreenOrientation.Orientation.LANDSCAPE
-        // );
-      }
-    }
-  };
+  // getOrientation = async () => {
+  //   if (this.refs.rootView) {
+  //     if (Dimensions.get("window").width < Dimensions.get("window").height) {
+  //       this.setState({orientation: "portrait"});
+  //       console.log("portrait");
+  //       // await ScreenOrientation.lockAsync(
+  //       //   ScreenOrientation.Orientation.PORTRAIT
+  //       // );
+  //     } else {
+  //       this.setState({orientation: "landsacpe"});
+  //       console.log("landscape");
+  //       // await ScreenOrientation.lockAsync(
+  //       //   ScreenOrientation.Orientation.LANDSCAPE
+  //       // );
+  //     }
+  //   }
+  // };
   // portrait 세로모드
   componentDidMount() {
-    ScreenOrientation.unlockAsync();
-    this.getOrientation();
-    Dimensions.addEventListener("change", () => {
-      this.getOrientation();
-    });
+    //ScreenOrientation.unlockAsync();
+    //this.getOrientation();
+    // Dimensions.addEventListener("change", () => {
+    //   this.getOrientation();
+    // });
   }
 
-  async changeScreenOrientation() {
-    const {orientation} = this.state;
-    if (orientation === "portrait")
-      await ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT);
-    else
-      await ScreenOrientation.lockAsync(
-        ScreenOrientation.Orientation.LANDSCAPE
-      );
-  }
+  // async changeScreenOrientation() {
+  //   const {orientation} = this.state;
+  //   if (orientation === "portrait")
+  //     await ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT);
+  //   else
+  //     await ScreenOrientation.lockAsync(
+  //       ScreenOrientation.Orientation.LANDSCAPE
+  //     );
+  // }
 
-  render() {
-    const {orientation} = this.state;
-    // const {
-    //   state: {
-    //     params: {minute, second, user1, user2, getScoreTime}
-    //   }
-    // } = this.props.navigation;
-
-    /////////////////portrait mode////////////////
-    const portrait_mode = (
-      <View style={styles.container}>
+  /////////////////portrait mode////////////////
+  portrait_mode = () => {
+    return (
+      <View style={styles.container} onLayout={this.onLayout}>
         {/* 플레이어 1 */}
         <View style={{flex: 3, flexDirection: "row"}}>
           <View style={{flex: 4, flexDirection: "column"}}>
@@ -152,89 +157,113 @@ export default class GameScreen extends React.Component {
         </View>
       </View>
     );
-    /////////////////////////////landscape////////////////////
+  };
 
-    const landsacpe_mode = (
-      <View style={landsacpe_styles.container}>
-        <View style={landsacpe_styles.timer_container}>
-          <GameTimer minute={5} second={0} />
-          <ScoreLog />
-          <GameEndButton />
-        </View>
-        <Divider style={{backgroundColor: "black", marginTop: 5}} />
-        <View style={landsacpe_styles.player_container}>
-          {/* 플레이어 1 */}
-
-          <View style={landsacpe_styles.player_per_container}>
-            <CustomModal player="player1" user="user1" />
-            {/* 게임 정보 */}
-            <GameInformation_1 />
+  /////////////////////////////landscape////////////////////
+  landsacpe_mode = () => {
+    return (
+      <View
+        onLayout={this.onLayout}
+        style={{width: this.state.width, height: this.state.height}}
+      >
+        <View style={landsacpe_styles.container}>
+          <View style={landsacpe_styles.timer_container}>
+            <GameTimer minute={5} second={0} />
+            <ScoreLog />
+            <GameEndButton />
           </View>
+          <Divider style={{backgroundColor: "black", marginTop: 5}} />
+          <View style={landsacpe_styles.player_container}>
+            {/* 플레이어 1 */}
 
-          {/* 플레이어 2 */}
-
-          <View style={landsacpe_styles.player_per_container}>
-            <CustomModal player="player2" user="user2" />
-
-            {/* 게임 정보 */}
-            <GameInformation_2 />
-          </View>
-        </View>
-        <Divider style={{backgroundColor: "black", marginTop: 5}} />
-        {/* 게임 버튼들 */}
-        <View style={landsacpe_styles.button_container}>
-          <View style={{flex: 1, flexDirection: "column"}}>
-            <View style={{flex: 1, flexDirection: "row"}}>
-              <View style={{flex: 1, backgroundColor: "red", margin: 5}}>
-                <PenaltyButton user="user1" />
-              </View>
-              <View style={{flex: 1, backgroundColor: "blue", margin: 5}}>
-                <AdvantageButton user="user1" />
-              </View>
+            <View style={landsacpe_styles.player_per_container}>
+              <CustomModal player="player1" user="user1" />
+              {/* 게임 정보 */}
+              <GameInformation_1 />
             </View>
-            <View style={{flex: 1, flexDirection: "row"}}>
-              <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                <ScoreButton user="user1" init_score="2" />
-              </View>
-              <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                <ScoreButton user="user1" init_score="3" />
-              </View>
-              <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                <ScoreButton user="user1" init_score="4" />
-              </View>
+
+            {/* 플레이어 2 */}
+
+            <View style={landsacpe_styles.player_per_container}>
+              <CustomModal player="player2" user="user2" />
+
+              {/* 게임 정보 */}
+              <GameInformation_2 />
             </View>
           </View>
+          <Divider style={{backgroundColor: "black", marginTop: 5}} />
           {/* 게임 버튼들 */}
-          <View style={{flex: 1, flexDirection: "column"}}>
-            <View style={{flex: 1, flexDirection: "row"}}>
-              <View style={{flex: 1, backgroundColor: "red", margin: 5}}>
-                <PenaltyButton user="user2" />
+          <View style={landsacpe_styles.button_container}>
+            <View style={{flex: 1, flexDirection: "column"}}>
+              <View style={{flex: 1, flexDirection: "row"}}>
+                <View style={{flex: 1, backgroundColor: "red", margin: 5}}>
+                  <PenaltyButton user="user1" />
+                </View>
+                <View style={{flex: 1, backgroundColor: "blue", margin: 5}}>
+                  <AdvantageButton user="user1" />
+                </View>
               </View>
-              <View style={{flex: 1, backgroundColor: "blue", margin: 5}}>
-                <AdvantageButton user="user2" />
+              <View style={{flex: 1, flexDirection: "row"}}>
+                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
+                  <ScoreButton user="user1" init_score="2" />
+                </View>
+                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
+                  <ScoreButton user="user1" init_score="3" />
+                </View>
+                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
+                  <ScoreButton user="user1" init_score="4" />
+                </View>
               </View>
             </View>
-            <View style={{flex: 1, flexDirection: "row"}}>
-              <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                <ScoreButton init_score="2" user="user2" />
+            {/* 게임 버튼들 */}
+            <View style={{flex: 1, flexDirection: "column"}}>
+              <View style={{flex: 1, flexDirection: "row"}}>
+                <View style={{flex: 1, backgroundColor: "red", margin: 5}}>
+                  <PenaltyButton user="user2" />
+                </View>
+                <View style={{flex: 1, backgroundColor: "blue", margin: 5}}>
+                  <AdvantageButton user="user2" />
+                </View>
               </View>
-              <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                <ScoreButton init_score="3" user="user2" />
-              </View>
-              <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                <ScoreButton init_score="4" user="user2" />
+              <View style={{flex: 1, flexDirection: "row"}}>
+                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
+                  <ScoreButton init_score="2" user="user2" />
+                </View>
+                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
+                  <ScoreButton init_score="3" user="user2" />
+                </View>
+                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
+                  <ScoreButton init_score="4" user="user2" />
+                </View>
               </View>
             </View>
           </View>
         </View>
       </View>
     );
+  };
+
+  render() {
+    const {orientation} = this.state;
+    // const {
+    //   state: {
+    //     params: {minute, second, user1, user2, getScoreTime}
+    //   }
+    // } = this.props.navigation;
 
     return (
       <Provider store={store}>
-        <View ref="rootView" style={{flex: 1, marginTop: 5}}>
-          {orientation === "portrait" ? portrait_mode : landsacpe_mode}
-        </View>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={"transparent"}
+          translucent={true}
+          hidden={true}
+        />
+        {/* <View ref="rootView" style={{flex: 1, marginTop: 5}}> */}
+        {orientation === "portrait"
+          ? this.portrait_mode()
+          : this.landsacpe_mode()}
+        {/* </View> */}
       </Provider>
     );
   }
@@ -242,7 +271,7 @@ export default class GameScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 20,
+    flex: 1,
     backgroundColor: "white",
     flexDirection: "column"
   },
@@ -288,7 +317,6 @@ const styles = StyleSheet.create({
 const landsacpe_styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    marginTop: 20,
     flex: 1
   },
   timer_container: {

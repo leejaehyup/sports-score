@@ -15,6 +15,7 @@ import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import {gameReset} from "../reducers/scoreGame";
 import WinnerLottie from "./lottie/WinnerLottie";
+import GameScoreInfoButton from "./GameScoreInfoButton";
 
 class GameEndButton extends Component {
   state = {
@@ -193,21 +194,29 @@ class GameEndButton extends Component {
               <ScrollView>
                 {!judge ? (
                   <View style={innerContainerTransparentStyle}>
-                    <Picker
-                      selectedValue={this.state.reason}
-                      style={{height: 50, width: 200}}
-                      onValueChange={(itemValue, itemIndex) =>
-                        this.setState({reason: itemValue})
-                      }
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: 20
+                      }}
                     >
-                      <Picker.Item label="점수" value="점수" />
-                      <Picker.Item label="서브미션" value="서브미션" />
-                      <Picker.Item label="경기중단" value="경기중단" />
-                      <Picker.Item label="실격" value="실격" />
-                      <Picker.Item label="실신" value="실신" />
-                      <Picker.Item label="추첨" value="추첨" />
-                      <Picker.Item label="기타" value="기타" />
-                    </Picker>
+                      <Picker
+                        selectedValue={this.state.reason}
+                        style={{height: 50, width: 150}}
+                        onValueChange={(itemValue, itemIndex) =>
+                          this.setState({reason: itemValue})
+                        }
+                      >
+                        <Picker.Item label="점수" value="점수" />
+                        <Picker.Item label="서브미션" value="서브미션" />
+                        <Picker.Item label="경기중단" value="경기중단" />
+                        <Picker.Item label="실격" value="실격" />
+                        <Picker.Item label="실신" value="실신" />
+                        <Picker.Item label="추첨" value="추첨" />
+                        <Picker.Item label="기타" value="기타" />
+                      </Picker>
+                    </View>
                     {this.state.reason !== "점수" ? (
                       <View style={{flex: 1, flexDirection: "column"}}>
                         <View>
@@ -262,7 +271,11 @@ class GameEndButton extends Component {
                     <Button
                       title="판정하기"
                       titleStyle={{fontSize: 20}}
-                      buttonStyle={{backgroundColor: "purple"}}
+                      buttonStyle={{
+                        backgroundColor: "purple",
+                        marginBottom: 20,
+                        marginTop: 20
+                      }}
                       onPress={this.judgement}
                     />
                     <Button
@@ -284,7 +297,7 @@ class GameEndButton extends Component {
                             }}
                           >
                             <Text style={{fontSize: 20}}>{winner}</Text>
-                            <Text style={{fontSize: 20}}>사유</Text>
+                            <Text style={{fontSize: 15}}>사유</Text>
                             <Text
                               style={{fontSize: 20}}
                             >{`${cause} ${difference}점차`}</Text>
@@ -310,10 +323,11 @@ class GameEndButton extends Component {
                         }}
                       >
                         <Text style={{fontSize: 20}}>{highlightPlayer}</Text>
-                        <Text style={{fontSize: 20}}>사유</Text>
+                        <Text style={{fontSize: 15}}>사유</Text>
                         <Text style={{fontSize: 20}}>{this.state.reason}</Text>
                       </View>
                     )}
+                    <GameScoreInfoButton />
                     <Button
                       title="close"
                       onPress={this.setModalVisible.bind(this, false)}
@@ -373,10 +387,7 @@ const mapStateToProps = state => ({
   penalty_1: state.scoreGame.penalty_1,
   totalScore_2: state.scoreGame.totalScore_2,
   advantage_2: state.scoreGame.advantage_2,
-  penalty_2: state.scoreGame.penalty_2,
-  player1: state.scoreGame.player1,
-  player2: state.scoreGame.player2,
-  gameStart: state.scoreGame.gameStart
+  penalty_2: state.scoreGame.penalty_2
 });
 
 export default connect(mapStateToProps, {gameReset})(GameEndButton);

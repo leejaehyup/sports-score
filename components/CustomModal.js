@@ -44,7 +44,11 @@ class CustomModal extends Component {
     var modalBackgroundStyle = {
       backgroundColor: "rgba(0, 0, 0, 0.5)"
     };
-    var innerContainerTransparentStyle = {backgroundColor: "#fff", padding: 20};
+    var innerContainerTransparentStyle = {
+      backgroundColor: "#fff",
+      padding: 20,
+      width: 300
+    };
     return (
       <View
         style={{

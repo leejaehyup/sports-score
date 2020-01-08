@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,7 +18,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.leejaehyup.sport"
+    },
+    "android": {
+      "package": "com.leejaehyup.sport"
+    },
+    "description": "sport score beta app",
+    "githubUrl": "https://github.com/leejaehyup/sports-score"
   }
 }

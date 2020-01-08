@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    flex: 1
+    flex: 1,
+    marginTop: 30
   },
   buttonContainer: {
     paddingTop: 20
