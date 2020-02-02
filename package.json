@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "s3deploy": "aws s3 sync ./web-build s3://score-board"
+    "s3deploy": "aws s3 sync ./web-build s3://score-board",
+    "avdStart": "cd C:/Users/dlwog/AppData/Local/Android/Sdk/tools && emulator -avd Nexus_5X_API_27"
   },
   "dependencies": {
     "expo": "^35.0.0",

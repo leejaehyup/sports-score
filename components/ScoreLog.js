@@ -1,8 +1,18 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, Modal, FlatList} from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Modal,
+  FlatList,
+  Image,
+  TouchableHighlight
+} from "react-native";
 import {connect} from "react-redux";
 import {deleteLog} from "../reducers/scoreGame";
 import {Divider, Button} from "react-native-elements";
+import gameLogButton from "../assets/images/buttons/gameLogButton.png";
+
 class ScoreLog extends Component {
   state = {
     modalVisible: false
@@ -64,12 +74,10 @@ class ScoreLog extends Component {
             </View>
           </View>
         </Modal>
-        <Button
-          title="Log"
-          titleStyle={{fontSize: 15}}
-          buttonStyle={{backgroundColor: "black"}}
-          onPress={this._handleButtonPress}
-        />
+        <TouchableHighlight onPress={this._handleButtonPress}>
+          <Image source={gameLogButton} />
+        </TouchableHighlight>
+
         {/* <Button title="Log" onPress={this._handleButtonPress} /> */}
       </View>
     );

@@ -1,5 +1,12 @@
 import React from "react";
-import {StyleSheet, View, StatusBar, Dimensions} from "react-native";
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  Dimensions,
+  Image,
+  TouchableHighlight
+} from "react-native";
 import ScoreButton from "../components/ScoreButton";
 import PenaltyButton from "../components/PenaltyButton";
 import AdvantageButton from "../components/AdvantageButton";
@@ -15,6 +22,7 @@ import {Provider} from "react-redux";
 import store from "../store";
 //orientation
 import {ScreenOrientation} from "expo";
+import scoreFrame from "../assets/images/frame/scoreFrame.png";
 
 export default class GameScreen extends React.Component {
   state = {
@@ -85,6 +93,7 @@ export default class GameScreen extends React.Component {
         {/* 플레이어 1 */}
         <View style={{flex: 3, flexDirection: "row"}}>
           <View style={{flex: 4, flexDirection: "column"}}>
+            <Image source={scoreFrame} style={{position: "absolute"}} />
             <View
               style={{
                 flex: 1,
@@ -130,6 +139,7 @@ export default class GameScreen extends React.Component {
         {/* 플레이어 2 */}
         <View style={{flex: 3, flexDirection: "row"}}>
           <View style={{flex: 4, flexDirection: "column"}}>
+            <Image source={scoreFrame} style={{position: "absolute"}} />
             <View
               style={{
                 flex: 1,
@@ -177,14 +187,31 @@ export default class GameScreen extends React.Component {
             {/* 플레이어 1 */}
 
             <View style={landsacpe_styles.player_per_container}>
-              <CustomModal player="player1" user="user1" />
+              <Image source={scoreFrame} style={{position: "absolute"}} />
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <CustomModal player="player1" user="user1" />
+              </View>
               {/* 게임 정보 */}
-              <GameInformation_1 />
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <GameInformation_1 />
+              </View>
             </View>
 
             {/* 플레이어 2 */}
 
             <View style={landsacpe_styles.player_per_container}>
+              <Image source={scoreFrame} style={{position: "absolute"}} />
               <CustomModal player="player2" user="user2" />
 
               {/* 게임 정보 */}

@@ -9,13 +9,16 @@ import {
   ProgressBarAndroid,
   Switch,
   Picker,
-  Alert
+  Alert,
+  Image,
+  TouchableHighlight
 } from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import {gameReset} from "../reducers/scoreGame";
 import WinnerLottie from "./lottie/WinnerLottie";
 import GameScoreInfoButton from "./GameScoreInfoButton";
+import gameEndButton from "../assets/images/buttons/gameEndButton.png";
 
 class GameEndButton extends Component {
   state = {
@@ -337,12 +340,9 @@ class GameEndButton extends Component {
               </ScrollView>
             </View>
           </Modal>
-          <Button
-            title="end"
-            titleStyle={{fontSize: 15}}
-            buttonStyle={{backgroundColor: "black"}}
-            onPress={this._handleButtonPress}
-          />
+          <TouchableHighlight onPress={this._handleButtonPress}>
+            <Image source={gameEndButton} />
+          </TouchableHighlight>
         </View>
       </SafeAreaView>
     );

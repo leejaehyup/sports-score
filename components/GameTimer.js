@@ -1,5 +1,12 @@
 import React from "react";
-import {StyleSheet, View, Modal, TextInput} from "react-native";
+import {
+  StyleSheet,
+  View,
+  Modal,
+  TextInput,
+  Image,
+  TouchableHighlight
+} from "react-native";
 import {Button, Text} from "react-native-elements";
 import {connect} from "react-redux";
 import {
@@ -8,6 +15,9 @@ import {
   gameStart,
   gameStop
 } from "../reducers/scoreGame";
+import gameStartButton from "../assets/images/buttons/gameStartButton.png";
+import gamePauseButton from "../assets/images/buttons/gamePauseButton.png";
+import gameResetButton from "../assets/images/buttons/gameResetButton.png";
 
 class GameTimer extends React.Component {
   state = {
@@ -219,21 +229,19 @@ class GameTimer extends React.Component {
         {/* <Text style={styles.timer_Text}>{`${min}분:${sec}초`}</Text> */}
         <View style={{marginRight: 10}}>
           {starting ? (
-            <Button title="중지" onPress={this.onPress_Stop_Timer} />
+            <TouchableHighlight onPress={this.onPress_Stop_Timer}>
+              <Image source={gamePauseButton} />
+            </TouchableHighlight>
           ) : (
-            <Button
-              title="시작"
-              buttonStyle={{backgroundColor: "black"}}
-              onPress={this.onPress_Start_Timer}
-            />
+            <TouchableHighlight onPress={this.onPress_Start_Timer}>
+              <Image source={gameStartButton} />
+            </TouchableHighlight>
           )}
         </View>
         <View>
-          <Button
-            title="reset"
-            buttonStyle={{backgroundColor: "black"}}
-            onPress={this.onPress_Reset_Timer}
-          />
+          <TouchableHighlight onPress={this.onPress_Reset_Timer}>
+            <Image source={gameResetButton} />
+          </TouchableHighlight>
         </View>
       </View>
     );

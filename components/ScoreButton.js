@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, Image, TouchableHighlight} from "react-native";
 import {Button, Text} from "react-native-elements";
 import {
   increment,
@@ -12,6 +12,7 @@ import {
   highlighting_on
 } from "../reducers/scoreGame";
 import {connect} from "react-redux";
+import scoreButton from "../assets/images/buttons/scoreButton.png";
 
 class ScoreButton extends React.Component {
   state = {
@@ -153,12 +154,24 @@ class ScoreButton extends React.Component {
           <View style={styles.scoreContainer}>
             <View style={styles.score_text}></View>
             <View style={styles.scoreButton}>
-              <Button
-                title={scores + ""}
-                titleStyle={{fontSize: 20}}
-                buttonStyle={{backgroundColor: "purple"}}
-                onPress={this.scorePressTimerOn}
-              />
+              <TouchableHighlight onPress={this.scorePressTimerOn}>
+                <View>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 30,
+                      zIndex: 2,
+                      color: "white"
+                    }}
+                  >
+                    {scores + ""}
+                  </Text>
+                  <Image
+                    source={scoreButton}
+                    style={{marginTop: -30, zIndex: 1}}
+                  />
+                </View>
+              </TouchableHighlight>
             </View>
             <View style={styles.plus_Minus_Button_Container}>
               {/* <Button

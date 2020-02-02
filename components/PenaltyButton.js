@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, Image, TouchableHighlight} from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import {
@@ -7,6 +7,8 @@ import {
   penaltyDecrement,
   gameLog
 } from "../reducers/scoreGame";
+import penaltyButton from "../assets/images/buttons/penaltyButton.png";
+
 class PenaltyButton extends React.Component {
   state = {
     loading: false
@@ -68,12 +70,9 @@ class PenaltyButton extends React.Component {
         <View style={styles.penalty_container}>
           <View style={styles.penalty_text}></View>
           <View style={styles.penalty_button}>
-            <Button
-              title="P"
-              titleStyle={{fontSize: 20}}
-              buttonStyle={{backgroundColor: "red"}}
-              onPress={this.onPress_Penalty_ScoreUp}
-            />
+            <TouchableHighlight onPress={this.onPress_Penalty_ScoreUp}>
+              <Image source={penaltyButton} />
+            </TouchableHighlight>
           </View>
           <View style={styles.minus_button}>
             {/* <Button

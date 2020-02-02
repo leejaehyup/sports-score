@@ -1,5 +1,12 @@
 import React from "react";
-import {View, Text, Button, Switch} from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  Switch,
+  Image,
+  TouchableHighlight
+} from "react-native";
 import BeltLottie from "../components/lottie/BeltLottie";
 import {ScreenOrientation} from "expo";
 
@@ -20,16 +27,11 @@ export default class IndexScreen extends React.Component {
       <View style={{flex: 1}}>
         <BeltLottie />
         <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-          <Text
-            style={{
-              fontSize: 50,
-              marginTop: -150,
-              color: "gray",
-              fontFamily: "sans-serif-condensed"
-            }}
-          >
-            sports score
-          </Text>
+          <Image
+            style={{marginTop: -180}}
+            source={require("../assets/images/font/logoName.png")}
+          />
+
           <View
             style={{
               flexDirection: "row",
@@ -64,8 +66,7 @@ export default class IndexScreen extends React.Component {
               가로모드
             </Text>
           </View>
-          <Button
-            title="Go Game screen"
+          <TouchableHighlight
             onPress={() => {
               let orientation;
               this.state.orientation
@@ -82,7 +83,11 @@ export default class IndexScreen extends React.Component {
                 orientation: orientation
               });
             }}
-          />
+          >
+            <Image
+              source={require("../assets/images/buttons/goGameScreenImg.png")}
+            />
+          </TouchableHighlight>
         </View>
       </View>
     );

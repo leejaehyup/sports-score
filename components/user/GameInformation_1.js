@@ -38,9 +38,9 @@ class GameInformation_1 extends React.Component {
           <View
             style={{
               flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              alignItems: "center"
+              flex: 1,
+              left: 35,
+              bottom: 5
             }}
           >
             {/* <Text style={{fontSize: 20}}>P : </Text> */}
@@ -49,9 +49,8 @@ class GameInformation_1 extends React.Component {
           <View
             style={{
               flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              alignItems: "center"
+              bottom: 5,
+              left: 3
             }}
           >
             {/* <Text style={{fontSize: 20}}>A : </Text> */}
@@ -73,17 +72,17 @@ const styles = StyleSheet.create({
   score_text: {
     fontSize: 100,
     textAlign: "center",
-    color: "purple"
+    color: "black"
   },
   penalty_text: {
-    fontSize: 50,
+    fontSize: 25,
     textAlign: "center",
-    color: "red"
+    color: "white"
   },
   advantage_text: {
-    fontSize: 50,
+    fontSize: 25,
     textAlign: "center",
-    color: "blue"
+    color: "white"
   }
 });
 const mapStateToProps = state => ({

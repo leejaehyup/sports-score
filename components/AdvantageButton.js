@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, Image, TouchableHighlight} from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import {
@@ -7,6 +7,7 @@ import {
   advantageDecrement,
   gameLog
 } from "../reducers/scoreGame";
+import advantageButton from "../assets/images/buttons/advantageButton.png";
 
 class AdvantageButton extends React.Component {
   state = {
@@ -76,12 +77,9 @@ class AdvantageButton extends React.Component {
         <View style={styles.advantage_container}>
           <View style={styles.advantage_text}></View>
           <View style={styles.advantage_button}>
-            <Button
-              title="A"
-              titleStyle={{fontSize: 20}}
-              buttonStyle={{backgroundColor: "blue"}}
-              onPress={this.onPress_Advantage_ScoreUp}
-            />
+            <TouchableHighlight onPress={this.onPress_Advantage_ScoreUp}>
+              <Image source={advantageButton} />
+            </TouchableHighlight>
           </View>
           <View style={styles.minus_button}>
             {/* <Button
