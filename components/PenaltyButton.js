@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View, Image, TouchableHighlight} from "react-native";
+import {StyleSheet, View, Image, TouchableOpacity} from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import {
@@ -70,9 +70,9 @@ class PenaltyButton extends React.Component {
         <View style={styles.penalty_container}>
           <View style={styles.penalty_text}></View>
           <View style={styles.penalty_button}>
-            <TouchableHighlight onPress={this.onPress_Penalty_ScoreUp}>
+            <TouchableOpacity onPress={this.onPress_Penalty_ScoreUp}>
               <Image source={penaltyButton} />
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
           <View style={styles.minus_button}>
             {/* <Button

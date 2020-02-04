@@ -11,19 +11,21 @@ class GameInformation_2 extends React.Component {
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
-        backgroundColor: "#A6A6A6"
+        backgroundColor: "#A6A6A6",
+        left: 15
       },
       off: {
         flex: 3,
         flexDirection: "row",
         justifyContent: "space-evenly",
-        alignItems: "center"
+        alignItems: "center",
+        left: 15
       }
     };
-    const {totalScore_2, advantage_2, penalty_2, highlight_2} = this.props;
+    const {totalScore_2, advantage_2, penalty_2} = this.props;
     return (
       <View style={styles.gameInfo_Container}>
-        <View style={highlight_2 ? highlight_style.on : highlight_style.off}>
+        <View style={highlight_style.off}>
           {/* <Text style={styles.button_text}>총점 : </Text> */}
           <Text style={styles.score_text}>{totalScore_2}</Text>
         </View>
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   score_text: {
-    fontSize: 100,
+    fontSize: 130,
     textAlign: "center",
     color: "black"
   },
@@ -87,8 +89,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   totalScore_2: state.scoreGame.totalScore_2,
   advantage_2: state.scoreGame.advantage_2,
-  penalty_2: state.scoreGame.penalty_2,
-  highlight_2: state.scoreGame.highlight_2
+  penalty_2: state.scoreGame.penalty_2
 });
 
 export default connect(mapStateToProps)(GameInformation_2);

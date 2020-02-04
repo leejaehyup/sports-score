@@ -17,12 +17,12 @@ import CustomModal from "../components/CustomModal";
 import {Divider} from "react-native-elements";
 import ScoreLog from "../components/ScoreLog";
 import GameEndButton from "../components/GameEndButton";
+import ScoreFrame from "../components/ScoreFrame";
 // redux
 import {Provider} from "react-redux";
 import store from "../store";
 //orientation
 import {ScreenOrientation} from "expo";
-import scoreFrame from "../assets/images/frame/scoreFrame.png";
 
 export default class GameScreen extends React.Component {
   state = {
@@ -32,7 +32,8 @@ export default class GameScreen extends React.Component {
     player1: "Player1",
     player2: "Player2",
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height
+    height: Dimensions.get("window").height,
+    highlight_1: false
   };
   static navigationOptions = {
     header: null
@@ -92,8 +93,16 @@ export default class GameScreen extends React.Component {
       <View style={styles.container} onLayout={this.onLayout}>
         {/* 플레이어 1 */}
         <View style={{flex: 3, flexDirection: "row"}}>
-          <View style={{flex: 4, flexDirection: "column"}}>
-            <Image source={scoreFrame} style={{position: "absolute"}} />
+          <View
+            style={{
+              flex: 4,
+              flexDirection: "column",
+              marginTop: 10,
+              marginLeft: 10
+            }}
+          >
+            <ScoreFrame user="1" />
+
             <View
               style={{
                 flex: 1,
@@ -122,7 +131,15 @@ export default class GameScreen extends React.Component {
           </View>
         </View>
         {/* 타이머 */}
-        <Divider style={{backgroundColor: "black", marginTop: 5}} />
+        <Divider
+          style={{
+            backgroundColor: "black",
+            marginTop: 5,
+            marginLeft: 10,
+            marginRight: 10,
+            opacity: 0.6
+          }}
+        />
         <View
           style={{
             flex: 1,
@@ -135,11 +152,19 @@ export default class GameScreen extends React.Component {
             <GameEndButton />
           </View>
         </View>
-        <Divider style={{backgroundColor: "black", marginBottom: 5}} />
+        <Divider
+          style={{
+            backgroundColor: "black",
+            marginLeft: 10,
+            marginRight: 10,
+            opacity: 0.6
+          }}
+        />
         {/* 플레이어 2 */}
-        <View style={{flex: 3, flexDirection: "row"}}>
-          <View style={{flex: 4, flexDirection: "column"}}>
-            <Image source={scoreFrame} style={{position: "absolute"}} />
+        <View style={{flex: 3, flexDirection: "row", marginTop: 10}}>
+          <View style={{flex: 4, flexDirection: "column", marginLeft: 10}}>
+            <ScoreFrame user="2" />
+            {/* <Image source={scoreFrame} style={{position: "absolute"}} /> */}
             <View
               style={{
                 flex: 1,
@@ -187,7 +212,7 @@ export default class GameScreen extends React.Component {
             {/* 플레이어 1 */}
 
             <View style={landsacpe_styles.player_per_container}>
-              <Image source={scoreFrame} style={{position: "absolute"}} />
+              {/* <Image source={scoreFrame} style={{position: "absolute"}} /> */}
               <View
                 style={{
                   justifyContent: "center",
@@ -211,7 +236,7 @@ export default class GameScreen extends React.Component {
             {/* 플레이어 2 */}
 
             <View style={landsacpe_styles.player_per_container}>
-              <Image source={scoreFrame} style={{position: "absolute"}} />
+              {/* <Image source={scoreFrame} style={{position: "absolute"}} /> */}
               <CustomModal player="player2" user="user2" />
 
               {/* 게임 정보 */}
@@ -304,7 +329,8 @@ const styles = StyleSheet.create({
   },
   button_container: {
     flex: 4,
-    flexDirection: "column"
+    flexDirection: "column",
+    marginBottom: 10
   },
   buttonsGroup_1: {
     justifyContent: "center",

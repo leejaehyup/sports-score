@@ -92,7 +92,12 @@ class GameTimer extends React.Component {
         </Modal>
         <Text
           onPress={this._handleButtonPress}
-          style={{fontSize: 30, textAlign: "center", marginRight: 10}}
+          style={{
+            fontSize: 27,
+            textAlign: "center",
+            marginRight: 5,
+            fontWeight: "bold"
+          }}
         >
           {`${min}분:${sec}초`}
         </Text>
@@ -227,20 +232,20 @@ class GameTimer extends React.Component {
       <View style={styles.timer_Container}>
         <this.modal min={min + ""} sec={sec + ""} />
         {/* <Text style={styles.timer_Text}>{`${min}분:${sec}초`}</Text> */}
-        <View style={{marginRight: 10}}>
+        <View style={{marginRight: 3}}>
           {starting ? (
             <TouchableHighlight onPress={this.onPress_Stop_Timer}>
-              <Image source={gamePauseButton} />
+              <Image source={gamePauseButton} style={{width: 60, height: 35}} />
             </TouchableHighlight>
           ) : (
             <TouchableHighlight onPress={this.onPress_Start_Timer}>
-              <Image source={gameStartButton} />
+              <Image source={gameStartButton} style={{width: 60, height: 35}} />
             </TouchableHighlight>
           )}
         </View>
         <View>
           <TouchableHighlight onPress={this.onPress_Reset_Timer}>
-            <Image source={gameResetButton} />
+            <Image source={gameResetButton} style={{width: 60, height: 35}} />
           </TouchableHighlight>
         </View>
       </View>

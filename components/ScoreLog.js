@@ -6,12 +6,18 @@ import {
   Modal,
   FlatList,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from "react-native";
 import {connect} from "react-redux";
 import {deleteLog} from "../reducers/scoreGame";
 import {Divider, Button} from "react-native-elements";
 import gameLogButton from "../assets/images/buttons/gameLogButton.png";
+import advantageLogBox from "../assets/images/frame/advantageLogBox.png";
+import penaltyLogBox from "../assets/images/frame/penaltyLogBox.png";
+import scoreLogBox from "../assets/images/frame/scoreLogBox.png";
+import scoreLogClose from "../assets/images/buttons/scoreLogClose.png";
+import deleteLogBtn from "../assets/images/buttons/deleteLog.png";
 
 class ScoreLog extends Component {
   state = {
@@ -31,34 +37,71 @@ class ScoreLog extends Component {
           onRequestClose={() => this.setModalVisible(false)}
         >
           <View style={[styles.container, modalBackgroundStyle]}>
-            <View style={innerContainerTransparentStyle}>
-              <Text style={{textAlign: "center", fontSize: 15, color: "blue"}}>
+            <View
+              style={{
+                backgroundColor: "#fff",
+                padding: 10,
+                borderRadius: 20,
+                width: "90%",
+                height: "90%"
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 30,
+                  color: "black",
+                  fontWeight: "bold"
+                }}
+              >
                 Log
               </Text>
               <FlatList
                 data={this.props.gameLog}
                 renderItem={({item, index}) => {
                   const color = this.handleLogColor(item.key);
-
+                  let box;
+                  color === "purple"
+                    ? (box = scoreLogBox)
+                    : color === "red"
+                    ? (box = penaltyLogBox)
+                    : (box = advantageLogBox);
                   return (
                     <View
                       style={{
                         flex: 1,
+                        alignItems: "center",
                         flexDirection: "row",
                         marginTop: 5,
-                        borderWidth: 3,
-                        borderColor: color,
                         justifyContent: "space-between"
                       }}
                     >
-                      <Text style={styles.item}>{item.key}</Text>
-
-                      <Button
+                      <Image source={box} style={{position: "absolute"}} />
+                      <Text
+                        style={{
+                          padding: 10,
+                          fontSize: 18,
+                          height: 44,
+                          justifyContent: "flex-start",
+                          color: color
+                        }}
+                      >
+                        {item.key}
+                      </Text>
+                      <TouchableOpacity
+                        style={{justifyContent: "center", alignItems: "center"}}
+                        onPress={() => {
+                          this.handleDeleteLog(item.key, index);
+                        }}
+                      >
+                        <Image source={deleteLogBtn} />
+                      </TouchableOpacity>
+                      {/* <Button
                         title="x"
                         onPress={() => {
                           this.handleDeleteLog(item.key, index);
                         }}
-                      ></Button>
+                      ></Button> */}
 
                       <Divider
                         style={{backgroundColor: "black", marginTop: 5}}
@@ -67,15 +110,21 @@ class ScoreLog extends Component {
                   );
                 }}
               />
-              <Button
+              <TouchableOpacity
+                onPress={this.setModalVisible.bind(this, false)}
+              >
+                <Image source={scoreLogClose} />
+              </TouchableOpacity>
+
+              {/* <Button
                 title="close"
                 onPress={this.setModalVisible.bind(this, false)}
-              />
+              /> */}
             </View>
           </View>
         </Modal>
         <TouchableHighlight onPress={this._handleButtonPress}>
-          <Image source={gameLogButton} />
+          <Image source={gameLogButton} style={{width: 60, height: 35}} />
         </TouchableHighlight>
 
         {/* <Button title="Log" onPress={this._handleButtonPress} /> */}

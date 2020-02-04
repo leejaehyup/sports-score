@@ -6,8 +6,6 @@ import {
   Modal,
   SafeAreaView,
   ScrollView,
-  ProgressBarAndroid,
-  Switch,
   Picker,
   Alert,
   Image,
@@ -341,7 +339,7 @@ class GameEndButton extends Component {
             </View>
           </Modal>
           <TouchableHighlight onPress={this._handleButtonPress}>
-            <Image source={gameEndButton} />
+            <Image source={gameEndButton} style={{width: 60, height: 35}} />
           </TouchableHighlight>
         </View>
       </SafeAreaView>

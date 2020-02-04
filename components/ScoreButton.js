@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View, Image, TouchableHighlight} from "react-native";
+import {StyleSheet, View, Image, TouchableOpacity} from "react-native";
 import {Button, Text} from "react-native-elements";
 import {
   increment,
@@ -154,24 +154,26 @@ class ScoreButton extends React.Component {
           <View style={styles.scoreContainer}>
             <View style={styles.score_text}></View>
             <View style={styles.scoreButton}>
-              <TouchableHighlight onPress={this.scorePressTimerOn}>
-                <View>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 30,
-                      zIndex: 2,
-                      color: "white"
-                    }}
-                  >
-                    {scores + ""}
-                  </Text>
-                  <Image
-                    source={scoreButton}
-                    style={{marginTop: -30, zIndex: 1}}
-                  />
-                </View>
-              </TouchableHighlight>
+              <TouchableOpacity
+                onPress={this.scorePressTimerOn}
+                style={{
+                  position: "absolute"
+                }}
+              >
+                <Image source={scoreButton} />
+              </TouchableOpacity>
+              {/*text style에서 클릭 이슈 발생*/}
+              <Text
+                style={{
+                  fontSize: 30,
+                  zIndex: 2,
+                  color: "white",
+                  left: 55,
+                  top: 4
+                }}
+              >
+                {scores + ""}
+              </Text>
             </View>
             <View style={styles.plus_Minus_Button_Container}>
               {/* <Button

@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View, Image, TouchableHighlight} from "react-native";
+import {StyleSheet, View, Image, TouchableOpacity} from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import {
@@ -77,9 +77,9 @@ class AdvantageButton extends React.Component {
         <View style={styles.advantage_container}>
           <View style={styles.advantage_text}></View>
           <View style={styles.advantage_button}>
-            <TouchableHighlight onPress={this.onPress_Advantage_ScoreUp}>
+            <TouchableOpacity onPress={this.onPress_Advantage_ScoreUp}>
               <Image source={advantageButton} />
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
           <View style={styles.minus_button}>
             {/* <Button
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    margin: 10
+    marginLeft: 10
   },
   advantage_container: {
     flex: 1,

@@ -1,7 +1,17 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, Button, Modal, TextInput} from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  Modal,
+  TextInput,
+  Image,
+  TouchableOpacity
+} from "react-native";
 import {connect} from "react-redux";
 import {playerName} from "../reducers/scoreGame";
+import playerNameClose from "../assets/images/buttons/playerNameClose.png";
 
 class CustomModal extends Component {
   state = {
@@ -54,8 +64,7 @@ class CustomModal extends Component {
         style={{
           flex: 1,
           alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "white"
+          justifyContent: "center"
         }}
       >
         <Modal
@@ -76,31 +85,52 @@ class CustomModal extends Component {
             ]}
           >
             <View style={innerContainerTransparentStyle}>
-              <Text>플레이어 이름을 설절해주세요.</Text>
+              <Text
+                style={{marginBottom: 15, fontSize: 20, fontWeight: "bold"}}
+              >
+                플레이어 이름을 설정해주세요.
+              </Text>
               {player === "player1" ? (
                 <TextInput
                   value={this.state.player1}
                   onChangeText={this.onChangePlayer1}
                   placeholder="User"
+                  style={{
+                    backgroundColor: "#D5D5D5",
+                    color: "#BDBDBD",
+                    fontSize: 20,
+                    borderRadius: 5,
+                    paddingLeft: 5,
+                    height: 35
+                  }}
                 />
               ) : (
                 <TextInput
+                  style={{
+                    backgroundColor: "#D5D5D5",
+                    color: "#BDBDBD",
+                    fontSize: 20,
+                    borderRadius: 5,
+                    paddingLeft: 5,
+                    height: 35
+                  }}
                   value={this.state.player2}
                   onChangeText={this.onChangePlayer2}
                   placeholder="User"
                 />
               )}
-
-              <Button
-                title="close"
+              <TouchableOpacity
                 onPress={this.setModalVisible.bind(this, false)}
-              />
+                style={{marginTop: 20, alignItems: "center"}}
+              >
+                <Image source={playerNameClose} />
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
         <Text
           onPress={this._handleButtonPress}
-          style={{fontSize: 20, fontWeight: "bold"}}
+          style={{fontSize: 30, fontWeight: "bold", left: 15}}
         >
           {player === "player1" ? this.props.player1 : this.props.player2}
         </Text>
