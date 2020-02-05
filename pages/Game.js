@@ -330,7 +330,8 @@ const styles = StyleSheet.create({
   button_container: {
     flex: 4,
     flexDirection: "column",
-    marginBottom: 10
+    marginBottom: 10,
+    marginTop: 10
   },
   buttonsGroup_1: {
     justifyContent: "center",

@@ -1,5 +1,14 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, Button, Modal, TextInput} from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Modal,
+  Image,
+  TouchableOpacity
+} from "react-native";
+
+import gameStartOkButton from "../../assets/images/buttons/gameStartOkButton.png";
 
 export default class ModalExample extends Component {
   state = {
@@ -20,21 +29,16 @@ export default class ModalExample extends Component {
         >
           <View style={[styles.container, modalBackgroundStyle]}>
             <View style={innerContainerTransparentStyle}>
-              <Text>This is a modal</Text>
-              <Button
-                title="close"
+              <Text>게임을 시작해주세요</Text>
+              <TouchableOpacity
                 onPress={this.setModalVisible.bind(this, false)}
-              />
-              <TextInput
-                // style={styles.textInput}
-                // onChangeText={user1 => this.setState({user1})}
-                //value={this.state.user1}
-                placeholder="User"
-              />
+              >
+                <Image source={gameStartOkButton} />
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
-        <Text onPress={this._handleButtonPress}>modal</Text>
+        {this.props.button}
       </View>
     );
   };

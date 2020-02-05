@@ -167,26 +167,11 @@ class ScoreButton extends React.Component {
                 style={{
                   fontSize: 30,
                   zIndex: 2,
-                  color: "white",
-                  left: 55,
-                  top: 4
+                  color: "white"
                 }}
               >
                 {scores + ""}
               </Text>
-            </View>
-            <View style={styles.plus_Minus_Button_Container}>
-              {/* <Button
-                title="+"
-                buttonStyle={{flex: 1, width: "100%", height: "100%"}}
-                onPress={this.plusScore}
-              /> */}
-              {/* <Button
-                buttonStyle={{}}
-                title="-"
-                titleStyle={{fontSize: 20}}
-                onPress={this.minusScore}
-              /> */}
             </View>
           </View>
         ) : (
@@ -209,7 +194,9 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   scoreButton: {
-    flex: 3
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center"
   },
   plus_Minus_Button_Container: {
     flex: 1

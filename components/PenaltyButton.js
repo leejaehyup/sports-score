@@ -8,6 +8,7 @@ import {
   gameLog
 } from "../reducers/scoreGame";
 import penaltyButton from "../assets/images/buttons/penaltyButton.png";
+import CustomModal from "./Element/CustomModal";
 
 class PenaltyButton extends React.Component {
   state = {
@@ -74,13 +75,6 @@ class PenaltyButton extends React.Component {
               <Image source={penaltyButton} />
             </TouchableOpacity>
           </View>
-          <View style={styles.minus_button}>
-            {/* <Button
-              title="-"
-              titleStyle={{fontSize: 20}}
-              onPress={this.minusPenalty}
-            /> */}
-          </View>
         </View>
       </View>
     );
@@ -91,8 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
-    margin: 10
+    alignItems: "center"
   },
   penalty_container: {
     flex: 1,
@@ -104,7 +97,9 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   penalty_button: {
-    flex: 3
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center"
   },
   minus_button: {
     flex: 1

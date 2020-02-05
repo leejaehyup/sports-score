@@ -1,7 +1,16 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, Modal, ScrollView} from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Modal,
+  ScrollView,
+  Image,
+  TouchableOpacity
+} from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
+import showScoreButton from "../assets/images/buttons/showScoreButton.png";
 
 class GameScoreInfoButton extends Component {
   state = {
@@ -80,12 +89,9 @@ class GameScoreInfoButton extends Component {
             </View>
           </View>
         </Modal>
-        <Button
-          title="점수 보기"
-          titleStyle={{fontSize: 20}}
-          buttonStyle={{backgroundColor: "black"}}
-          onPress={this._handleButtonPress}
-        />
+        <TouchableOpacity onPress={this._handleButtonPress}>
+          <Image source={showScoreButton} />
+        </TouchableOpacity>
       </View>
     );
   }

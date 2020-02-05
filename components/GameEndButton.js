@@ -9,7 +9,8 @@ import {
   Picker,
   Alert,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
@@ -17,6 +18,12 @@ import {gameReset} from "../reducers/scoreGame";
 import WinnerLottie from "./lottie/WinnerLottie";
 import GameScoreInfoButton from "./GameScoreInfoButton";
 import gameEndButton from "../assets/images/buttons/gameEndButton.png";
+import judgeButton from "../assets/images/buttons/judgeButton.png";
+import judgeCloseButton from "../assets/images/buttons/judgeCloseButton.png";
+import winnerTxt from "../assets/images/font/winnerTxt.png";
+import loserFrame from "../assets/images/frame/loserFrame.png";
+import winnerFrame from "../assets/images/frame/winnerFrame.png";
+import winLogo from "../assets/images/frame/winLogo.png";
 
 class GameEndButton extends Component {
   state = {
@@ -199,12 +206,22 @@ class GameEndButton extends Component {
                       style={{
                         justifyContent: "center",
                         alignItems: "center",
-                        marginTop: 20
+                        marginTop: 30,
+                        borderColor: "purple",
+                        borderWidth: 3,
+                        marginLeft: 70,
+                        marginRight: 70,
+                        borderRadius: 10
                       }}
                     >
                       <Picker
                         selectedValue={this.state.reason}
-                        style={{height: 50, width: 150}}
+                        style={{
+                          height: 50,
+                          width: 200,
+                          borderColor: "black",
+                          borderWidth: 1
+                        }}
                         onValueChange={(itemValue, itemIndex) =>
                           this.setState({reason: itemValue})
                         }
@@ -220,23 +237,49 @@ class GameEndButton extends Component {
                     </View>
                     {this.state.reason !== "점수" ? (
                       <View style={{flex: 1, flexDirection: "column"}}>
-                        <View>
-                          <Text style={{textAlign: "center", fontSize: 30}}>
+                        <View
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: 30
+                          }}
+                        >
+                          <Image source={winnerTxt} />
+                          {/* <Text style={{textAlign: "center", fontSize: 30}}>
                             승자를 선택하세요
-                          </Text>
+                          </Text> */}
                         </View>
                         <View
-                          style={{flex: 1, flexDirection: "row", margin: 30}}
+                          style={{
+                            flex: 1,
+                            flexDirection: "row",
+                            marginTop: 30,
+                            marginBottom: 30,
+                            justifyContent: "center",
+                            alignItems: "center"
+                          }}
                         >
                           <View
-                            style={
-                              this.state.highlightPlayer === this.props.player1
-                                ? {backgroundColor: "yellow", flex: 1}
-                                : {flex: 1}
-                            }
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                              flex: 1
+                            }}
                           >
+                            {this.state.highlightPlayer ===
+                            this.props.player1 ? (
+                              <Image
+                                source={winnerFrame}
+                                style={{position: "absolute"}}
+                              />
+                            ) : (
+                              <Image
+                                source={loserFrame}
+                                style={{position: "absolute"}}
+                              />
+                            )}
                             <Text
-                              style={{fontSize: 30, textAlign: "center"}}
+                              style={{fontSize: 25, textAlign: "center"}}
                               onPress={() => {
                                 this.setState({
                                   highlightPlayer: this.props.player1
@@ -247,14 +290,27 @@ class GameEndButton extends Component {
                             </Text>
                           </View>
                           <View
-                            style={
-                              this.state.highlightPlayer === this.props.player2
-                                ? {backgroundColor: "yellow", flex: 1}
-                                : {flex: 1}
-                            }
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                              flex: 1
+                            }}
                           >
+                            {this.state.highlightPlayer ===
+                            this.props.player2 ? (
+                              <Image
+                                source={winnerFrame}
+                                style={{position: "absolute"}}
+                              />
+                            ) : (
+                              <Image
+                                source={loserFrame}
+                                style={{position: "absolute"}}
+                              />
+                            )}
+
                             <Text
-                              style={{fontSize: 30, textAlign: "center"}}
+                              style={{fontSize: 25, textAlign: "center"}}
                               onPress={() => {
                                 this.setState({
                                   highlightPlayer: this.props.player2
@@ -269,24 +325,41 @@ class GameEndButton extends Component {
                     ) : (
                       <View></View>
                     )}
-                    <Button
-                      title="판정하기"
-                      titleStyle={{fontSize: 20}}
-                      buttonStyle={{
-                        backgroundColor: "purple",
-                        marginBottom: 20,
-                        marginTop: 20
+                    <TouchableOpacity
+                      style={{
+                        marginTop: 30,
+                        marginBottom: 10,
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center"
                       }}
                       onPress={this.judgement}
-                    />
-                    <Button
-                      title="close"
+                    >
+                      <Image source={judgeButton} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
                       onPress={this.setModalVisible.bind(this, false)}
-                    />
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Image source={judgeCloseButton} />
+                    </TouchableOpacity>
                   </View>
                 ) : (
                   <View style={innerContainerTransparentStyle}>
-                    <WinnerLottie />
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Image source={winLogo} />
+                    </View>
                     {this.state.reason === "점수" ? (
                       <View>
                         {winner !== "" ? (
@@ -294,13 +367,15 @@ class GameEndButton extends Component {
                             style={{
                               flex: 1,
                               justifyContent: "center",
-                              alignItems: "center"
+                              alignItems: "center",
+                              marginTop: 10
                             }}
                           >
-                            <Text style={{fontSize: 20}}>{winner}</Text>
-                            <Text style={{fontSize: 15}}>사유</Text>
+                            <Text style={{fontSize: 30, marginBottom: 5}}>
+                              {winner}
+                            </Text>
                             <Text
-                              style={{fontSize: 20}}
+                              style={{fontSize: 20, marginBottom: 10}}
                             >{`${cause} ${difference}점차`}</Text>
                           </View>
                         ) : (
@@ -311,7 +386,9 @@ class GameEndButton extends Component {
                               alignItems: "center"
                             }}
                           >
-                            <Text>동일 점수로 인한 심판 합의</Text>
+                            <Text style={{fontSize: 20, margin: 10}}>
+                              동일 점수로 인한 심판 합의
+                            </Text>
                           </View>
                         )}
                       </View>
@@ -320,19 +397,30 @@ class GameEndButton extends Component {
                         style={{
                           flex: 1,
                           justifyContent: "center",
-                          alignItems: "center"
+                          alignItems: "center",
+                          marginTop: 10
                         }}
                       >
-                        <Text style={{fontSize: 20}}>{highlightPlayer}</Text>
-                        <Text style={{fontSize: 15}}>사유</Text>
-                        <Text style={{fontSize: 20}}>{this.state.reason}</Text>
+                        <Text style={{fontSize: 30, marginBottom: 5}}>
+                          {highlightPlayer}
+                        </Text>
+                        <Text style={{fontSize: 20, marginBottom: 10}}>
+                          {this.state.reason}
+                        </Text>
                       </View>
                     )}
                     <GameScoreInfoButton />
-                    <Button
-                      title="close"
+                    <TouchableOpacity
                       onPress={this.setModalVisible.bind(this, false)}
-                    />
+                      style={{
+                        marginTop: 10,
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Image source={judgeCloseButton} />
+                    </TouchableOpacity>
                   </View>
                 )}
               </ScrollView>

@@ -81,14 +81,6 @@ class AdvantageButton extends React.Component {
               <Image source={advantageButton} />
             </TouchableOpacity>
           </View>
-          <View style={styles.minus_button}>
-            {/* <Button
-              buttonStyle={{}}
-              title="-"
-              titleStyle={{fontSize: 20}}
-              onPress={this.minusAdvantage}
-            /> */}
-          </View>
         </View>
       </View>
     );
@@ -99,8 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10
+    alignItems: "center"
   },
   advantage_container: {
     flex: 1,
@@ -112,7 +103,9 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   advantage_button: {
-    flex: 3
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center"
   },
   minus_button: {
     flex: 1

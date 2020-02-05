@@ -73,14 +73,19 @@ class ScoreLog extends Component {
                         alignItems: "center",
                         flexDirection: "row",
                         marginTop: 5,
-                        justifyContent: "space-between"
+                        justifyContent: "center"
                       }}
                     >
-                      <Image source={box} style={{position: "absolute"}} />
+                      <Image
+                        source={box}
+                        style={{
+                          position: "absolute"
+                        }}
+                      />
                       <Text
                         style={{
                           padding: 10,
-                          fontSize: 18,
+                          fontSize: 20,
                           height: 44,
                           justifyContent: "flex-start",
                           color: color
@@ -89,7 +94,10 @@ class ScoreLog extends Component {
                         {item.key}
                       </Text>
                       <TouchableOpacity
-                        style={{justifyContent: "center", alignItems: "center"}}
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "flex-end"
+                        }}
                         onPress={() => {
                           this.handleDeleteLog(item.key, index);
                         }}
@@ -112,6 +120,7 @@ class ScoreLog extends Component {
               />
               <TouchableOpacity
                 onPress={this.setModalVisible.bind(this, false)}
+                style={{justifyContent: "center", alignItems: "center"}}
               >
                 <Image source={scoreLogClose} />
               </TouchableOpacity>
