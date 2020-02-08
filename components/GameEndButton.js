@@ -426,8 +426,11 @@ class GameEndButton extends Component {
               </ScrollView>
             </View>
           </Modal>
-          <TouchableHighlight onPress={this._handleButtonPress}>
-            <Image source={gameEndButton} style={{width: 60, height: 35}} />
+          <TouchableHighlight
+            onPress={this._handleButtonPress}
+            style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+          >
+            <Image source={gameEndButton} style={{resizeMode: "stretch"}} />
           </TouchableHighlight>
         </View>
       </SafeAreaView>

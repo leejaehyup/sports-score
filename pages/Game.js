@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  StatusBar,
-  Dimensions,
-  Image,
-  TouchableHighlight
-} from "react-native";
+import {StyleSheet, View, StatusBar, Dimensions} from "react-native";
 import ScoreButton from "../components/ScoreButton";
 import PenaltyButton from "../components/PenaltyButton";
 import AdvantageButton from "../components/AdvantageButton";
@@ -92,30 +85,16 @@ export default class GameScreen extends React.Component {
     return (
       <View style={styles.container} onLayout={this.onLayout}>
         {/* 플레이어 1 */}
-        <View style={{flex: 3, flexDirection: "row"}}>
+        <View style={{flex: 4, flexDirection: "row", margin: 10}}>
           <View
             style={{
-              flex: 4,
+              flex: 7,
               flexDirection: "column",
-              marginTop: 10,
-              marginLeft: 10
+              marginRight: 5
             }}
           >
+            {/*게임 정보*/}
             <ScoreFrame user="1" />
-
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <CustomModal player="player1" user="user1" />
-            </View>
-            {/* 게임 정보 */}
-            <View style={{flex: 5}}>
-              <GameInformation_1 />
-            </View>
           </View>
           {/* 게임 버튼들 */}
           <View style={styles.button_container}>
@@ -125,8 +104,12 @@ export default class GameScreen extends React.Component {
               <ScoreButton user="user1" init_score="4" />
             </View>
             <View style={styles.additionButtons}>
-              <PenaltyButton user="user1" />
-              <AdvantageButton user="user1" />
+              <View style={{flex: 1, marginTop: 3}}>
+                <PenaltyButton user="user1" />
+              </View>
+              <View style={{flex: 1, marginTop: 3, marginBottom: 2}}>
+                <AdvantageButton user="user1" />
+              </View>
             </View>
           </View>
         </View>
@@ -134,7 +117,6 @@ export default class GameScreen extends React.Component {
         <Divider
           style={{
             backgroundColor: "black",
-            marginTop: 5,
             marginLeft: 10,
             marginRight: 10,
             opacity: 0.6
@@ -143,13 +125,13 @@ export default class GameScreen extends React.Component {
         <View
           style={{
             flex: 1,
-            flexDirection: "column"
+            flexDirection: "column",
+            marginRight: 10,
+            marginLeft: 10
           }}
         >
           <View style={styles.timer_Container}>
-            <GameTimer minute={5} second={0} />
-            <ScoreLog />
-            <GameEndButton />
+            <GameTimer minute={5} second={0} landFlex={false} />
           </View>
         </View>
         <Divider
@@ -161,21 +143,16 @@ export default class GameScreen extends React.Component {
           }}
         />
         {/* 플레이어 2 */}
-        <View style={{flex: 3, flexDirection: "row", marginTop: 10}}>
-          <View style={{flex: 4, flexDirection: "column", marginLeft: 10}}>
-            <ScoreFrame user="2" />
-            {/* <Image source={scoreFrame} style={{position: "absolute"}} /> */}
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <CustomModal player="player2" user="user2" />
-            </View>
+        <View style={{flex: 4, flexDirection: "row", margin: 10}}>
+          <View
+            style={{
+              flex: 7,
+              flexDirection: "column",
+              marginRight: 5
+            }}
+          >
             {/* 게임 정보 */}
-            <GameInformation_2 />
+            <ScoreFrame user="2" />
           </View>
           {/* 게임 버튼들 */}
           <View style={styles.button_container}>
@@ -185,8 +162,12 @@ export default class GameScreen extends React.Component {
               <ScoreButton init_score="4" user="user2" />
             </View>
             <View style={styles.additionButtons}>
-              <PenaltyButton user="user2" />
-              <AdvantageButton user="user2" />
+              <View style={{flex: 1, marginTop: 3}}>
+                <PenaltyButton user="user2" />
+              </View>
+              <View style={{flex: 1, marginTop: 3, marginBottom: 2}}>
+                <AdvantageButton user="user2" />
+              </View>
             </View>
           </View>
         </View>
@@ -202,91 +183,70 @@ export default class GameScreen extends React.Component {
         style={{width: this.state.width, height: this.state.height}}
       >
         <View style={landsacpe_styles.container}>
-          <View style={landsacpe_styles.timer_container}>
-            <GameTimer minute={5} second={0} />
-            <ScoreLog />
-            <GameEndButton />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              marginRight: 50
+            }}
+          >
+            <GameTimer minute={5} second={0} landFlex={true} />
           </View>
-          <Divider style={{backgroundColor: "black", marginTop: 5}} />
+          <Divider
+            style={{
+              backgroundColor: "black",
+              marginTop: 5,
+              marginBottom: 5,
+              opacity: 0.5
+            }}
+          />
           <View style={landsacpe_styles.player_container}>
             {/* 플레이어 1 */}
 
-            <View style={landsacpe_styles.player_per_container}>
-              {/* <Image source={scoreFrame} style={{position: "absolute"}} /> */}
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <CustomModal player="player1" user="user1" />
-              </View>
+            <View style={{flex: 1, flexDirection: "column", marginRight: 5}}>
+              <ScoreFrame user="1" orientation="landscape" />
               {/* 게임 정보 */}
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <GameInformation_1 />
-              </View>
             </View>
-
             {/* 플레이어 2 */}
-
-            <View style={landsacpe_styles.player_per_container}>
-              {/* <Image source={scoreFrame} style={{position: "absolute"}} /> */}
-              <CustomModal player="player2" user="user2" />
-
+            <View style={{flex: 1, flexDirection: "column", marginLeft: 5}}>
+              <ScoreFrame user="2" orientation="landscape" />
               {/* 게임 정보 */}
-              <GameInformation_2 />
             </View>
           </View>
-          <Divider style={{backgroundColor: "black", marginTop: 5}} />
           {/* 게임 버튼들 */}
           <View style={landsacpe_styles.button_container}>
-            <View style={{flex: 1, flexDirection: "column"}}>
+            <View style={{flex: 1, flexDirection: "column", marginRight: 5}}>
               <View style={{flex: 1, flexDirection: "row"}}>
-                <View style={{flex: 1, backgroundColor: "red", margin: 5}}>
+                <View style={{flex: 1, marginRight: 5}}>
                   <PenaltyButton user="user1" />
                 </View>
-                <View style={{flex: 1, backgroundColor: "blue", margin: 5}}>
-                  <AdvantageButton user="user1" />
-                </View>
+                <AdvantageButton user="user1" />
               </View>
               <View style={{flex: 1, flexDirection: "row"}}>
-                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                  <ScoreButton user="user1" init_score="2" />
-                </View>
-                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                  <ScoreButton user="user1" init_score="3" />
-                </View>
-                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                  <ScoreButton user="user1" init_score="4" />
-                </View>
+                <ScoreButton user="user1" init_score="2" />
+
+                <ScoreButton user="user1" init_score="3" />
+
+                <ScoreButton user="user1" init_score="4" />
               </View>
             </View>
             {/* 게임 버튼들 */}
-            <View style={{flex: 1, flexDirection: "column"}}>
+            <View style={{flex: 1, flexDirection: "column", marginLeft: 5}}>
               <View style={{flex: 1, flexDirection: "row"}}>
-                <View style={{flex: 1, backgroundColor: "red", margin: 5}}>
+                <View style={{flex: 1, marginRight: 5}}>
                   <PenaltyButton user="user2" />
                 </View>
-                <View style={{flex: 1, backgroundColor: "blue", margin: 5}}>
+                <View style={{flex: 1}}>
                   <AdvantageButton user="user2" />
                 </View>
               </View>
               <View style={{flex: 1, flexDirection: "row"}}>
-                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
+                <View style={{flex: 1}}>
                   <ScoreButton init_score="2" user="user2" />
                 </View>
-                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                  <ScoreButton init_score="3" user="user2" />
-                </View>
-                <View style={{flex: 1, backgroundColor: "purple", margin: 5}}>
-                  <ScoreButton init_score="4" user="user2" />
-                </View>
+                <ScoreButton init_score="3" user="user2" />
+
+                <ScoreButton init_score="4" user="user2" />
               </View>
             </View>
           </View>
@@ -329,9 +289,7 @@ const styles = StyleSheet.create({
   },
   button_container: {
     flex: 4,
-    flexDirection: "column",
-    marginBottom: 10,
-    marginTop: 10
+    flexDirection: "column"
   },
   buttonsGroup_1: {
     justifyContent: "center",
@@ -357,9 +315,7 @@ const styles = StyleSheet.create({
     // right: "40%",
     // top: "45%"
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center"
+    flexDirection: "row"
   },
   userText: {
     fontSize: 20,
@@ -371,24 +327,25 @@ const styles = StyleSheet.create({
 const landsacpe_styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    flex: 1
+    flex: 1,
+    margin: 10
   },
   timer_container: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center"
+    marginTop: 5
   },
   player_container: {
-    flex: 5,
-    flexDirection: "row"
+    flex: 7,
+    flexDirection: "row",
+    marginBottom: 5
   },
   player_per_container: {
     flex: 1,
     flexDirection: "column"
   },
   button_container: {
-    flex: 4,
+    flex: 5,
     flexDirection: "row"
   }
 });

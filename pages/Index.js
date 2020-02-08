@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  Switch,
-  Image,
-  TouchableHighlight
-} from "react-native";
+import {View, Text, Switch, Image, TouchableHighlight} from "react-native";
 import BeltLottie from "../components/lottie/BeltLottie";
 import {ScreenOrientation} from "expo";
 

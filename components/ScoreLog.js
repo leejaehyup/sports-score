@@ -132,8 +132,15 @@ class ScoreLog extends Component {
             </View>
           </View>
         </Modal>
-        <TouchableHighlight onPress={this._handleButtonPress}>
-          <Image source={gameLogButton} style={{width: 60, height: 35}} />
+        <TouchableHighlight
+          onPress={this._handleButtonPress}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <Image source={gameLogButton} style={{resizeMode: "stretch"}} />
         </TouchableHighlight>
 
         {/* <Button title="Log" onPress={this._handleButtonPress} /> */}

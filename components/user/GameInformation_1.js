@@ -9,25 +9,33 @@ class GameInformation_1 extends React.Component {
       on: {
         flex: 3,
         flexDirection: "row",
-        justifyContent: "space-evenly",
+        justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#A6A6A6",
-        left: 15
+        marginTop: 10
       },
       off: {
         flex: 3,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        left: 15
+        marginTop: 10
       }
     };
-    const {totalScore_1, advantage_1, penalty_1} = this.props;
+    const {totalScore_1, advantage_1, penalty_1, style} = this.props;
     return (
       <View style={styles.gameInfo_Container}>
         <View style={highlight_style.off}>
           {/* <Text style={styles.button_text}>총점 : </Text> */}
-          <Text style={styles.score_text}>{totalScore_1}</Text>
+          <Text
+            style={{
+              fontSize: style.fontSize,
+              textAlign: "center",
+              color: "black"
+            }}
+          >
+            {totalScore_1}
+          </Text>
         </View>
         <View
           style={{
@@ -39,9 +47,7 @@ class GameInformation_1 extends React.Component {
         >
           <View
             style={{
-              flex: 1,
-              left: 35,
-              top: 3
+              flex: 1
             }}
           >
             {/* <Text style={{fontSize: 20}}>P : </Text> */}
@@ -49,9 +55,7 @@ class GameInformation_1 extends React.Component {
           </View>
           <View
             style={{
-              flex: 1,
-              top: 3,
-              left: 3
+              flex: 1
             }}
           >
             {/* <Text style={{fontSize: 20}}>A : </Text> */}

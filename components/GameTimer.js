@@ -15,6 +15,10 @@ import {
   gameStart,
   gameStop
 } from "../reducers/scoreGame";
+
+import ScoreLog from "./ScoreLog";
+import GameEndButton from "./GameEndButton";
+
 import gameStartButton from "../assets/images/buttons/gameStartButton.png";
 import gamePauseButton from "../assets/images/buttons/gamePauseButton.png";
 import gameResetButton from "../assets/images/buttons/gameResetButton.png";
@@ -46,16 +50,21 @@ class GameTimer extends React.Component {
     var modalBackgroundStyle = {
       backgroundColor: "rgba(0, 0, 0, 0.5)"
     };
+    const landStyle = {
+      flex: 8,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "white"
+    };
+    const portStyle = {
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "white"
+    };
+
     var innerContainerTransparentStyle = {backgroundColor: "#fff", padding: 20};
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "white"
-        }}
-      >
+      <View style={props.landFlex ? landStyle : portStyle}>
         <Modal
           animationType="fade"
           transparent={true}
@@ -95,7 +104,6 @@ class GameTimer extends React.Component {
           style={{
             fontSize: 27,
             textAlign: "center",
-            marginRight: 5,
             fontWeight: "bold"
           }}
         >
@@ -230,23 +238,40 @@ class GameTimer extends React.Component {
     } = this.state;
     return (
       <View style={styles.timer_Container}>
-        <this.modal min={min + ""} sec={sec + ""} />
+        <this.modal
+          min={min + ""}
+          sec={sec + ""}
+          landFlex={this.props.landFlex}
+        />
         {/* <Text style={styles.timer_Text}>{`${min}분:${sec}초`}</Text> */}
-        <View style={{marginRight: 3}}>
-          {starting ? (
-            <TouchableHighlight onPress={this.onPress_Stop_Timer}>
-              <Image source={gamePauseButton} style={{width: 60, height: 35}} />
-            </TouchableHighlight>
-          ) : (
-            <TouchableHighlight onPress={this.onPress_Start_Timer}>
-              <Image source={gameStartButton} style={{width: 60, height: 35}} />
-            </TouchableHighlight>
-          )}
-        </View>
-        <View>
-          <TouchableHighlight onPress={this.onPress_Reset_Timer}>
-            <Image source={gameResetButton} style={{width: 60, height: 35}} />
+
+        {starting ? (
+          <TouchableHighlight
+            onPress={this.onPress_Stop_Timer}
+            style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+          >
+            <Image source={gamePauseButton} style={{resizeMode: "stretch"}} />
           </TouchableHighlight>
+        ) : (
+          <TouchableHighlight
+            onPress={this.onPress_Start_Timer}
+            style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+          >
+            <Image source={gameStartButton} style={{resizeMode: "stretch"}} />
+          </TouchableHighlight>
+        )}
+
+        <TouchableHighlight
+          onPress={this.onPress_Reset_Timer}
+          style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+        >
+          <Image source={gameResetButton} style={{resizeMode: "stretch"}} />
+        </TouchableHighlight>
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+          <ScoreLog />
+        </View>
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+          <GameEndButton />
         </View>
       </View>
     );
@@ -254,7 +279,7 @@ class GameTimer extends React.Component {
 }
 const styles = StyleSheet.create({
   timer_Container: {
-    flex: 9,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center"

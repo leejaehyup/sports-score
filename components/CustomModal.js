@@ -50,7 +50,7 @@ class CustomModal extends Component {
   };
 
   render() {
-    let {player, gameStart} = this.props;
+    let {player, gameStart, style} = this.props;
     var modalBackgroundStyle = {
       backgroundColor: "rgba(0, 0, 0, 0.5)"
     };
@@ -63,8 +63,7 @@ class CustomModal extends Component {
       <View
         style={{
           flex: 1,
-          alignItems: "center",
-          justifyContent: "center"
+          marginTop: style.marginTop
         }}
       >
         <Modal
@@ -130,7 +129,7 @@ class CustomModal extends Component {
         </Modal>
         <Text
           onPress={this._handleButtonPress}
-          style={{fontSize: 30, fontWeight: "bold", left: 15}}
+          style={{fontSize: style.fontSize, fontWeight: "bold"}}
         >
           {player === "player1" ? this.props.player1 : this.props.player2}
         </Text>

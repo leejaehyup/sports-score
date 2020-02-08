@@ -1,5 +1,11 @@
 import React from "react";
-import {StyleSheet, View, Image, TouchableOpacity} from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  ImageBackground
+} from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import {
@@ -74,44 +80,23 @@ class AdvantageButton extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.advantage_container}>
-          <View style={styles.advantage_text}></View>
-          <View style={styles.advantage_button}>
-            <TouchableOpacity onPress={this.onPress_Advantage_ScoreUp}>
-              <Image source={advantageButton} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <TouchableOpacity
+          onPress={this.onPress_Advantage_ScoreUp}
+          style={{flex: 1}}
+        >
+          <ImageBackground
+            source={advantageButton}
+            style={{flex: 1}}
+            imageStyle={{resizeMode: "stretch"}}
+          ></ImageBackground>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  advantage_container: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  advantage_text: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  advantage_button: {
-    flex: 3,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  minus_button: {
     flex: 1
-  },
-  button_text: {
-    fontSize: 20
   }
 });
 const mapStateToProps = state => ({

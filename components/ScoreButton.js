@@ -1,5 +1,11 @@
 import React from "react";
-import {StyleSheet, View, Image, TouchableOpacity} from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  ImageBackground
+} from "react-native";
 import {Button, Text} from "react-native-elements";
 import {
   increment,
@@ -149,64 +155,28 @@ class ScoreButton extends React.Component {
   render() {
     const {scores} = this.state;
     return (
-      <View style={styles.container}>
-        {scores !== "-1" ? (
-          <View style={styles.scoreContainer}>
-            <View style={styles.score_text}></View>
-            <View style={styles.scoreButton}>
-              <TouchableOpacity
-                onPress={this.scorePressTimerOn}
-                style={{
-                  position: "absolute"
-                }}
-              >
-                <Image source={scoreButton} />
-              </TouchableOpacity>
-              {/*text style에서 클릭 이슈 발생*/}
-              <Text
-                style={{
-                  fontSize: 30,
-                  zIndex: 2,
-                  color: "white"
-                }}
-              >
-                {scores + ""}
-              </Text>
-            </View>
-          </View>
-        ) : (
-          <Text>123</Text>
-        )}
+      <View style={{flex: 1}}>
+        <TouchableOpacity onPress={this.scorePressTimerOn} style={{flex: 1}}>
+          <ImageBackground
+            source={scoreButton}
+            style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+            imageStyle={{resizeMode: "stretch"}}
+          >
+            <Text
+              style={{
+                fontSize: 30,
+                color: "white"
+              }}
+            >
+              {scores + ""}
+            </Text>
+          </ImageBackground>
+        </TouchableOpacity>
       </View>
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 10,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  scoreContainer: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  scoreButton: {
-    flex: 3,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  plus_Minus_Button_Container: {
-    flex: 1
-  },
-  score_text: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+const styles = StyleSheet.create({});
 const mapStateToProps = state => ({
   timer: state.scoreGame.timer,
   player1: state.scoreGame.player1,

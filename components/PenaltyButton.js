@@ -1,5 +1,11 @@
 import React from "react";
-import {StyleSheet, View, Image, TouchableOpacity} from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  ImageBackground
+} from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import {
@@ -68,44 +74,23 @@ class PenaltyButton extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.penalty_container}>
-          <View style={styles.penalty_text}></View>
-          <View style={styles.penalty_button}>
-            <TouchableOpacity onPress={this.onPress_Penalty_ScoreUp}>
-              <Image source={penaltyButton} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <TouchableOpacity
+          onPress={this.onPress_Penalty_ScoreUp}
+          style={{flex: 1}}
+        >
+          <ImageBackground
+            source={penaltyButton}
+            style={{flex: 1}}
+            imageStyle={{resizeMode: "stretch"}}
+          ></ImageBackground>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  penalty_container: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  penalty_text: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  penalty_button: {
-    flex: 3,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  minus_button: {
     flex: 1
-  },
-  button_text: {
-    fontSize: 20
   }
 });
 const mapStateToProps = state => ({

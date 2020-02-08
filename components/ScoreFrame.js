@@ -1,24 +1,138 @@
 import React, {Component} from "react";
-import {View, Image} from "react-native";
+import {View, Image, Text, ImageBackground} from "react-native";
 import {connect} from "react-redux";
 import originScoreFrame from "../assets/images/frame/scoreFrame.png";
 import acquireScoreFrame from "../assets/images/frame/acquireScoreFrame.png";
-
+import originScoreFrameLand from "../assets/images/frame/scoreFrameLand.png";
+import CustomModal from "./CustomModal";
+import GameInformation_1 from "./user/GameInformation_1";
+import GameInformation_2 from "./user/GameInformation_2";
 class ScoreFrame extends Component {
   render() {
-    const {highlight_1, highlight_2, user} = this.props;
+    console.log();
+    const {highlight_1, highlight_2, user, orientation} = this.props;
     return (
-      <View style={{position: "absolute"}}>
-        {user === "1" ? (
-          highlight_1 ? (
-            <Image source={acquireScoreFrame} />
+      <View style={{flex: 1}}>
+        {orientation === "landscape" ? (
+          user === "1" ? (
+            highlight_1 ? (
+              <ImageBackground
+                source={acquireScoreFrame}
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+                imageStyle={{resizeMode: "stretch"}}
+              >
+                <CustomModal
+                  player="player1"
+                  user="user1"
+                  style={{fontSize: 25, marginTop: 0}}
+                />
+                <GameInformation_2 style={{fontSize: 100}} />
+              </ImageBackground>
+            ) : (
+              <ImageBackground
+                source={originScoreFrameLand}
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+                imageStyle={{resizeMode: "stretch"}}
+              >
+                <CustomModal
+                  player="player1"
+                  user="user1"
+                  style={{fontSize: 25, marginTop: 0}}
+                />
+
+                <GameInformation_1 style={{fontSize: 100}} />
+              </ImageBackground>
+            )
+          ) : highlight_2 ? (
+            <ImageBackground
+              source={acquireScoreFrame}
+              style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+              imageStyle={{resizeMode: "stretch"}}
+            >
+              <CustomModal
+                player="player2"
+                user="user2"
+                style={{fontSize: 25, marginTop: 0}}
+              />
+              <GameInformation_2 style={{fontSize: 100}} />
+            </ImageBackground>
           ) : (
-            <Image source={originScoreFrame} />
+            <ImageBackground
+              source={originScoreFrameLand}
+              style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+              imageStyle={{resizeMode: "stretch"}}
+            >
+              <CustomModal
+                player="player2"
+                user="user2"
+                style={{fontSize: 25, marginTop: 0}}
+              />
+              <GameInformation_2 style={{fontSize: 100}} />
+            </ImageBackground>
+          )
+        ) : user === "1" ? (
+          highlight_1 ? (
+            <ImageBackground
+              source={acquireScoreFrame}
+              style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+              imageStyle={{resizeMode: "stretch"}}
+            >
+              <CustomModal
+                player="player1"
+                user="user1"
+                style={{fontSize: 27, marginTop: 10}}
+              />
+              <GameInformation_2 style={{fontSize: 130}} />
+            </ImageBackground>
+          ) : (
+            <ImageBackground
+              source={originScoreFrame}
+              style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+              imageStyle={{resizeMode: "stretch"}}
+            >
+              <CustomModal
+                player="player1"
+                user="user1"
+                style={{fontSize: 27, marginTop: 10}}
+              />
+
+              <GameInformation_1 style={{fontSize: 130}} />
+            </ImageBackground>
           )
         ) : highlight_2 ? (
-          <Image source={acquireScoreFrame} />
+          <ImageBackground
+            source={acquireScoreFrame}
+            style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+            imageStyle={{resizeMode: "stretch"}}
+          >
+            <CustomModal
+              player="player2"
+              user="user2"
+              style={{fontSize: 27, marginTop: 10}}
+            />
+            <GameInformation_2 style={{fontSize: 130}} />
+          </ImageBackground>
         ) : (
-          <Image source={originScoreFrame} />
+          <ImageBackground
+            source={originScoreFrame}
+            style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+            imageStyle={{resizeMode: "stretch"}}
+          >
+            <CustomModal
+              player="player2"
+              user="user2"
+              style={{fontSize: 27, marginTop: 10}}
+            />
+            <GameInformation_2 style={{fontSize: 130}} />
+          </ImageBackground>
         )}
       </View>
     );
