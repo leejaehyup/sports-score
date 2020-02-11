@@ -11,6 +11,7 @@ import {
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
 import showScoreButton from "../assets/images/buttons/showScoreButton.png";
+import scoreInfoClose from "../assets/images/buttons/scoreInfoClose.png";
 
 class GameScoreInfoButton extends Component {
   state = {
@@ -42,7 +43,8 @@ class GameScoreInfoButton extends Component {
     var innerContainerTransparentStyle = {
       backgroundColor: "#fff",
       padding: 20,
-      width: 300
+      width: 300,
+      borderRadius: 20
     };
     return (
       <View
@@ -72,19 +74,84 @@ class GameScoreInfoButton extends Component {
           >
             <View style={innerContainerTransparentStyle}>
               <ScrollView>
-                <Text>{player1}</Text>
-                <Text>{totalScore_1}</Text>
-                <Text>{advantage_1}</Text>
-                <Text>{penalty_1}</Text>
-                <Text>{player2}</Text>
-                <Text>{totalScore_2}</Text>
-                <Text>{advantage_2}</Text>
-                <Text>{penalty_2}</Text>
-                <Text></Text>
-                <Button
-                  title="close"
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    marginBottom: 25
+                  }}
+                >
+                  <Text style={{fontSize: 25}}>{player1}</Text>
+                  <Text style={{fontSize: 25}}>{player2}</Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                    alignItems: "center"
+                  }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#5c154b",
+                        fontSize: 20,
+                        margin: 6
+                      }}
+                    >
+                      {totalScore_1}
+                    </Text>
+                    <Text style={{color: "#7b74f9", fontSize: 20, margin: 6}}>
+                      {advantage_1}
+                    </Text>
+                    <Text style={{color: "#fe5b1b", fontSize: 20, margin: 6}}>
+                      {penalty_1}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Text style={{color: "#5c154b", fontSize: 20, margin: 6}}>
+                      {totalScore_2}
+                    </Text>
+                    <Text style={{color: "#7b74f9", fontSize: 20, margin: 6}}>
+                      {advantage_2}
+                    </Text>
+                    <Text style={{color: "#fe5b1b", fontSize: 20, margin: 6}}>
+                      {penalty_2}
+                    </Text>
+                  </View>
+                </View>
+
+                <TouchableOpacity
                   onPress={this.setModalVisible.bind(this, false)}
-                />
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 25
+                  }}
+                >
+                  <Image
+                    source={scoreInfoClose}
+                    style={{resizeMode: "stretch"}}
+                  />
+                </TouchableOpacity>
               </ScrollView>
             </View>
           </View>

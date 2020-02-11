@@ -9,8 +9,8 @@ import {
   Picker,
   Alert,
   Image,
-  TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground
 } from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
@@ -174,7 +174,11 @@ class GameEndButton extends Component {
     var modalBackgroundStyle = {
       backgroundColor: "rgba(0, 0, 0, 0.5)"
     };
-    var innerContainerTransparentStyle = {backgroundColor: "#fff", padding: 20};
+    var innerContainerTransparentStyle = {
+      backgroundColor: "#fff",
+      padding: 20,
+      flex: 1
+    };
     return (
       <SafeAreaView
         style={{
@@ -199,28 +203,36 @@ class GameEndButton extends Component {
                 modalBackgroundStyle
               ]}
             >
-              <ScrollView>
+              <ScrollView style={{flex: 1}}>
                 {!judge ? (
-                  <View style={innerContainerTransparentStyle}>
+                  <View
+                    style={{
+                      backgroundColor: "#fff",
+                      padding: 20,
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
                     <View
                       style={{
-                        justifyContent: "center",
-                        alignItems: "center",
                         marginTop: 30,
                         borderColor: "purple",
                         borderWidth: 3,
-                        marginLeft: 70,
-                        marginRight: 70,
-                        borderRadius: 10
+                        borderRadius: 10,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginBottom: 30,
+                        flex: 1
                       }}
                     >
                       <Picker
                         selectedValue={this.state.reason}
+                        mode="dropdown"
                         style={{
-                          height: 50,
+                          flex: 1,
                           width: 200,
-                          borderColor: "black",
-                          borderWidth: 1
+                          opacity: 0.5
                         }}
                         onValueChange={(itemValue, itemIndex) =>
                           this.setState({reason: itemValue})
@@ -236,18 +248,21 @@ class GameEndButton extends Component {
                       </Picker>
                     </View>
                     {this.state.reason !== "점수" ? (
-                      <View style={{flex: 1, flexDirection: "column"}}>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                      >
                         <View
                           style={{
                             justifyContent: "center",
-                            alignItems: "center",
-                            marginTop: 30
+                            alignItems: "center"
                           }}
                         >
                           <Image source={winnerTxt} />
-                          {/* <Text style={{textAlign: "center", fontSize: 30}}>
-                            승자를 선택하세요
-                          </Text> */}
                         </View>
                         <View
                           style={{
@@ -255,70 +270,114 @@ class GameEndButton extends Component {
                             flexDirection: "row",
                             marginTop: 30,
                             marginBottom: 30,
-                            justifyContent: "center",
-                            alignItems: "center"
+                            justifyContent: "space-between",
+                            alignItems: "stretch"
                           }}
                         >
                           <View
                             style={{
-                              justifyContent: "center",
-                              alignItems: "center",
-                              flex: 1
+                              flex: 1,
+                              marginRight: 10,
+                              height: 40
                             }}
                           >
                             {this.state.highlightPlayer ===
                             this.props.player1 ? (
-                              <Image
+                              <ImageBackground
                                 source={winnerFrame}
-                                style={{position: "absolute"}}
-                              />
+                                style={{
+                                  flex: 1,
+                                  justifyContent: "center",
+                                  alignItems: "center"
+                                }}
+                                imageStyle={{resizeMode: "stretch"}}
+                              >
+                                <Text
+                                  style={{fontSize: 25, textAlign: "center"}}
+                                  onPress={() => {
+                                    this.setState({
+                                      highlightPlayer: this.props.player1
+                                    });
+                                  }}
+                                >
+                                  {this.props.player1}
+                                </Text>
+                              </ImageBackground>
                             ) : (
-                              <Image
+                              <ImageBackground
                                 source={loserFrame}
-                                style={{position: "absolute"}}
-                              />
+                                style={{
+                                  flex: 1,
+                                  justifyContent: "center",
+                                  alignItems: "center"
+                                }}
+                                imageStyle={{
+                                  resizeMode: "stretch"
+                                }}
+                              >
+                                <Text
+                                  style={{fontSize: 25, textAlign: "center"}}
+                                  onPress={() => {
+                                    this.setState({
+                                      highlightPlayer: this.props.player1
+                                    });
+                                  }}
+                                >
+                                  {this.props.player1}
+                                </Text>
+                              </ImageBackground>
                             )}
-                            <Text
-                              style={{fontSize: 25, textAlign: "center"}}
-                              onPress={() => {
-                                this.setState({
-                                  highlightPlayer: this.props.player1
-                                });
-                              }}
-                            >
-                              {this.props.player1}
-                            </Text>
                           </View>
                           <View
                             style={{
-                              justifyContent: "center",
-                              alignItems: "center",
-                              flex: 1
+                              flex: 1,
+                              height: 40
                             }}
                           >
                             {this.state.highlightPlayer ===
                             this.props.player2 ? (
-                              <Image
+                              <ImageBackground
                                 source={winnerFrame}
-                                style={{position: "absolute"}}
-                              />
+                                style={{
+                                  flex: 1,
+                                  justifyContent: "center",
+                                  alignItems: "center"
+                                }}
+                                imageStyle={{resizeMode: "stretch"}}
+                              >
+                                <Text
+                                  style={{fontSize: 25, textAlign: "center"}}
+                                  onPress={() => {
+                                    this.setState({
+                                      highlightPlayer: this.props.player2
+                                    });
+                                  }}
+                                >
+                                  {this.props.player2}
+                                </Text>
+                              </ImageBackground>
                             ) : (
-                              <Image
+                              <ImageBackground
                                 source={loserFrame}
-                                style={{position: "absolute"}}
-                              />
+                                style={{
+                                  flex: 1,
+                                  justifyContent: "center",
+                                  alignItems: "center"
+                                }}
+                                imageStyle={{resizeMode: "stretch"}}
+                              >
+                                <Text
+                                  style={{fontSize: 25, textAlign: "center"}}
+                                  onPress={() => {
+                                    this.setState({
+                                      highlightPlayer: this.props.player2
+                                    });
+                                  }}
+                                >
+                                  {this.props.player2}
+                                </Text>
+                              </ImageBackground>
                             )}
-
-                            <Text
-                              style={{fontSize: 25, textAlign: "center"}}
-                              onPress={() => {
-                                this.setState({
-                                  highlightPlayer: this.props.player2
-                                });
-                              }}
-                            >
-                              {this.props.player2}
-                            </Text>
                           </View>
                         </View>
                       </View>
@@ -335,7 +394,12 @@ class GameEndButton extends Component {
                       }}
                       onPress={this.judgement}
                     >
-                      <Image source={judgeButton} />
+                      <Image
+                        source={judgeButton}
+                        style={{
+                          resizeMode: "stretch"
+                        }}
+                      />
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -343,10 +407,17 @@ class GameEndButton extends Component {
                       style={{
                         flex: 1,
                         justifyContent: "center",
+                        marginRight: 10,
+                        marginLeft: 10,
                         alignItems: "center"
                       }}
                     >
-                      <Image source={judgeCloseButton} />
+                      <Image
+                        source={judgeCloseButton}
+                        style={{
+                          resizeMode: "stretch"
+                        }}
+                      />
                     </TouchableOpacity>
                   </View>
                 ) : (
@@ -371,7 +442,13 @@ class GameEndButton extends Component {
                               marginTop: 10
                             }}
                           >
-                            <Text style={{fontSize: 30, marginBottom: 5}}>
+                            <Text
+                              style={{
+                                fontSize: 30,
+                                marginBottom: 5,
+                                color: "#ffb53e"
+                              }}
+                            >
                               {winner}
                             </Text>
                             <Text
@@ -401,7 +478,13 @@ class GameEndButton extends Component {
                           marginTop: 10
                         }}
                       >
-                        <Text style={{fontSize: 30, marginBottom: 5}}>
+                        <Text
+                          style={{
+                            fontSize: 30,
+                            marginBottom: 5,
+                            color: "#ffb53e"
+                          }}
+                        >
                           {highlightPlayer}
                         </Text>
                         <Text style={{fontSize: 20, marginBottom: 10}}>
@@ -426,12 +509,12 @@ class GameEndButton extends Component {
               </ScrollView>
             </View>
           </Modal>
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={this._handleButtonPress}
             style={{flex: 1, justifyContent: "center", alignItems: "center"}}
           >
             <Image source={gameEndButton} style={{resizeMode: "stretch"}} />
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );

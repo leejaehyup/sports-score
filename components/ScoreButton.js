@@ -165,7 +165,8 @@ class ScoreButton extends React.Component {
             <Text
               style={{
                 fontSize: 30,
-                color: "white"
+                color: "white",
+                fontFamily: "nanum-square-b"
               }}
             >
               {scores + ""}

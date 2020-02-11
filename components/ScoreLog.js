@@ -6,8 +6,8 @@ import {
   Modal,
   FlatList,
   Image,
-  TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground
 } from "react-native";
 import {connect} from "react-redux";
 import {deleteLog} from "../reducers/scoreGame";
@@ -51,7 +51,7 @@ class ScoreLog extends Component {
                   textAlign: "center",
                   fontSize: 30,
                   color: "black",
-                  fontWeight: "bold"
+                  fontFamily: "nanum-square-b"
                 }}
               >
                 Log
@@ -59,61 +59,73 @@ class ScoreLog extends Component {
               <FlatList
                 data={this.props.gameLog}
                 renderItem={({item, index}) => {
-                  const color = this.handleLogColor(item.key);
+                  let color = this.handleLogColor(item.key);
                   let box;
                   color === "purple"
                     ? (box = scoreLogBox)
                     : color === "red"
                     ? (box = penaltyLogBox)
                     : (box = advantageLogBox);
+                  color === "purple"
+                    ? (color = "#5c154b")
+                    : color === "red"
+                    ? (color = "#fe5b1b")
+                    : (color = "#7b74f9");
                   return (
                     <View
                       style={{
                         flex: 1,
-                        alignItems: "center",
-                        flexDirection: "row",
-                        marginTop: 5,
-                        justifyContent: "center"
+                        marginTop: 5
                       }}
                     >
-                      <Image
+                      <ImageBackground
                         source={box}
                         style={{
-                          position: "absolute"
-                        }}
-                      />
-                      <Text
-                        style={{
-                          padding: 10,
-                          fontSize: 20,
-                          height: 44,
-                          justifyContent: "flex-start",
-                          color: color
-                        }}
-                      >
-                        {item.key}
-                      </Text>
-                      <TouchableOpacity
-                        style={{
+                          flex: 1,
+                          justifyContent: "space-between",
                           alignItems: "center",
-                          justifyContent: "flex-end"
+                          flexDirection: "row"
                         }}
-                        onPress={() => {
-                          this.handleDeleteLog(item.key, index);
-                        }}
+                        imageStyle={{resizeMode: "stretch"}}
                       >
-                        <Image source={deleteLogBtn} />
-                      </TouchableOpacity>
+                        <Text
+                          style={{
+                            padding: 10,
+                            fontSize: 20,
+                            color: color,
+                            textAlign: "center",
+                            fontFamily: "nanum-square-b"
+                          }}
+                        >
+                          {item.key}
+                        </Text>
+                        <TouchableOpacity
+                          style={{
+                            flex: 1,
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                            flexDirection: "row",
+                            padding: 20
+                          }}
+                          onPress={() => {
+                            this.handleDeleteLog(item.key, index);
+                          }}
+                        >
+                          <Image
+                            source={deleteLogBtn}
+                            style={{
+                              resizeMode: "stretch"
+                            }}
+                          />
+                        </TouchableOpacity>
+                      </ImageBackground>
+
                       {/* <Button
                         title="x"
                         onPress={() => {
                           this.handleDeleteLog(item.key, index);
                         }}
                       ></Button> */}
-
-                      <Divider
-                        style={{backgroundColor: "black", marginTop: 5}}
-                      />
                     </View>
                   );
                 }}
@@ -132,7 +144,7 @@ class ScoreLog extends Component {
             </View>
           </View>
         </Modal>
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={this._handleButtonPress}
           style={{
             flex: 1,
@@ -141,7 +153,7 @@ class ScoreLog extends Component {
           }}
         >
           <Image source={gameLogButton} style={{resizeMode: "stretch"}} />
-        </TouchableHighlight>
+        </TouchableOpacity>
 
         {/* <Button title="Log" onPress={this._handleButtonPress} /> */}
       </View>

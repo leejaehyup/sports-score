@@ -13,8 +13,8 @@ const initialState = {
     sec: 0
   },
   gameLog: [],
-  player1: "player1",
-  player2: "player2",
+  player1: "PLAYER1",
+  player2: "PLAYER2",
   gameStart: false,
   run_score_time: false
 };
@@ -306,8 +306,8 @@ function reducer(state = initialState, action) {
           sec: 0
         },
         gameLog: [],
-        player1: "player1",
-        player2: "player2",
+        player1: "PLAYER1",
+        player2: "PLAYER2",
         gameStart: false,
         log: []
       };

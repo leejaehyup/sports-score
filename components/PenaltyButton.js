@@ -4,7 +4,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  Text
 } from "react-native";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
@@ -80,9 +81,19 @@ class PenaltyButton extends React.Component {
         >
           <ImageBackground
             source={penaltyButton}
-            style={{flex: 1}}
+            style={{flex: 1, justifyContent: "center", alignItems: "center"}}
             imageStyle={{resizeMode: "stretch"}}
-          ></ImageBackground>
+          >
+            <Text
+              style={{
+                fontSize: 30,
+                color: "white",
+                fontFamily: "nanum-square-b"
+              }}
+            >
+              P
+            </Text>
+          </ImageBackground>
         </TouchableOpacity>
       </View>
     );

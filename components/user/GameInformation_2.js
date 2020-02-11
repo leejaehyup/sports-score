@@ -1,13 +1,15 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, ImageBackground} from "react-native";
 import {Text} from "react-native-elements";
 import {connect} from "react-redux";
+import PAscoreFrame from "../../assets/images/frame/PAscoreFrame.png";
 
 class GameInformation_2 extends React.Component {
   render() {
+    const {totalScore_2, advantage_2, penalty_2, style, land} = this.props;
     const highlight_style = {
       on: {
-        flex: 3,
+        flex: land ? 10 : 20,
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
@@ -15,14 +17,14 @@ class GameInformation_2 extends React.Component {
         marginTop: 10
       },
       off: {
-        flex: 3,
+        flex: land ? 10 : 20,
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
         marginTop: 10
       }
     };
-    const {totalScore_2, advantage_2, penalty_2, style} = this.props;
+
     return (
       <View style={styles.gameInfo_Container}>
         <View style={highlight_style.off}>
@@ -37,38 +39,53 @@ class GameInformation_2 extends React.Component {
             {totalScore_2}
           </Text>
         </View>
+        <View style={{flex: 10}}></View>
         <View
           style={{
-            flex: 2,
+            flex: land ? 7 : 5,
             flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "center"
+            justifyContent: "center"
           }}
         >
-          <View
+          <View style={{flex: style.flex}}></View>
+          <ImageBackground
+            source={PAscoreFrame}
             style={{
-              flex: 1
+              flex: 3,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
             }}
+            imageStyle={{resizeMode: "stretch"}}
           >
-            {/* <Text style={{fontSize: 20}}>P : </Text> */}
-            <Text style={styles.penalty_text}>{penalty_2}</Text>
-          </View>
-          <View
-            style={{
-              flex: 1
-            }}
-          >
-            {/* <Text style={{fontSize: 20}}>A : </Text> */}
-            <Text style={styles.advantage_text}>{advantage_2}</Text>
-          </View>
+            <View
+              style={{
+                flex: 1
+              }}
+            >
+              <Text style={styles.penalty_text}>{penalty_2}</Text>
+            </View>
+            <View
+              style={{
+                flex: 1
+              }}
+            >
+              <Text style={styles.advantage_text}>{advantage_2}</Text>
+            </View>
+          </ImageBackground>
+          <View style={{flex: style.flex}}></View>
         </View>
+        <View style={{flex: 2}}></View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   gameInfo_Container: {
-    flex: 5
+    flex: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 15
   },
   button_text: {
     fontSize: 20,
@@ -77,17 +94,20 @@ const styles = StyleSheet.create({
   score_text: {
     fontSize: 130,
     textAlign: "center",
-    color: "black"
+    color: "black",
+    fontFamily: "nanum-square-b"
   },
   penalty_text: {
-    fontSize: 25,
+    fontSize: 20,
     textAlign: "center",
-    color: "white"
+    color: "white",
+    fontFamily: "nanum-square-b"
   },
   advantage_text: {
-    fontSize: 25,
+    fontSize: 20,
     textAlign: "center",
-    color: "white"
+    color: "white",
+    fontFamily: "nanum-square-b"
   }
 });
 const mapStateToProps = state => ({

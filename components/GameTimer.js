@@ -5,7 +5,7 @@ import {
   Modal,
   TextInput,
   Image,
-  TouchableHighlight
+  TouchableOpacity
 } from "react-native";
 import {Button, Text} from "react-native-elements";
 import {connect} from "react-redux";
@@ -62,7 +62,11 @@ class GameTimer extends React.Component {
       backgroundColor: "white"
     };
 
-    var innerContainerTransparentStyle = {backgroundColor: "#fff", padding: 20};
+    var innerContainerTransparentStyle = {
+      backgroundColor: "#fff",
+      padding: 20,
+      borderRadius: 20
+    };
     return (
       <View style={props.landFlex ? landStyle : portStyle}>
         <Modal
@@ -104,7 +108,8 @@ class GameTimer extends React.Component {
           style={{
             fontSize: 27,
             textAlign: "center",
-            fontWeight: "bold"
+            fontFamily: "nanum-square-b",
+            marginRight: 5
           }}
         >
           {`${min}분:${sec}초`}
@@ -246,27 +251,27 @@ class GameTimer extends React.Component {
         {/* <Text style={styles.timer_Text}>{`${min}분:${sec}초`}</Text> */}
 
         {starting ? (
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={this.onPress_Stop_Timer}
             style={{flex: 1, justifyContent: "center", alignItems: "center"}}
           >
             <Image source={gamePauseButton} style={{resizeMode: "stretch"}} />
-          </TouchableHighlight>
+          </TouchableOpacity>
         ) : (
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={this.onPress_Start_Timer}
             style={{flex: 1, justifyContent: "center", alignItems: "center"}}
           >
             <Image source={gameStartButton} style={{resizeMode: "stretch"}} />
-          </TouchableHighlight>
+          </TouchableOpacity>
         )}
 
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={this.onPress_Reset_Timer}
           style={{flex: 1, justifyContent: "center", alignItems: "center"}}
         >
           <Image source={gameResetButton} style={{resizeMode: "stretch"}} />
-        </TouchableHighlight>
+        </TouchableOpacity>
         <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
           <ScoreLog />
         </View>
@@ -281,7 +286,7 @@ const styles = StyleSheet.create({
   timer_Container: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center"
   },
   timer_Text: {

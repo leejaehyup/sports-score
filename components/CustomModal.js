@@ -16,8 +16,8 @@ import playerNameClose from "../assets/images/buttons/playerNameClose.png";
 class CustomModal extends Component {
   state = {
     modalVisible: false,
-    player1: "player1",
-    player2: "player2"
+    player1: "PLAYER1",
+    player2: "PLAYER2"
   };
 
   _handleButtonPress = () => {
@@ -33,7 +33,7 @@ class CustomModal extends Component {
     this.setState({modalVisible: visible});
   };
   onChangePlayer1 = name => {
-    if (name.length > 15) {
+    if (name.length > 10) {
       alert("글자 수 초과");
       return;
     }
@@ -41,7 +41,7 @@ class CustomModal extends Component {
     this.props.playerName(this.props.user, name);
   };
   onChangePlayer2 = name => {
-    if (name.length > 15) {
+    if (name.length > 10) {
       alert("글자 수 초과");
       return;
     }
@@ -89,7 +89,7 @@ class CustomModal extends Component {
               >
                 플레이어 이름을 설정해주세요.
               </Text>
-              {player === "player1" ? (
+              {player === "PLAYER1" ? (
                 <TextInput
                   value={this.state.player1}
                   onChangeText={this.onChangePlayer1}
@@ -129,9 +129,12 @@ class CustomModal extends Component {
         </Modal>
         <Text
           onPress={this._handleButtonPress}
-          style={{fontSize: style.fontSize, fontWeight: "bold"}}
+          style={{
+            fontSize: style.fontSize,
+            fontFamily: "nanum-square-eb"
+          }}
         >
-          {player === "player1" ? this.props.player1 : this.props.player2}
+          {player === "PLAYER1" ? this.props.player1 : this.props.player2}
         </Text>
       </View>
     );

@@ -26,11 +26,14 @@ class ScoreFrame extends Component {
                 imageStyle={{resizeMode: "stretch"}}
               >
                 <CustomModal
-                  player="player1"
+                  player="PLAYER1"
                   user="user1"
                   style={{fontSize: 25, marginTop: 0}}
                 />
-                <GameInformation_2 style={{fontSize: 100}} />
+                <GameInformation_1
+                  style={{fontSize: 100, flex: 2}}
+                  land={true}
+                />
               </ImageBackground>
             ) : (
               <ImageBackground
@@ -43,12 +46,15 @@ class ScoreFrame extends Component {
                 imageStyle={{resizeMode: "stretch"}}
               >
                 <CustomModal
-                  player="player1"
+                  player="PLAYER1"
                   user="user1"
                   style={{fontSize: 25, marginTop: 0}}
                 />
 
-                <GameInformation_1 style={{fontSize: 100}} />
+                <GameInformation_1
+                  style={{fontSize: 100, flex: 2}}
+                  land={true}
+                />
               </ImageBackground>
             )
           ) : highlight_2 ? (
@@ -58,11 +64,11 @@ class ScoreFrame extends Component {
               imageStyle={{resizeMode: "stretch"}}
             >
               <CustomModal
-                player="player2"
+                player="PLAYER2"
                 user="user2"
                 style={{fontSize: 25, marginTop: 0}}
               />
-              <GameInformation_2 style={{fontSize: 100}} />
+              <GameInformation_2 style={{fontSize: 100, flex: 2}} land={true} />
             </ImageBackground>
           ) : (
             <ImageBackground
@@ -71,11 +77,11 @@ class ScoreFrame extends Component {
               imageStyle={{resizeMode: "stretch"}}
             >
               <CustomModal
-                player="player2"
+                player="PLAYER2"
                 user="user2"
                 style={{fontSize: 25, marginTop: 0}}
               />
-              <GameInformation_2 style={{fontSize: 100}} />
+              <GameInformation_2 style={{fontSize: 100, flex: 2}} land={true} />
             </ImageBackground>
           )
         ) : user === "1" ? (
@@ -86,11 +92,14 @@ class ScoreFrame extends Component {
               imageStyle={{resizeMode: "stretch"}}
             >
               <CustomModal
-                player="player1"
+                player="PLAYER1"
                 user="user1"
-                style={{fontSize: 27, marginTop: 10}}
+                style={{fontSize: 32, marginTop: 20}}
               />
-              <GameInformation_2 style={{fontSize: 130}} />
+              <GameInformation_1
+                style={{fontSize: 130, flex: 1}}
+                land={false}
+              />
             </ImageBackground>
           ) : (
             <ImageBackground
@@ -99,12 +108,15 @@ class ScoreFrame extends Component {
               imageStyle={{resizeMode: "stretch"}}
             >
               <CustomModal
-                player="player1"
+                player="PLAYER1"
                 user="user1"
-                style={{fontSize: 27, marginTop: 10}}
+                style={{fontSize: 32, marginTop: 20}}
               />
 
-              <GameInformation_1 style={{fontSize: 130}} />
+              <GameInformation_1
+                style={{fontSize: 130, flex: 1}}
+                land={false}
+              />
             </ImageBackground>
           )
         ) : highlight_2 ? (
@@ -114,11 +126,11 @@ class ScoreFrame extends Component {
             imageStyle={{resizeMode: "stretch"}}
           >
             <CustomModal
-              player="player2"
+              player="PLAYER2"
               user="user2"
-              style={{fontSize: 27, marginTop: 10}}
+              style={{fontSize: 32, marginTop: 20}}
             />
-            <GameInformation_2 style={{fontSize: 130}} />
+            <GameInformation_2 style={{fontSize: 130, flex: 1}} land={false} />
           </ImageBackground>
         ) : (
           <ImageBackground
@@ -127,11 +139,11 @@ class ScoreFrame extends Component {
             imageStyle={{resizeMode: "stretch"}}
           >
             <CustomModal
-              player="player2"
+              player="PLAYER2"
               user="user2"
-              style={{fontSize: 27, marginTop: 10}}
+              style={{fontSize: 32, marginTop: 20}}
             />
-            <GameInformation_2 style={{fontSize: 130}} />
+            <GameInformation_2 style={{fontSize: 130, flex: 1}} land={false} />
           </ImageBackground>
         )}
       </View>

@@ -16,6 +16,7 @@ import {Provider} from "react-redux";
 import store from "../store";
 //orientation
 import {ScreenOrientation} from "expo";
+import * as Font from "expo-font";
 
 export default class GameScreen extends React.Component {
   state = {
@@ -26,7 +27,8 @@ export default class GameScreen extends React.Component {
     player2: "Player2",
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-    highlight_1: false
+    highlight_1: false,
+    fontLoaded: false
   };
   static navigationOptions = {
     header: null
@@ -62,13 +64,22 @@ export default class GameScreen extends React.Component {
   //   }
   // };
   // portrait 세로모드
-  componentDidMount() {
-    //ScreenOrientation.unlockAsync();
-    //this.getOrientation();
-    // Dimensions.addEventListener("change", () => {
-    //   this.getOrientation();
-    // });
+  async componentDidMount() {
+    await Font.loadAsync({
+      "nanum-square-b": require("../assets/Font/NanumSquareB.ttf"),
+      "nanum-square-eb": require("../assets/Font/NanumSquareEB.ttf")
+    });
+
+    this.setState({fontLoaded: true});
   }
+  //componentDidMount() {
+
+  //ScreenOrientation.unlockAsync();
+  //this.getOrientation();
+  // Dimensions.addEventListener("change", () => {
+  //   this.getOrientation();
+  // });
+  //}
 
   // async changeScreenOrientation() {
   //   const {orientation} = this.state;
@@ -256,7 +267,7 @@ export default class GameScreen extends React.Component {
   };
 
   render() {
-    const {orientation} = this.state;
+    const {orientation, fontLoaded} = this.state;
     // const {
     //   state: {
     //     params: {minute, second, user1, user2, getScoreTime}
@@ -272,9 +283,12 @@ export default class GameScreen extends React.Component {
           hidden={true}
         />
         {/* <View ref="rootView" style={{flex: 1, marginTop: 5}}> */}
-        {orientation === "portrait"
-          ? this.portrait_mode()
-          : this.landsacpe_mode()}
+
+        {fontLoaded
+          ? orientation === "portrait"
+            ? this.portrait_mode()
+            : this.landsacpe_mode()
+          : null}
         {/* </View> */}
       </Provider>
     );
