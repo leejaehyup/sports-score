@@ -232,6 +232,7 @@ class GameEndButton extends Component {
                         style={{
                           flex: 1,
                           width: 200,
+                          height: 45,
                           opacity: 0.5
                         }}
                         onValueChange={(itemValue, itemIndex) =>

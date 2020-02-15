@@ -16,7 +16,8 @@ const initialState = {
   player1: "PLAYER1",
   player2: "PLAYER2",
   gameStart: false,
-  run_score_time: false
+  run_score_time: false,
+  runningScore: false
 };
 //---------//
 // Actions //
@@ -43,6 +44,8 @@ export const TIMER_LOADED = "TIMER_LOADED";
 // player name
 export const PLAYER1_NAME = "PLAYER1_NAME";
 export const PLAYER2_NAME = "PLAYER2_NAME";
+const GAME_SCORE_RUNNING_FAIL = "GAME_SCORE_RUNNING_FAIL";
+const GAME_SCORE_RUNNING_SUCESS = "GAME_SCORE_RUNNING_SUCESS";
 
 // game utils
 export const GAME_LOG = "GAME_LOG";
@@ -185,6 +188,16 @@ export const gameStart = () => {
 export const gameStop = () => {
   return {
     type: GAME_STOP
+  };
+};
+export const runningScoreSuccess = () => {
+  return {
+    type: GAME_SCORE_RUNNING_SUCESS
+  };
+};
+export const runningScoreFail = () => {
+  return {
+    type: GAME_SCORE_RUNNING_FAIL
   };
 };
 
@@ -360,7 +373,16 @@ function reducer(state = initialState, action) {
         ...state,
         highlight_1: false
       };
-
+    case GAME_SCORE_RUNNING_SUCESS:
+      return {
+        ...state,
+        runningScore: true
+      };
+    case GAME_SCORE_RUNNING_FAIL:
+      return {
+        ...state,
+        runningScore: false
+      };
     default:
       return state;
   }

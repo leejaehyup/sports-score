@@ -49,12 +49,14 @@ class ScoreLog extends Component {
               <Text
                 style={{
                   textAlign: "center",
-                  fontSize: 30,
+                  fontSize: 25,
                   color: "black",
-                  fontFamily: "nanum-square-b"
+                  fontFamily: "nanum-square-b",
+                  marginBottom: 15,
+                  marginTop: 15
                 }}
               >
-                Log
+                LOG
               </Text>
               <FlatList
                 data={this.props.gameLog}

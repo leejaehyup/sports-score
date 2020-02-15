@@ -57,7 +57,8 @@ class CustomModal extends Component {
     var innerContainerTransparentStyle = {
       backgroundColor: "#fff",
       padding: 20,
-      width: 300
+      width: 300,
+      borderRadius: 15
     };
     return (
       <View
@@ -95,7 +96,7 @@ class CustomModal extends Component {
                   onChangeText={this.onChangePlayer1}
                   placeholder="User"
                   style={{
-                    backgroundColor: "#D5D5D5",
+                    backgroundColor: "#E7E7E7",
                     color: "#BDBDBD",
                     fontSize: 20,
                     borderRadius: 5,
@@ -106,7 +107,7 @@ class CustomModal extends Component {
               ) : (
                 <TextInput
                   style={{
-                    backgroundColor: "#D5D5D5",
+                    backgroundColor: "#E7E7E7",
                     color: "#BDBDBD",
                     fontSize: 20,
                     borderRadius: 5,
@@ -120,7 +121,7 @@ class CustomModal extends Component {
               )}
               <TouchableOpacity
                 onPress={this.setModalVisible.bind(this, false)}
-                style={{marginTop: 20, alignItems: "center"}}
+                style={{marginTop: 25, alignItems: "center"}}
               >
                 <Image source={playerNameClose} />
               </TouchableOpacity>

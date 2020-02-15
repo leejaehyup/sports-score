@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, Switch, Image, TouchableHighlight} from "react-native";
+import {View, Text, Switch, Image, TouchableOpacity} from "react-native";
 import BeltLottie from "../components/lottie/BeltLottie";
 import {ScreenOrientation} from "expo";
 
@@ -59,7 +59,7 @@ export default class IndexScreen extends React.Component {
               가로모드
             </Text>
           </View>
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={() => {
               let orientation;
               this.state.orientation
@@ -80,7 +80,7 @@ export default class IndexScreen extends React.Component {
             <Image
               source={require("../assets/images/buttons/goGameScreenImg.png")}
             />
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </View>
     );

@@ -2,11 +2,10 @@ import React from "react";
 import {
   StyleSheet,
   View,
-  Image,
   TouchableOpacity,
   ImageBackground
 } from "react-native";
-import {Button, Text} from "react-native-elements";
+import {Text} from "react-native-elements";
 import {
   increment,
   decrement,
@@ -15,7 +14,8 @@ import {
   runScoreTimeFail,
   runScoreTimeSuccess,
   highlighting_off,
-  highlighting_on
+  highlighting_on,
+  runningScoreFail
 } from "../reducers/scoreGame";
 import {connect} from "react-redux";
 import scoreButton from "../assets/images/buttons/scoreButton.png";
@@ -27,7 +27,8 @@ class ScoreButton extends React.Component {
     scores: this.props.init_score + "", // 시간
     interval: null, // setInterval 함수
     changeInitScore: false, // 타이머를 초기 스코어로 바꿀지 여부
-    getScoreTime: 3
+    getScoreTime: 3,
+    currentTime: null
   };
 
   highlight_on = user => {
@@ -78,10 +79,36 @@ class ScoreButton extends React.Component {
       this.props.decrement(this.props.player2, parseInt(this.state.initScore));
     }
   };
+  componentDidUpdate(preProps) {
+    // runningScore -> 게임 중지 클릭시 true
+    const {run_score_time, gameStart, runningScore, user} = this.props;
+    const {timerOn} = this.state;
+    if (run_score_time && runningScore) {
+      if (!gameStart) {
+        clearInterval(this.state.interval);
+      }
+    }
+    if (gameStart && timerOn && runningScore && run_score_time) {
+      this.setState({timerOn: true});
+      this.countdown(true);
+      this.props.runScoreTimeSuccess();
+      this.highlight_on(user);
+      this.props.runningScoreFail();
+    }
+  }
 
   scorePressTimerOn = e => {
     const {timerOn, changeInitScore, initScore} = this.state;
     const {gameStart, run_score_time, user} = this.props;
+
+    // 게임 시작 후 -> 점수 획득 시간 후 -> 게임 중지 -> 버튼 눌러서 초기화
+    if (!gameStart && timerOn) {
+      this.setState({timerOn: false, scores: initScore});
+      this.props.runningScoreFail();
+      this.props.runScoreTimeFail();
+      return;
+    }
+
     if (!gameStart) {
       alert("게임 시작을 해주세요");
       return;
@@ -97,25 +124,22 @@ class ScoreButton extends React.Component {
       this.props.runScoreTimeFail();
       this.highlight_off(user);
     } else {
+      this.props.runScoreTimeFail();
       this.setState({scores: initScore, changeInitScore: false}); // 세 번 클릭 시
     }
   };
   // 3초 카운트
-  countdown = () => {
+  countdown = (reCount = false) => {
     const startTimer = Date.now();
-    this.setState({scores: "0"});
+    const {currentTime} = this.state;
+    reCount ? null : this.setState({scores: "0"});
     this.setState({
       interval: setInterval(() => {
-        let currentTimer = Date.now() - startTimer;
+        let currentTimer = reCount
+          ? Date.now() + currentTime - startTimer
+          : Date.now() - startTimer;
         const {getScoreTime, initScore} = this.state;
-        const {
-          timer,
-          player1,
-          player2,
-          user,
-          totalScore_1,
-          totalScore_2
-        } = this.props;
+        const {timer, player1, player2, user} = this.props;
         // tofiexd는 문자열 반환 -> number형으로 변환해서 비교
         if (
           +parseFloat(getScoreTime).toFixed(1) <=
@@ -142,13 +166,15 @@ class ScoreButton extends React.Component {
             });
             this.props.increment(player2, parseInt(initScore));
           }
+          this.props.runScoreTimeFail();
         } else {
           this.setState({
             //scores: (parseFloat(this.state.scores) + 0.1).toFixed(1) + ""
-            scores: (currentTimer / 1000).toFixed(1) + ""
+            scores: (currentTimer / 1000).toFixed(1) + "",
+            currentTime: currentTimer
           });
         }
-      }, 50)
+      }, 100)
     });
   };
 
@@ -185,7 +211,8 @@ const mapStateToProps = state => ({
   totalScore_1: state.scoreGame.totalScore_1,
   totalScore_2: state.scoreGame.totalScore_2,
   gameStart: state.scoreGame.gameStart,
-  run_score_time: state.scoreGame.run_score_time
+  run_score_time: state.scoreGame.run_score_time,
+  runningScore: state.scoreGame.runningScore
 });
 
 export default connect(mapStateToProps, {
@@ -196,5 +223,6 @@ export default connect(mapStateToProps, {
   runScoreTimeFail,
   runScoreTimeSuccess,
   highlighting_off,
-  highlighting_on
+  highlighting_on,
+  runningScoreFail
 })(ScoreButton);
